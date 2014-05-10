@@ -34,11 +34,24 @@
             android:inputType="textMultiLine" />
 
         <ImageButton
+            android:id="@+id/button_emoji"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/actionbar_return_button"
+            android:src="@drawable/ic_action_emoji" />
+
+        <ImageButton
             android:id="@+id/button_send"
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:background="@drawable/actionbar_return_button"
             android:src="@drawable/ic_action_send_now" />
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/fragment_emoji"
+        android:name="com.rockerhieu.emojicon.EmojiconsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="220dp" />
 
 </LinearLayout>

@@ -10,19 +10,28 @@ import mynuaa.whatever.DataSource.CommentGetTask;
 import mynuaa.whatever.DataSource.CommentGetTask.OnCommentGetListener;
 import mynuaa.whatever.DataSource.CommentPostTask;
 import mynuaa.whatever.DataSource.CommentPostTask.OnCommentPostListener;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -31,9 +40,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CommentActivity extends SherlockActivity implements
+public class CommentActivity extends SherlockFragmentActivity implements
 		OnItemClickListener, InputFilter, OnClickListener,
-		OnCommentPostListener, OnCommentGetListener, OnGestureListener {
+		OnCommentPostListener, OnCommentGetListener, OnGestureListener,
+		EmojiconGridFragment.OnEmojiconClickedListener,
+		EmojiconsFragment.OnEmojiconBackspaceClickedListener, OnTouchListener,
+		OnFocusChangeListener {
 	private static final String TASK_TAG = "task_comment_activity";
 
 	GestureDetector mGestureDetector;
@@ -42,8 +54,10 @@ public class CommentActivity extends SherlockActivity implements
 
 	private ListView listView_comment;
 	private EditText editText_comment;
-	private View button_send;
+	private View button_send, button_emoji;
 	private View loadingView;// 加载视图的布局
+
+	private Fragment fragment_emoji;
 
 	private CommentAdapter mCommentAdapter = new CommentAdapter();
 
@@ -60,6 +74,9 @@ public class CommentActivity extends SherlockActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
 
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		mGestureDetector = new GestureDetector(this, this);
 		isLoading = false;
 
@@ -68,6 +85,10 @@ public class CommentActivity extends SherlockActivity implements
 		listView_comment = (ListView) findViewById(R.id.listView_comment);
 		editText_comment = (EditText) findViewById(R.id.editText_comment);
 		button_send = findViewById(R.id.button_send);
+		button_emoji = findViewById(R.id.button_emoji);
+
+		FragmentManager fm = getSupportFragmentManager();
+		fragment_emoji = fm.findFragmentById(R.id.fragment_emoji);
 
 		loadingView = LayoutInflater.from(this).inflate(R.layout.footer, null);
 		((TextView) loadingView.findViewById(R.id.textView_footer))
@@ -79,10 +100,14 @@ public class CommentActivity extends SherlockActivity implements
 		listView_comment.addFooterView(loadingView);
 		listView_comment.setAdapter(mCommentAdapter);
 		listView_comment.setOnItemClickListener(this);
+		listView_comment.setOnTouchListener(this);
 
 		editText_comment.setFilters(new InputFilter[] { this });
+		editText_comment.setOnFocusChangeListener(this);
+		editText_comment.setOnClickListener(this);
 
 		button_send.setOnClickListener(this);
+		button_emoji.setOnClickListener(this);
 
 		loadingView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -93,6 +118,26 @@ public class CommentActivity extends SherlockActivity implements
 
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 		updateCurrendData(true);
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (fragment_emoji.isVisible()) {
+				FragmentManager fm = getSupportFragmentManager();
+				Util.toggleEmojiFragment(fm, fragment_emoji, false);
+				return true;
+			}
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		FragmentManager fm = getSupportFragmentManager();
+		Util.toggleEmojiFragment(fm, fragment_emoji, false);
 	}
 
 	@Override
@@ -270,22 +315,32 @@ public class CommentActivity extends SherlockActivity implements
 
 	@Override
 	public void onClick(View v) {
-		String comment = getComment();
+		if (v == button_send) {
+			String comment = getComment();
 
-		if (comment.isEmpty()) {
-			Toast.makeText(this, "评论不能为空", Toast.LENGTH_SHORT).show();
-			return;
+			if (comment.isEmpty()) {
+				Toast.makeText(this, "评论不能为空", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			editText_comment.setEnabled(false);
+			button_send.setEnabled(false);
+
+			CommentData cd = new CommentData();
+			cd.content = comment;
+			cd.replyTo = mReplyTo == -1 ? 0 : mReplyTo;
+			cd.message_cid = mMessage_cid;
+
+			WhateverApplication.getMainTaskManager().startTask(
+					new CommentPostTask(TASK_TAG, cd, this));
+		} else if (v == button_emoji) {
+			Util.setInputMethod(this, false);
+
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, true);
+		} else if (v == editText_comment) {
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, false);
 		}
-		editText_comment.setEnabled(false);
-		button_send.setEnabled(false);
-
-		CommentData cd = new CommentData();
-		cd.content = comment;
-		cd.replyTo = mReplyTo == -1 ? 0 : mReplyTo;
-		cd.message_cid = mMessage_cid;
-
-		WhateverApplication.getMainTaskManager().startTask(
-				new CommentPostTask(TASK_TAG, cd, this));
 	}
 
 	private String getComment() {
@@ -395,11 +450,29 @@ public class CommentActivity extends SherlockActivity implements
 	}
 
 	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		if (mGestureDetector.onTouchEvent(ev)) {
+	public void onEmojiconBackspaceClicked(View v) {
+		EmojiconsFragment.backspace(editText_comment);
+	}
+
+	@Override
+	public void onEmojiconClicked(Emojicon emojicon) {
+		EmojiconsFragment.input(editText_comment, emojicon);
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (mGestureDetector.onTouchEvent(event)) {
 			return true;
 		}
-		return super.dispatchTouchEvent(ev);
+		return false;
+	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if (v == editText_comment && hasFocus) {
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, false);
+		}
 	}
 
 }

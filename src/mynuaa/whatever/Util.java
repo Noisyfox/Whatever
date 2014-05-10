@@ -14,6 +14,7 @@ import org.json.JSONException;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -36,6 +37,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -98,6 +102,18 @@ public class Util {
 						InputMethodManager.HIDE_NOT_ALWAYS);
 			}
 		}
+	}
+
+	public static void toggleEmojiFragment(FragmentManager fm, Fragment ef,
+			boolean show) {
+		FragmentTransaction ft = fm.beginTransaction();
+		ft.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
+		if (show) {
+			ft.show(ef);
+		} else {
+			ft.hide(ef);
+		}
+		ft.commit();
 	}
 
 	public static Bitmap creatPreviewImage(Bitmap res) {
@@ -386,6 +402,16 @@ public class Util {
 
 	public static void setupCommonActionBar(final SherlockActivity activity,
 			int titleRes) {
+		setupCommonActionBar(activity, activity.getSupportActionBar(), titleRes);
+	}
+
+	public static void setupCommonActionBar(
+			final SherlockFragmentActivity activity, int titleRes) {
+		setupCommonActionBar(activity, activity.getSupportActionBar(), titleRes);
+	}
+
+	private static void setupCommonActionBar(final Activity activity,
+			ActionBar actionbar, int titleRes) {
 		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
 				ActionBar.LayoutParams.MATCH_PARENT,
 				ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
@@ -393,10 +419,9 @@ public class Util {
 		View viewTitleBar = activity.getLayoutInflater().inflate(
 				R.layout.common_actionbar, null);
 
-		activity.getSupportActionBar().setCustomView(viewTitleBar, lp);
-		activity.getSupportActionBar().setDisplayOptions(
-				ActionBar.DISPLAY_SHOW_CUSTOM);
-		activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
+		actionbar.setCustomView(viewTitleBar, lp);
+		actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionbar.setDisplayShowCustomEnabled(true);
 
 		viewTitleBar.findViewById(R.id.left_btn).setOnClickListener(
 				new OnClickListener() {

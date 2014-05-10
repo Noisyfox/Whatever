@@ -13,25 +13,33 @@ import mynuaa.whatever.DataSource.PMRequireSessionTask;
 import mynuaa.whatever.DataSource.PMRequireSessionTask.OnSessionGetListener;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -42,9 +50,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressWarnings("deprecation")
-public class PMActivity extends SherlockActivity implements OnGestureListener,
-		OnClickListener, OnRefreshListener<ListView>, OnLongClickListener,
-		OnSessionGetListener, OnPMPostListener, OnPMGetListener {
+public class PMActivity extends SherlockFragmentActivity implements
+		OnGestureListener, OnClickListener, OnRefreshListener<ListView>,
+		OnLongClickListener, OnSessionGetListener, OnPMPostListener,
+		OnPMGetListener, EmojiconGridFragment.OnEmojiconClickedListener,
+		EmojiconsFragment.OnEmojiconBackspaceClickedListener, OnTouchListener,
+		OnFocusChangeListener {
 	private static final String TASK_TAG = "task_pm_activity";
 
 	public static void startPMSession(Activity activity, String cid,
@@ -65,8 +76,10 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 	private PullToRefreshListView rootListView;
 	private ListView listView;
 	private EditText editText_message;
-	private View button_send;
+	private View button_send, button_emoji;
 	private View loadingView;
+
+	private Fragment fragment_emoji;
 
 	private LinkedList<PMData> currentData = new LinkedList<PMData>();
 	private PMAdapter currentAdapter = new PMAdapter();
@@ -237,11 +250,20 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pm);
 
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		rootListView = (PullToRefreshListView) findViewById(R.id.listView_messages);
 		listView = rootListView.getRefreshableView();
 		editText_message = (EditText) findViewById(R.id.editText_message);
 		button_send = findViewById(R.id.button_send);
+		button_emoji = findViewById(R.id.button_emoji);
 		loadingView = findViewById(R.id.pm_load_process);
+
+		FragmentManager fm = getSupportFragmentManager();
+		fragment_emoji = fm.findFragmentById(R.id.fragment_emoji);
+
+		listView.setOnTouchListener(this);
 
 		ILoadingLayout ll = rootListView.getLoadingLayoutProxy();
 		ll.setPullLabel(getText(R.string.pm_refresh_pulling));
@@ -276,6 +298,26 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 		}
 	}
 
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (fragment_emoji.isVisible()) {
+				FragmentManager fm = getSupportFragmentManager();
+				Util.toggleEmojiFragment(fm, fragment_emoji, false);
+				return true;
+			}
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		FragmentManager fm = getSupportFragmentManager();
+		Util.toggleEmojiFragment(fm, fragment_emoji, false);
+	}
+
 	private void finishLoad(List<PMData> unread) {
 		if (unread == null) {
 			mergeData(true, PMData.getCachedMessages(session, -1));// ‘ÿ»Îª∫¥Ê
@@ -287,7 +329,9 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 		rootListView.setOnRefreshListener(this);
 
 		button_send.setOnClickListener(this);
-
+		button_emoji.setOnClickListener(this);
+		editText_message.setOnClickListener(this);
+		editText_message.setOnFocusChangeListener(this);
 		editText_message.setEnabled(true);
 		button_send.setEnabled(true);
 		loadingView.setVisibility(View.GONE);
@@ -295,28 +339,38 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 
 	@Override
 	public void onClick(View v) {
-		String message = editText_message.getText().toString();
-		editText_message.setText("");
-		if (message.isEmpty()) {
-			return;
+		if (v == button_send) {
+			String message = editText_message.getText().toString();
+			editText_message.setText("");
+			if (message.isEmpty()) {
+				return;
+			}
+
+			PMData pd = new PMData();
+			pd.content = message;
+			pd.timeL = System.currentTimeMillis();
+			pd.ncid = cid;
+			pd.cid = -1;
+			pd.from = PMData.FROM_ME;
+			pd.session = session;
+			pd.status = PMData.STATUS_SENDING;
+
+			LinkedList<PMData> l = new LinkedList<PMData>();
+			l.add(pd);
+			mergeData(true, l);
+			currentAdapter.notifyDataSetChanged();
+
+			WhateverApplication.getMainTaskManager().startTask(
+					new PMPostTask(TASK_TAG, pd, this));
+		} else if (v == button_emoji) {
+			Util.setInputMethod(this, false);
+
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, true);
+		} else if (v == editText_message) {
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, false);
 		}
-
-		PMData pd = new PMData();
-		pd.content = message;
-		pd.timeL = System.currentTimeMillis();
-		pd.ncid = cid;
-		pd.cid = -1;
-		pd.from = PMData.FROM_ME;
-		pd.session = session;
-		pd.status = PMData.STATUS_SENDING;
-
-		LinkedList<PMData> l = new LinkedList<PMData>();
-		l.add(pd);
-		mergeData(true, l);
-		currentAdapter.notifyDataSetChanged();
-
-		WhateverApplication.getMainTaskManager().startTask(
-				new PMPostTask(TASK_TAG, pd, this));
 	}
 
 	@Override
@@ -371,14 +425,6 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		if (mGestureDetector.onTouchEvent(ev)) {
-			return true;
-		}
-		return super.dispatchTouchEvent(ev);
 	}
 
 	@Override
@@ -484,4 +530,29 @@ public class PMActivity extends SherlockActivity implements OnGestureListener,
 		}
 	}
 
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (mGestureDetector.onTouchEvent(event)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void onEmojiconBackspaceClicked(View v) {
+		EmojiconsFragment.backspace(editText_message);
+	}
+
+	@Override
+	public void onEmojiconClicked(Emojicon emojicon) {
+		EmojiconsFragment.input(editText_message, emojicon);
+	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if (v == editText_message && hasFocus) {
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, false);
+		}
+	}
 }
