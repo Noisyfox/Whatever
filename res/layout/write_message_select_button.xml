@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mynuaa.whatever.MaskedImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:maskedimage="http://schemas.android.com/apk/res/mynuaa.whatever"
+    android:id="@+id/btn_selector"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:scaleType="center"
+    maskedimage:image="@drawable/selector_mask"
+    maskedimage:mask="@drawable/selector_mask"
+    maskedimage:stamp="@null" >
+
+</mynuaa.whatever.MaskedImageView>

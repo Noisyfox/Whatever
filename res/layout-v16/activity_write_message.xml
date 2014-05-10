@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WriteMessageActivity" >
+
+    <ScrollView
+        android:id="@+id/scrollView_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <ImageView
+                    android:id="@+id/imageView_background"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/editText_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/write_message_text_hint"
+                        android:inputType="textMultiLine"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" >
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/textView_addImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:background="@drawable/add_pic"
+                        android:gravity="center"
+                        android:text="@string/write_message_add_image"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <ImageView
+                        android:id="@+id/imageView_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginRight="60dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        android:src="@drawable/message_test_img" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <mynuaa.whatever.HListView
+            android:id="@+id/listView_color"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_gravity="center"/>
+
+        <mynuaa.whatever.HListView
+            android:id="@+id/listView_texture"
+            android:layout_width="match_parent"
+            android:layout_height="47dp" />
+    </LinearLayout>
+
+</LinearLayout>

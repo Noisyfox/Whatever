@@ -1,0 +1,325 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:numberButton="http://schemas.android.com/apk/res/mynuaa.whatever"
+    android:id="@+id/message_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MessageActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <ImageView
+                        android:id="@+id/imageView_background"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/textView_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="30dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/white" />
+
+                        <mynuaa.whatever.SmartImageView
+                            android:id="@+id/imageView_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginRight="60dp"
+                            android:adjustViewBounds="true"
+                            android:background="@color/message_image_loading_background"
+                            android:minHeight="93dp"
+                            android:minWidth="150dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:text="@string/message_test_time"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#1e4d55" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_bottom_background" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <mynuaa.whatever.NumberButton
+                    android:id="@+id/button_good"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp"
+                    android:textColor="@color/btn_message_text"
+                    numberButton:number_offset_x="8dp"
+                    numberButton:number_offset_y="8dp" />
+
+                <mynuaa.whatever.NumberButton
+                    android:id="@+id/button_bad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp"
+                    android:textColor="@color/btn_message_text"
+                    numberButton:number_offset_x="8dp"
+                    numberButton:number_offset_y="8dp" />
+
+                <mynuaa.whatever.NumberButton
+                    android:id="@+id/button_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp"
+                    android:textColor="@color/btn_message_text"
+                    numberButton:number_offset_x="8dp"
+                    numberButton:number_offset_y="8dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/button_report"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp" />
+
+                <Button
+                    android:id="@+id/button_pm"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp" />
+
+                <Button
+                    android:id="@+id/button_who"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/message_bottom_button"
+                    android:minHeight="40dp" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/message_bottom_background_trans"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:id="@+id/imageView_good"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_good" />
+
+                    <TextView
+                        android:id="@+id/textView_good"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_good"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_report" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_report"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:id="@+id/imageView_bad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_bad" />
+
+                    <TextView
+                        android:id="@+id/textView_bad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_bad"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_pm" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_pm"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_comment" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_comment"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/message_who" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/btn_message_who"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/btn_message_text" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

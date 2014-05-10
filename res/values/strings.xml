@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_delete">删除</string>
+    <string name="app_name">Whatever</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    <string name="switch_contact">显示联系人状态</string>
+    <string name="switch_location">显示周边状态</string>
+    <string name="drawer_title_user">个人</string>
+    <string name="drawer_title_mainpage">首页</string>
+    <string name="drawer_title_message">消息</string>
+    <string name="drawer_title_path">痕迹</string>
+    <string name="drawer_title_settings">设置</string>
+    <string name="message_test">这是一段不出意外应该是可以居中显示的文本挂叔泥垢强迫症什么的最讨厌了哼。</string>
+    <string name="message_test_time">27/02 23:03</string>
+    <string name="message_title">状态</string>
+    <string name="write_message_title">写状态</string>
+    <string name="btn_message_good">赞</string>
+    <string name="btn_message_bad">踩</string>
+    <string name="btn_message_good_already">已赞</string>
+    <string name="btn_message_bad_already">已踩</string>
+    <string name="btn_message_comment">评论</string>
+    <string name="btn_message_report">举报</string>
+    <string name="btn_message_pm">私信</string>
+    <string name="btn_message_who">WHO</string>
+    <string name="message_detail_test">喵咪</string>
+    <string name="write_message_text_hint">戳这里输入文字</string>
+    <string name="write_message_add_image">添加图片</string>
+    <string name="write_message_background_color">背景色</string>
+    <string name="write_message_background_texure">纹理</string>
+    <string name="btn_write_message_sned">发布</string>
+    <string name="comment_title">评论</string>
+    <string name="new_comment_hint">点击此处发表评论</string>
+    <string name="comment_user_test">用户1</string>
+    <string name="comment_test">忍者神龟是美漫？</string>
+    <string name="mymessage_prefix">状态</string>
+    <string name="mymessage_test">“啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊”</string>
+    <string name="mymessage_r_test">收到1个赞</string>
+    <string name="footer_more">more</string>
+    <string name="footer_loading">载入中</string>
+    <string name="path_good">赞过</string>
+    <string name="path_bad">踩过</string>
+    <string name="path_WHO">WHO</string>
+    <string name="path_message">发表</string>
+    <string name="path_comment">评论</string>
+    <string name="path_pm">私信</string>
+    <string name="path_report">举报</string>
+    <string name="user_user"><b>用户：</b></string>
+    <string name="user_name"><b>姓名：</b></string>
+    <string name="user_phone"><b>手机：</b></string>
+    <string name="user_edit">修改</string>
+    <string name="user_loading">载入中</string>
+    <string name="about_title">关于</string>
+    <string name="about_version">V 1.0</string>
+    <string name="about_nuaa">纸飞机南航青年网络社区出品</string>
+    <string name="about_contact">联系我们:appwhateverapp@gamil.com</string>
+    <string name="edit_user_info">修改个人信息</string>
+    <string name="edit_user_info_accept">保存</string>
+    <string name="edit_user_info_cancel">取消</string>
+    <string name="qr_download_title">二维码分享</string>
+    <string name="qr_download_share">扫一扫二维码，立刻下载我！</string>
+    <string name="report_default_title">可选举报理由:</string>
+    <string name="pm_title">私信</string>
+    <string name="pm_message_copyed">已复制到剪贴板</string>
+    <string name="pm_refresh_pulling">下拉显示更多消息…</string>
+    <string name="pm_refresh_release">放开以显示更多消息…</string>
+    <string name="pm_history">查看消息记录</string>
+    <string name="pm_history_title">消息记录</string>
+    <string name="pm_action_sync_history">漫游记录</string>
+    <string name="pm_history_page_divider">/</string>
+    <string name="pm_history_from_me">我</string>
+    <string name="pm_history_from_other">陌生人</string>
+    <string name="pm_history_sync_ask_title">同步漫游私信记录</string>
+    <string name="pm_history_sync_ask">将把服务器端的完整私信记录同步至本地。</string>
+    <string name="pm_history_delete">删除</string>
+    <string name="pm_history_delete_ask_title">删除私信记录</string>
+    <string name="pm_history_delete_ask">确认删除和Ta的私信记录</string>
+
+    <string-array name="report_default">
+        <item></item>
+        <item>垃圾广告</item>
+        <item>人身攻击</item>
+        <item>敏感信息</item>
+        <item>淫秽色情</item>
+        <item>不实信息</item>
+        <item>泄露隐私</item>
+    </string-array>
+
+</resources>

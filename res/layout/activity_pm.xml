@@ -1,0 +1,62 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PMActivity" >
+
+    <LinearLayout
+        android:id="@+id/pm_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/listView_messages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/comment_list_background"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="14dp"
+            android:listSelector="@drawable/empty_list_selector"
+            android:showDividers="beginning|middle"
+            android:transcriptMode="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true" >
+
+            <EditText
+                android:id="@+id/editText_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textMultiLine" />
+
+            <ImageButton
+                android:id="@+id/button_send"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/actionbar_return_button"
+                android:enabled="false"
+                android:src="@drawable/ic_action_send_now" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/pm_load_process"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#44000000" >
+
+        <include
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            layout="@layout/overlay_progress_view" />
+    </RelativeLayout>
+
+</merge>

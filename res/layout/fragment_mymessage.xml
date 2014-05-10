@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ListView
+        android:id="@+id/main_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/message_list_background"
+        android:fastScrollEnabled="true"
+        android:footerDividersEnabled="true"
+        android:divider="@color/divider"
+        android:dividerHeight="1dp" 
+        android:scrollbars="vertical" />
+
+    <ImageButton
+        android:id="@+id/button_write_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/new_message_button"
+        android:src="@drawable/new_msg" />
+
+</RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/path_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button_bad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_bad" />
+
+            <Button
+                android:id="@+id/button_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_comment" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button_good"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_good" />
+
+            <Button
+                android:id="@+id/button_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_message" />
+
+            <Button
+                android:id="@+id/button_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_report" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_WHO" />
+
+            <Button
+                android:id="@+id/button_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/path_button"
+                android:gravity="center"
+                android:text="@string/path_pm" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
