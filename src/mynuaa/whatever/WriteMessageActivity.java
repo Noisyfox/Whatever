@@ -26,7 +26,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -194,7 +193,7 @@ public class WriteMessageActivity extends SherlockActivity implements
 
 	private void askForCancel() {
 		if (!isEdited) {
-			finish();
+			finishProxy();
 		} else {
 			Dialog alertDialog = new MyAlertDialog.Builder(this)
 					.setMessage("放弃发布这条状态吗？")
@@ -203,7 +202,7 @@ public class WriteMessageActivity extends SherlockActivity implements
 								@Override
 								public boolean onClick(DialogInterface dialog,
 										int which) {
-									finish();
+									finishProxy();
 
 									return true;
 								}
@@ -212,20 +211,14 @@ public class WriteMessageActivity extends SherlockActivity implements
 		}
 	}
 
-	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			askForCancel();
-			return true;
-		}
-
-		return super.onKeyUp(keyCode, event);
+	private synchronized void finishProxy() {
+		super.finish();
+		overridePendingTransition(R.anim.stay, R.anim.slide_out_bottom);
 	}
 
 	@Override
 	public void finish() {
-		super.finish();
-		overridePendingTransition(R.anim.stay, R.anim.slide_out_bottom);
+		askForCancel();
 	}
 
 	@Override
@@ -433,7 +426,7 @@ public class WriteMessageActivity extends SherlockActivity implements
 
 		if (result == MessagePostTask.POST_SUCCESS) {
 			Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
-			finish();
+			finishProxy();
 		} else if (result == MessagePostTask.POST_FAIL_IMAGE_UPLOAD_FAIL) {
 			Toast.makeText(this, "发布失败：未能上传图片", Toast.LENGTH_SHORT).show();
 		} else {
