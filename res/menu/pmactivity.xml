@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/pmhistory"
-        android:showAsAction="never"
+        android:showAsAction="always|withText"
         android:title="@string/pm_history"/>
 
 </menu>
