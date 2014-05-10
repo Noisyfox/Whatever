@@ -12,9 +12,8 @@
         android:layout_weight="1"
         android:background="@color/comment_list_background"
         android:divider="@android:color/transparent"
-        android:dividerHeight="14dp"
+        android:dividerHeight="0dp"
         android:listSelector="@drawable/empty_list_selector"
-        android:showDividers="beginning|middle"
         android:transcriptMode="normal" >
     </ListView>
 
