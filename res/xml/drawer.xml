@@ -1,18 +1,25 @@
 <drawer_menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:drawer="http://schemas.android.com/apk/res/mynuaa.whatever">
-    <item drawer:drawer_id="@+id/drawer_user"
-          drawer:drawer_icon="@drawable/head_none"
-          drawer:drawer_title="@string/drawer_title_user"/>
-    <item drawer:drawer_id="@+id/drawer_mainpage"
-          drawer:drawer_icon="@drawable/drawer_icon_mainpage"
-          drawer:drawer_title="@string/drawer_title_mainpage"/>
-    <item drawer:drawer_id="@+id/drawer_message"
-          drawer:drawer_icon="@drawable/drawer_icon_message"
-          drawer:drawer_title="@string/drawer_title_message"/>
-    <item drawer:drawer_id="@+id/drawer_path"
-          drawer:drawer_icon="@drawable/drawer_icon_path"
-          drawer:drawer_title="@string/drawer_title_path"/>
-    <item drawer:drawer_id="@+id/drawer_settings"
-          drawer:drawer_icon="@drawable/drawer_icon_settings"
-          drawer:drawer_title="@string/drawer_title_settings"/>
+    xmlns:drawer="http://schemas.android.com/apk/res/mynuaa.whatever" >
+
+    <item
+        drawer:drawer_icon="@drawable/head_none"
+        drawer:drawer_id="@+id/drawer_user"
+        drawer:drawer_title="@string/drawer_title_user"/>
+    <item
+        drawer:drawer_icon="@drawable/drawer_icon_mainpage"
+        drawer:drawer_id="@+id/drawer_mainpage"
+        drawer:drawer_title="@string/drawer_title_mainpage"/>
+    <item
+        drawer:drawer_icon="@drawable/drawer_icon_message"
+        drawer:drawer_id="@+id/drawer_message"
+        drawer:drawer_title="@string/drawer_title_message"/>
+    <item
+        drawer:drawer_icon="@drawable/drawer_icon_path"
+        drawer:drawer_id="@+id/drawer_path"
+        drawer:drawer_title="@string/drawer_title_path"/>
+    <item
+        drawer:drawer_icon="@drawable/drawer_icon_settings"
+        drawer:drawer_id="@+id/drawer_settings"
+        drawer:drawer_title="@string/drawer_title_settings"/>
+
 </drawer_menu>

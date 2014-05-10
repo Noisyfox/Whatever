@@ -10,9 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/pm_message_time"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/pm_text_time"
-        android:textSize="12sp"
-        android:gravity="center" />
+        android:textSize="12sp" />
 
 </LinearLayout>

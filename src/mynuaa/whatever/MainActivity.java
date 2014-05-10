@@ -474,8 +474,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 			selectItem(position);
 		}
 	}
-	
-	public void jumpToSettings(){
+
+	public void jumpToSettings() {
 		selectItem(4);
 	}
 

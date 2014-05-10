@@ -16,8 +16,8 @@ public class CacheClearTask extends Task {
 	public void doTask() {
 		clearCache();
 	}
-	
-	public static void clearCache(){
+
+	public static void clearCache() {
 		// Çå³ýÍ¼Æ¬»º´æ
 		ImageCacheManager icm = DataCenter.getImageCacheManager();
 		icm.clearImageCache();

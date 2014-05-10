@@ -237,7 +237,8 @@ public class MessageActivity extends SherlockActivity implements
 		btn_pm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PMActivity.startPMSession(MessageActivity.this, mMessage.cid, null);
+				PMActivity.startPMSession(MessageActivity.this, mMessage.cid,
+						null);
 			}
 		});
 	}

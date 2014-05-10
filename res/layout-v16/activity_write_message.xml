@@ -25,7 +25,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -70,8 +70,8 @@
                         android:layout_marginRight="60dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
-                        android:visibility="gone"
-                        android:src="@drawable/message_test_img" />
+                        android:src="@drawable/message_test_img"
+                        android:visibility="gone" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -86,7 +86,7 @@
             android:id="@+id/listView_color"
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
         <mynuaa.whatever.HListView
             android:id="@+id/listView_texture"

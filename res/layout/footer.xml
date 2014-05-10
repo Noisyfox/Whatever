@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/footer_more"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textStyle="bold"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
 </LinearLayout>

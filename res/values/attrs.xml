@@ -2,6 +2,7 @@
 <resources>
 
     <declare-styleable name="AppTheme">
+
         <!-- Attributes below are needed to support the navigation drawer on Android 3.x. -->
         <!-- A smaller, sleeker list item height. -->
         <attr name="myapp_listPreferredItemHeightSmall" format="dimension" />
@@ -12,8 +13,8 @@
         <!-- The preferred TextAppearance for the primary text of small list items. -->
         <attr name="myapp_textAppearanceListItemSmall" format="reference" />
     </declare-styleable>
-    
     <declare-styleable name="MaskedImageView">
+
         <!-- Identifier for the image that represents the Imageview's content. -->
         <attr name="image" format="reference" />
         <!-- crop Imageview's content same as mask -->
@@ -21,18 +22,14 @@
         <!-- crop Imageview's content same as mask -->
         <attr name="stamp" format="reference" />
     </declare-styleable>
-    
-    
     <declare-styleable name="DrawerDef">
         <attr name="drawer_id" format="reference" />
         <attr name="drawer_icon" format="reference" />
         <attr name="drawer_title" format="string|reference" />
     </declare-styleable>
-    
     <declare-styleable name="Triangle">
         <attr name="color" format="reference|color" />
     </declare-styleable>
-    
     <declare-styleable name="NumberButton">
         <attr name="number_offset_x" format="dimension" />
         <attr name="number_offset_y" format="dimension" />

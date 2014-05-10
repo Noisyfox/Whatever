@@ -6,24 +6,24 @@
         res/values-v11/styles.xml on API 14+ devices.
     -->
     <style name="AppBaseTheme" parent="@style/Theme.Sherlock.Light">
-        <!-- For API-14 and above the default implementation of the navigation drawer menu is used. Below APU-14 a custom implementation is used. -->  
-        <item name="myapp_listPreferredItemHeightSmall">?android:attr/listPreferredItemHeightSmall</item>  
-        <item name="myapp_textAppearanceListItemSmall">?android:attr/textAppearanceListItemSmall</item>  
-        <item name="myapp_activatedBackgroundIndicator">?android:attr/activatedBackgroundIndicator</item> 
-        
+
+        <!-- For API-14 and above the default implementation of the navigation drawer menu is used. Below APU-14 a custom implementation is used. -->
+        <item name="myapp_listPreferredItemHeightSmall">?android:attr/listPreferredItemHeightSmall</item>
+        <item name="myapp_textAppearanceListItemSmall">?android:attr/textAppearanceListItemSmall</item>
+        <item name="myapp_activatedBackgroundIndicator">?android:attr/activatedBackgroundIndicator</item>
         <item name="actionBarStyle">@style/Theme.MyTheme.ActionBar</item>
-    	<item name="android:actionBarStyle">@style/Theme.MyTheme.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Theme.MyTheme.ActionBar</item>
     </style>
-    	
+
     <style name="Theme.MyTheme.ActionBar" parent="Widget.Sherlock.Light.ActionBar">
-    	<item name="android:background">@color/actionbar_background</item>
-    	<item name="background">@color/actionbar_background</item>
-    	<item name="android:titleTextStyle">@style/Theme.MyTheme.ActionBar.TitleTextStyle</item>
-    	<item name="titleTextStyle">@style/Theme.MyTheme.ActionBar.TitleTextStyle</item>
-	</style>
-	
-	<style name="Theme.MyTheme.ActionBar.TitleTextStyle" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
-	    <item name="android:textColor">@color/actionbar_text</item>
-	</style>
-    
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="background">@color/actionbar_background</item>
+        <item name="android:titleTextStyle">@style/Theme.MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="titleTextStyle">@style/Theme.MyTheme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="Theme.MyTheme.ActionBar.TitleTextStyle" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/actionbar_text</item>
+    </style>
+
 </resources>

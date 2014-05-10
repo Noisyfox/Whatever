@@ -10,7 +10,7 @@
     <string name="error_incorrect_password">ID或密码不正确</string>
     <string name="error_field_required">这项还没填哦</string>
     <string name="error_invalid_phone">不是有效的手机号</string>
-
     <string name="no_id"><u>还没有账号?</u></string>
     <string name="password_forget"><u>忘记密码?</u></string>
+
 </resources>

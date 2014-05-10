@@ -69,7 +69,6 @@
         android:dividerHeight="1dp"
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true" >
-
     </ListView>
 
 </RelativeLayout>

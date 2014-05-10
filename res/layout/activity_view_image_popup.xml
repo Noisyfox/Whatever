@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewImagePopupActivity"
-    android:background="#66000000" >
+    android:background="#66000000"
+    tools:context=".ViewImagePopupActivity" >
 
     <mynuaa.whatever.TouchImageView
         android:id="@+id/imageView_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progressBar_loading"

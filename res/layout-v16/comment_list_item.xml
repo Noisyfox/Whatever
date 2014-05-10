@@ -6,11 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
-        android:layout_marginTop="9dp"
-        >
+        android:layout_marginTop="9dp" >
 
         <TextView
             android:id="@+id/textView_user"
@@ -26,16 +25,15 @@
             android:layout_height="wrap_content"
             android:text="@string/message_test_time"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
-        android:layout_marginBottom="9dp"
         android:text="@string/comment_test"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

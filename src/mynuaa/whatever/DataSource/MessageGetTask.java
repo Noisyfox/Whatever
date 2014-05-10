@@ -98,8 +98,8 @@ public class MessageGetTask extends Task {
 
 		parse(result);
 	}
-	
-	private void getContact(){
+
+	private void getContact() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
 		params.put("session", UserSession.getCurrentSession().mSession);
 		params.put("contact", "1");

@@ -32,7 +32,7 @@
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:text="@string/qr_download_share"
-        android:textColor="@color/gray"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/gray" />
 
 </RelativeLayout>

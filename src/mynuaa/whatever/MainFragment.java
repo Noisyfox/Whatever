@@ -372,7 +372,7 @@ public class MainFragment extends SherlockFragment implements
 	@Override
 	public void onRefresh(final PullToRefreshBase<ListView> refreshView) {
 		if (isLoading) {
-			refreshView.post(new Runnable(){
+			refreshView.post(new Runnable() {
 				@Override
 				public void run() {
 					refreshView.onRefreshComplete();
