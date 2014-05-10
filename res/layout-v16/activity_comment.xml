@@ -9,10 +9,11 @@
         android:id="@+id/listView_comment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" 
+        android:layout_weight="1"
+        android:background="@color/comment_list_background"
+        android:cacheColorHint="#00000000"
         android:focusable="true"
-        android:focusableInTouchMode="true" 
-        android:background="@color/comment_list_background">
+        android:focusableInTouchMode="true" >
     </ListView>
 
     <LinearLayout
@@ -25,12 +26,12 @@
             android:id="@+id/editText_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
-        	android:layout_marginTop="3dp"
-        	android:layout_marginBottom="3dp"
             android:ems="10"
-            android:inputType="textMultiLine" 
-            android:hint="@string/new_comment_hint"/>
+            android:hint="@string/new_comment_hint"
+            android:inputType="textMultiLine" />
 
         <ImageButton
             android:id="@+id/button_send"
