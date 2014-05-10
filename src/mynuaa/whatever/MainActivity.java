@@ -14,11 +14,14 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -116,6 +119,11 @@ public class MainActivity extends SherlockFragmentActivity implements
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		mMainFragment.mMessageGroupIsContact = sp.getBoolean("mainLastGroup",
+				false);
+
 		if (savedInstanceState == null) {
 			selectItem(1);
 		}
@@ -139,6 +147,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 	protected void onDestroy() {
 		WhateverApplication.getMainTaskManager().deactivateTag(TASK_TAG);
 		DataCenter.stopLocationService();
+
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		Editor e = sp.edit();
+		e.putBoolean("mainLastGroup", mMainFragment.mMessageGroupIsContact);
+		e.commit();
 		super.onDestroy();
 	}
 

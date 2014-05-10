@@ -56,7 +56,7 @@ public class MainFragment extends SherlockFragment implements
 
 	private View toTopView;
 
-	private boolean mMessageGroupIsContact = false;
+	protected boolean mMessageGroupIsContact = false;
 	private boolean mMessageGroupIsVisible = true;
 
 	@Override
