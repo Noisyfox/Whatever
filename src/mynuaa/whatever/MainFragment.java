@@ -459,7 +459,12 @@ public class MainFragment extends SherlockFragment implements
 		// 进入下一页，此时视图未加载.
 		isLoading = false;
 
-		rootListView.onRefreshComplete();
+		rootListView.post(new Runnable() {
+			@Override
+			public void run() {
+				rootListView.onRefreshComplete();
+			}
+		});
 	}
 
 	@Override
