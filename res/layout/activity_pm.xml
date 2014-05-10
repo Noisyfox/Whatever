@@ -27,7 +27,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" >
 
-            <com.rockerhieu.emojicon.EditText
+            <com.rockerhieu.emojicon.EmojiconEditText
                 android:id="@+id/editText_message"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
