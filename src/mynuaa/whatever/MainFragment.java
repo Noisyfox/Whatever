@@ -81,10 +81,10 @@ public class MainFragment extends SherlockFragment implements
 		item.setVisible(mMessageGroupIsVisible);
 		if (mMessageGroupIsVisible) {
 			if (mMessageGroupIsContact) {
-				item.setIcon(R.drawable.ic_location);
+				item.setIcon(R.drawable.ic_contact);
 				item.setTitle(R.string.switch_location);
 			} else {
-				item.setIcon(R.drawable.ic_contact);
+				item.setIcon(R.drawable.ic_location);
 				item.setTitle(R.string.switch_contact);
 			}
 		}
