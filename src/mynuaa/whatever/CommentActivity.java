@@ -437,6 +437,9 @@ public class CommentActivity extends SherlockFragmentActivity implements
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
+		if (e1 == null) {
+			return false;
+		}
 		float dx = e1.getX() - e2.getX(), dy = e1.getY() - e2.getY();
 
 		if (dx > verticalMinDistance && Math.abs(velocityX) > minVelocity) {

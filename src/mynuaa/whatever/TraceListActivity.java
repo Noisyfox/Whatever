@@ -300,11 +300,17 @@ public class TraceListActivity extends SherlockActivity implements
 			updateCurrendData(false);
 		} else {
 			Intent intent = new Intent();
-			intent.setClass(this, MessageActivity.class);
 
 			MessageData md = (MessageData) parent.getAdapter()
 					.getItem(position);
 			intent.putExtra("message", md);
+
+			if (mTraceFilter == TraceGetTask.FILTER_PM) {
+				intent.setClass(this, PMActivity.class);
+				intent.putExtra("cid", md.cid);
+			} else {
+				intent.setClass(this, MessageActivity.class);
+			}
 
 			startActivity(intent);
 			overridePendingTransition(R.anim.slide_in_right, R.anim.stay);

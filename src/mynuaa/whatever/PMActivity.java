@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import mynuaa.whatever.DataSource.MessageData;
 import mynuaa.whatever.DataSource.PMData;
 import mynuaa.whatever.DataSource.PMGetTask;
 import mynuaa.whatever.DataSource.PMGetTask.OnPMGetListener;
@@ -415,6 +416,9 @@ public class PMActivity extends SherlockFragmentActivity implements
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
+		if (e1 == null) {
+			return false;
+		}
 		float dx = e1.getX() - e2.getX(), dy = e1.getY() - e2.getY();
 
 		if (dx > verticalMinDistance && Math.abs(velocityX) > minVelocity) {
@@ -496,6 +500,15 @@ public class PMActivity extends SherlockFragmentActivity implements
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
+
+			if (getIntent().hasExtra("message")) {
+				Intent intent = new Intent();
+				MessageData md = getIntent().getParcelableExtra("message");
+				intent.putExtra("message", md);
+				intent.setClass(this, MessageActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+			}
 			return true;
 		case R.id.pmhistory: {
 			PMHistoryActivity.showHistory(this, session);
