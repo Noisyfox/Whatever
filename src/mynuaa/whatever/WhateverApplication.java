@@ -20,6 +20,9 @@ public class WhateverApplication extends Application implements
 
 		mWhateverApplication = this;
 
+		CrashHandler crashHandler = CrashHandler.getInstance();
+		crashHandler.init(getApplicationContext());
+
 		DataCenter.initDataCenter(getApplicationContext());
 
 		mTaskManager = new TaskManager(Looper.getMainLooper());
