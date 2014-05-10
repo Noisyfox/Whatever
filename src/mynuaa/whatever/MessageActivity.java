@@ -141,17 +141,18 @@ public class MessageActivity extends SherlockActivity implements
 		btn_who.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Dialog alertDialog = new AlertDialog.Builder(
+				Dialog alertDialog = new MyAlertDialog.Builder(
 						MessageActivity.this)
 						.setTitle("WHO")
 						.setIcon(R.drawable.message_who)
 						.setMessage(
 								"\u3000\u3000对方将收到你的信息（姓名、手机号），并有权决定是否与你交换信息，确定发送？")
 						.setPositiveButton("确定",
-								new DialogInterface.OnClickListener() {
+								new MyAlertDialog.OnClickListener() {
 									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
+									public boolean onClick(
+											DialogInterface dialog, int which) {
+										return true;
 									}
 								}).setNegativeButton("取消", null).create();
 				alertDialog.show();
@@ -182,34 +183,40 @@ public class MessageActivity extends SherlockActivity implements
 							}
 						});
 
-				AlertDialog alertDialog = MyAlertDialog.creatAlertDialog(
-						MessageActivity.this, "举报", reportView, "举报",
-						new MyAlertDialog.OnClickListener() {
-							@Override
-							public boolean onClick(DialogInterface dialog,
-									int which) {
-								editText_report.setError(null);
-								String content = editText_report.getText()
-										.toString().trim();
-								String cid = mMessage.cid;
-								if (content.isEmpty()) {
-									editText_report.setError("举报内容不能为空");
-									return false;
-								}
+				AlertDialog alertDialog = new MyAlertDialog.Builder(
+						MessageActivity.this)
+						.setTitle("举报")
+						.setView(reportView)
+						.setIcon(R.drawable.message_report)
+						.setPositiveButton("举报",
+								new MyAlertDialog.OnClickListener() {
+									@Override
+									public boolean onClick(
+											DialogInterface dialog, int which) {
+										editText_report.setError(null);
+										String content = editText_report
+												.getText().toString().trim();
+										String cid = mMessage.cid;
+										if (content.isEmpty()) {
+											editText_report
+													.setError("举报内容不能为空");
+											return false;
+										}
 
-								WhateverApplication
-										.getMainTaskManager()
-										.startTask(
-												new ReportTask(
-														"Global",
-														cid,
-														content,
-														WhateverApplication
-																.getApplication()));
+										WhateverApplication
+												.getMainTaskManager()
+												.startTask(
+														new ReportTask(
+																"Global",
+																cid,
+																content,
+																WhateverApplication
+																		.getApplication()));
 
-								return true;
-							}
-						}, "算了吧", null);
+										return true;
+									}
+								}).setNegativeButton("算了吧", null).create();
+
 				alertDialog.show();
 			}
 		});

@@ -11,7 +11,6 @@ import mynuaa.whatever.DataSource.MessageData;
 import mynuaa.whatever.DataSource.MessageGetTask;
 import mynuaa.whatever.DataSource.MessageGetTask.OnMessageGetListener;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -98,16 +97,17 @@ public class MainFragment extends SherlockFragment implements
 		case R.id.switch_group:
 			if (!mMessageGroupIsContact
 					&& !ContactSyncTask.contactEnabled(getActivity())) {
-				Dialog alertDialog = new AlertDialog.Builder(getActivity())
+				Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
 						.setMessage(
 								"\u3000\u3000基于通讯录的状态匹配需要开启通讯录匹配功能。你可以在设置中点击\"匹配手机通讯录\"来启用它。")
 						.setPositiveButton("现在去开",
-								new DialogInterface.OnClickListener() {
+								new MyAlertDialog.OnClickListener() {
 									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
+									public boolean onClick(
+											DialogInterface dialog, int which) {
 										((MainActivity) getActivity())
 												.jumpToSettings();
+										return true;
 									}
 								}).setNegativeButton("算了吧", null).create();
 				alertDialog.show();
@@ -227,16 +227,17 @@ public class MainFragment extends SherlockFragment implements
 
 		if (mMessageGroupIsContact
 				&& !ContactSyncTask.contactEnabled(getActivity())) {
-			Dialog alertDialog = new AlertDialog.Builder(getActivity())
+			Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
 					.setMessage(
 							"\u3000\u3000基于通讯录的状态匹配需要开启通讯录匹配功能。你可以在设置中点击\"匹配手机通讯录\"来启用它。")
 					.setPositiveButton("现在去开",
-							new DialogInterface.OnClickListener() {
+							new MyAlertDialog.OnClickListener() {
 								@Override
-								public void onClick(DialogInterface dialog,
+								public boolean onClick(DialogInterface dialog,
 										int which) {
 									((MainActivity) getActivity())
 											.jumpToSettings();
+									return true;
 								}
 							}).setNegativeButton("算了吧", null).create();
 			alertDialog.show();

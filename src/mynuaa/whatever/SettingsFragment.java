@@ -10,7 +10,6 @@ import mynuaa.whatever.SettingsWidget.ToggleSetting;
 import mynuaa.whatever.SettingsWidget.ToggleSetting.OnToggleSettingChangeListener;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -52,13 +51,13 @@ public class SettingsFragment extends SherlockFragment implements
 				new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
-						Dialog alertDialog = new AlertDialog.Builder(
+						Dialog alertDialog = new MyAlertDialog.Builder(
 								getActivity())
 								.setMessage("确定要退出当前账号么？")
 								.setPositiveButton("退出",
-										new DialogInterface.OnClickListener() {
+										new MyAlertDialog.OnClickListener() {
 											@Override
-											public void onClick(
+											public boolean onClick(
 													DialogInterface dialog,
 													int which) {
 												UserSession
@@ -72,6 +71,8 @@ public class SettingsFragment extends SherlockFragment implements
 												getActivity().startActivity(i);
 
 												getActivity().finish();
+
+												return true;
 											}
 										}).setNegativeButton("取消", null)
 								.create();
@@ -97,15 +98,15 @@ public class SettingsFragment extends SherlockFragment implements
 									false);
 
 							if (!no) {
-								Dialog alertDialog = new AlertDialog.Builder(
+								Dialog alertDialog = new MyAlertDialog.Builder(
 										getActivity())
 										.setMessage(
 												"\u3000\u3000开启通讯录匹配将会上传您的通讯录信息到服务器以显示通讯录好友发布的状态。是否同意？")
 										.setPositiveButton(
 												"同意",
-												new DialogInterface.OnClickListener() {
+												new MyAlertDialog.OnClickListener() {
 													@Override
-													public void onClick(
+													public boolean onClick(
 															DialogInterface dialog,
 															int which) {
 														Editor e = sp.edit();
@@ -113,6 +114,8 @@ public class SettingsFragment extends SherlockFragment implements
 																SP_READ_CONTACT_NOTIFY,
 																true);
 														e.commit();
+
+														return true;
 													}
 												})
 										.setNegativeButton("取消", null).create();
@@ -129,13 +132,13 @@ public class SettingsFragment extends SherlockFragment implements
 		settingsAdapter.addSetting(new ButtonSetting("清除缓存", "clearCache") {
 			@Override
 			public void OnClick() {
-				Dialog alertDialog = new AlertDialog.Builder(getActivity())
+				Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
 						.setMessage("清空缓存的图片、状态等信息？")
 						.setPositiveButton("清除缓存",
-								new DialogInterface.OnClickListener() {
+								new MyAlertDialog.OnClickListener() {
 									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
+									public boolean onClick(
+											DialogInterface dialog, int which) {
 										mCacheClearDialog = ProgressDialog
 												.show(getActivity(), "清除缓存",
 														"请稍候", false);
@@ -145,6 +148,8 @@ public class SettingsFragment extends SherlockFragment implements
 														new CacheClearTask(
 																TASK_TAG,
 																SettingsFragment.this));
+
+										return true;
 									}
 								}).setNegativeButton("取消", null).create();
 				alertDialog.show();

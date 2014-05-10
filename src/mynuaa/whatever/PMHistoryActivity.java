@@ -16,7 +16,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -217,13 +216,13 @@ public class PMHistoryActivity extends SherlockActivity implements
 			finish();
 			return true;
 		case R.id.pm_history_sync: {
-			Dialog alertDialog = new AlertDialog.Builder(this)
+			Dialog alertDialog = new MyAlertDialog.Builder(this)
 					.setTitle(R.string.pm_history_sync_ask_title)
 					.setMessage(R.string.pm_history_sync_ask)
 					.setPositiveButton(R.string.button_ok,
-							new DialogInterface.OnClickListener() {
+							new MyAlertDialog.OnClickListener() {
 								@Override
-								public void onClick(DialogInterface dialog,
+								public boolean onClick(DialogInterface dialog,
 										int which) {
 									mProgressDialog = ProgressDialog.show(
 											PMHistoryActivity.this, null,
@@ -237,6 +236,7 @@ public class PMHistoryActivity extends SherlockActivity implements
 															session,
 															PMGetTask.TYPE_NORMAL,
 															PMHistoryActivity.this));
+									return true;
 								}
 							}).setNegativeButton(R.string.button_cancel, null)
 					.create();
@@ -317,13 +317,13 @@ public class PMHistoryActivity extends SherlockActivity implements
 	@Override
 	public void onClick(View v) {
 		if (v == btn_delete) {
-			Dialog alertDialog = new AlertDialog.Builder(this)
+			Dialog alertDialog = new MyAlertDialog.Builder(this)
 					.setTitle(R.string.pm_history_delete_ask_title)
 					.setMessage(R.string.pm_history_delete_ask)
 					.setPositiveButton(R.string.button_delete,
-							new DialogInterface.OnClickListener() {
+							new MyAlertDialog.OnClickListener() {
 								@Override
-								public void onClick(DialogInterface dialog,
+								public boolean onClick(DialogInterface dialog,
 										int which) {
 									mProgressDialog = ProgressDialog.show(
 											PMHistoryActivity.this, null,
@@ -336,6 +336,8 @@ public class PMHistoryActivity extends SherlockActivity implements
 															TASK_TAG,
 															session,
 															PMHistoryActivity.this));
+
+									return true;
 								}
 							}).setNegativeButton(R.string.button_cancel, null)
 					.create();

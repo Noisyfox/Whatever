@@ -10,7 +10,6 @@ import mynuaa.whatever.DataSource.MessagePostTask.OnMessagePostListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -144,24 +143,19 @@ public class WriteMessageActivity extends SherlockActivity implements
 			@Override
 			public void onClick(View v) {
 				isEdited = true;
-				Dialog alertDialog = new AlertDialog.Builder(
+				Dialog alertDialog = new MyAlertDialog.Builder(
 						WriteMessageActivity.this)
 						.setMessage("确定移除这张图片吗？")
 						.setPositiveButton("确定",
-								new DialogInterface.OnClickListener() {
+								new MyAlertDialog.OnClickListener() {
 									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
+									public boolean onClick(
+											DialogInterface dialog, int which) {
 										putImage(false);
+
+										return true;
 									}
-								})
-						.setNegativeButton("取消",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-									}
-								}).create();
+								}).setNegativeButton("取消", null).create();
 				alertDialog.show();
 			}
 		});
@@ -202,23 +196,18 @@ public class WriteMessageActivity extends SherlockActivity implements
 		if (!isEdited) {
 			finish();
 		} else {
-			Dialog alertDialog = new AlertDialog.Builder(this)
+			Dialog alertDialog = new MyAlertDialog.Builder(this)
 					.setMessage("放弃发布这条状态吗？")
 					.setPositiveButton("确定",
-							new DialogInterface.OnClickListener() {
+							new MyAlertDialog.OnClickListener() {
 								@Override
-								public void onClick(DialogInterface dialog,
+								public boolean onClick(DialogInterface dialog,
 										int which) {
 									finish();
+
+									return true;
 								}
-							})
-					.setNegativeButton("取消",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-								}
-							}).create();
+							}).setNegativeButton("取消", null).create();
 			alertDialog.show();
 		}
 	}
