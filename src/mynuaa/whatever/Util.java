@@ -508,4 +508,23 @@ public class Util {
 		}
 		return DF_level_timeOnly.format(new Date(time));
 	}
+
+	/**
+	 * a copy from org.apache.commons.lang.StringUtils
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isBlank(String str) {
+		int strLen;
+		if (str == null || (strLen = str.length()) == 0) {
+			return true;
+		}
+		for (int i = 0; i < strLen; i++) {
+			if ((Character.isWhitespace(str.charAt(i)) == false)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -404,6 +404,11 @@ public class WriteMessageActivity extends SherlockActivity implements
 
 	@Override
 	public void onClick(View arg0) {
+		String message = editText_message.getText().toString();
+		if (Util.isBlank(message)) {
+			Toast.makeText(this, "不可以什么都不说哦~", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		mPostDialog = ProgressDialog.show(this, "发布状态中", "请稍候", false);
 
 		MessageData md = new MessageData();
