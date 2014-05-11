@@ -113,6 +113,10 @@
             android:name="mynuaa.whatever.PMHistoryActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="mynuaa.whatever.WebViewActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
