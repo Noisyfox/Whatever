@@ -102,6 +102,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 				Looper.loop();
 			}
 		}.start();
+		ex.printStackTrace();
 		// 收集设备参数信息
 		collectDeviceInfo(mContext);
 		// 保存日志文件
