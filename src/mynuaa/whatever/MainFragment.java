@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -310,14 +311,20 @@ public class MainFragment extends SherlockFragment implements
 					.findViewById(R.id.textView_time);
 			ImageView imageView_image = (ImageView) convertView
 					.findViewById(R.id.imageView_image);
-			TriangleCornerView triangleCornerView_corner = (TriangleCornerView) convertView
-					.findViewById(R.id.TriangleCornerView_corner);
+			View view_background = convertView
+					.findViewById(R.id.view_background);
 
 			textView_context.setText(md.content);
 			textView_time.setText(md.time);
-
-			triangleCornerView_corner.setColor(MessageTheme.getColor(
-					md.background_color_index, MessageTheme.COLOR_CORNER));
+			GradientDrawable sd = (GradientDrawable) view_background
+					.getBackground();
+			sd.setColor(MessageTheme.getColor(md.background_color_index,
+					MessageTheme.COLOR_CORNER));
+			int textC = MessageTheme.getColor(md.background_color_index,
+					MessageTheme.COLOR_TEXT);
+			textView_context.setTextColor(textC);
+			textC = (textC & 0x00FFFFFF) | 0x80000000;
+			textView_time.setTextColor(textC);
 
 			if (!md.image_cid.isEmpty()) {
 				imageView_image.setVisibility(View.VISIBLE);
