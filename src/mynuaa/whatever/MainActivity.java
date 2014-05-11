@@ -28,7 +28,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ActionProvider;
-import android.view.KeyEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -55,25 +54,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 	private MainFragment mMainFragment = new MainFragment();
 
 	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mCurrentFragment != R.id.drawer_mainpage) {// 如果当前选项卡不在主页，则先返回主页
-				selectItem(1);
-				return true;
+	public void finish() {
+		if (mCurrentFragment != R.id.drawer_mainpage) {// 如果当前选项卡不在主页，则先返回主页
+			selectItem(1);
+		} else {
+			long secondTime = System.currentTimeMillis();
+			if (secondTime - exitFirstTime > 800) {// 如果两次按键时间间隔大于800毫秒，则不退出
+				Toast.makeText(MainActivity.this, "连续点击退出", Toast.LENGTH_SHORT)
+						.show();
+				exitFirstTime = secondTime;
 			} else {
-				long secondTime = System.currentTimeMillis();
-				if (secondTime - exitFirstTime > 800) {// 如果两次按键时间间隔大于800毫秒，则不退出
-					Toast.makeText(MainActivity.this, "连续点击退出",
-							Toast.LENGTH_SHORT).show();
-					exitFirstTime = secondTime;
-					return true;
-				} else {
-					finish();
-				}
+				super.finish();
 			}
 		}
-
-		return super.onKeyUp(keyCode, event);
 	}
 
 	@Override
