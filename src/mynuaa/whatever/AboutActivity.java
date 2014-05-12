@@ -43,6 +43,8 @@ public class AboutActivity extends SherlockActivity implements
 		settingsAdapter.addSetting(new ButtonSetting("ÒþË½ÉùÃ÷", "privacy") {
 			@Override
 			public void OnClick() {
+				WebViewActivity.startWebView(AboutActivity.this,
+						"file:///android_asset/privacy.html");
 			}
 		});
 		settingsAdapter.addSetting(new ButtonSetting("ÍÅ¶Ó¼ò½é", "aboutUs") {
