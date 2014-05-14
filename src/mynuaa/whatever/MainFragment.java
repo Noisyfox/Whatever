@@ -51,7 +51,7 @@ public class MainFragment extends SherlockFragment implements
 	private PullToRefreshListView rootListView;
 	private ListView listView;
 	private LinkedList<MessageData> currentData = new LinkedList<MessageData>();// 当前视图显示的数据
-	private CustomAdapter customadapter = new CustomAdapter();// 自定义适配器
+	private CustomAdapter customAdapter = new CustomAdapter();// 自定义适配器
 	private View loadingView;// 加载视图的布局
 	private View fakeFootView;
 
@@ -170,7 +170,7 @@ public class MainFragment extends SherlockFragment implements
 		// 初始化适配器
 		// customadapter = new CustomAdapter();
 
-		rootListView.setAdapter(customadapter);
+		rootListView.setAdapter(customAdapter);
 		// 滚动条监听
 		rootListView.setOnItemClickListener(this);
 		rootListView.setOnScrollListener(this);
@@ -217,7 +217,7 @@ public class MainFragment extends SherlockFragment implements
 				currentData.add(md);
 			}
 		}
-		customadapter.notifyDataSetChanged();
+		customAdapter.notifyDataSetChanged();
 	}
 
 	// 添加List元素
@@ -447,7 +447,7 @@ public class MainFragment extends SherlockFragment implements
 				&& ((mMessageGroupIsContact && filter == MessageData.MESSAGE_FILTER_CONTACT) || (!mMessageGroupIsContact && filter == MessageData.MESSAGE_FILTER_LOCATION))) {
 			mergeMessage(prevId, messages);
 			// 更新
-			customadapter.notifyDataSetChanged();
+			customAdapter.notifyDataSetChanged();
 			clearLoading();
 		}
 
@@ -487,6 +487,6 @@ public class MainFragment extends SherlockFragment implements
 			}
 		}
 		if (refresh)
-			customadapter.notifyDataSetChanged();
+			customAdapter.notifyDataSetChanged();
 	}
 }

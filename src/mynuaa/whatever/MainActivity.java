@@ -529,7 +529,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			title = "Whatever";
 			break;
 		case R.id.drawer_message:
-			fragment = new MyMessageFragment();
+			fragment = new NotifyFragment();
 			// title = "ÏûÏ¢";
 			break;
 		case R.id.drawer_path:
