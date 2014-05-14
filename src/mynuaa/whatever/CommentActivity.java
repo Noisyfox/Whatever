@@ -20,7 +20,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
@@ -354,9 +353,6 @@ public class CommentActivity extends SherlockFragmentActivity implements
 	@Override
 	public CharSequence filter(CharSequence source, int start, int end,
 			Spanned dest, int dstart, int dend) {
-		Log.d("text", "source:" + source + ", start:" + start + ", end:" + end
-				+ ", dest:" + dest + ", dstart:" + dstart + ", dend:" + dend);
-
 		int prefixLen = mReplyToPrefix.length();
 
 		if (dstart < prefixLen
