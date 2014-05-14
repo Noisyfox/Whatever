@@ -502,12 +502,8 @@ public class PMActivity extends SherlockFragmentActivity implements
 			finish();
 
 			if (getIntent().hasExtra("message")) {
-				Intent intent = new Intent();
-				MessageData md = getIntent().getParcelableExtra("message");
-				intent.putExtra("message", md);
-				intent.setClass(this, MessageActivity.class);
-				startActivity(intent);
-				overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+				MessageActivity.showMessage(this, (MessageData) getIntent()
+						.getParcelableExtra("message"));
 			}
 			return true;
 		case R.id.pmhistory: {

@@ -358,15 +358,8 @@ public class MainFragment extends SherlockFragment implements
 		if (arg1 == this.loadingView) {
 			updateCurrendData(false);
 		} else {
-			Intent intent = new Intent();
-			intent.setClass(this.getActivity(), MessageActivity.class);
-
-			MessageData md = (MessageData) arg0.getAdapter().getItem(arg2);
-			intent.putExtra("message", md);
-
-			startActivity(intent);
-			getActivity().overridePendingTransition(R.anim.slide_in_right,
-					R.anim.stay);
+			MessageActivity.showMessage(getActivity(), (MessageData) arg0
+					.getAdapter().getItem(arg2));
 		}
 	}
 

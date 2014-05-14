@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
@@ -93,7 +94,7 @@ public class MessageRefreshTask extends Task {
 
 				MessageData md = new MessageData();
 				md.cid = cid;
-				md.content = content;
+				md.content = Util.messageDecode(content);
 				md.image_cid = image_cid;
 				md.time = time;
 				md.background_color_index = background_color_index_i;
@@ -140,7 +141,15 @@ public class MessageRefreshTask extends Task {
 		cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_MANNER, (mMessage.put_bad ? 1
 				: 0) + (mMessage.put_good ? 2 : 0));
 
-		db.update(DataCenter.DB_MESSAGECACHE_NAME, cv, selection, selectionArgs);
+		Cursor c = db.query(DataCenter.DB_MESSAGECACHE_NAME, null, selection,
+				selectionArgs, null, null, null);
+		if (c.moveToFirst()) {
+			db.update(DataCenter.DB_MESSAGECACHE_NAME, cv, selection,
+					selectionArgs);
+		} else {
+			db.insert(DataCenter.DB_MESSAGECACHE_NAME, null, cv);
+		}
+		c.close();
 	}
 
 	@Override

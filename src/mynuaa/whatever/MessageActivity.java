@@ -11,12 +11,14 @@ import mynuaa.whatever.DataSource.ReportTask;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
@@ -38,6 +40,26 @@ public class MessageActivity extends SherlockActivity implements
 		OnMessageRefreshListener, OnMannerPutListener {
 	private static final String TASK_TAG = "task_message_activity";
 
+	public static void showMessage(Activity activity, MessageData md) {
+		Intent intent = new Intent();
+		intent.setClass(activity, MessageActivity.class);
+
+		intent.putExtra("message", md);
+
+		activity.startActivity(intent);
+		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+	}
+
+	public static void showMessage(Activity activity, String cid) {
+		Intent intent = new Intent();
+		intent.setClass(activity, MessageActivity.class);
+
+		intent.putExtra("cid", cid);
+
+		activity.startActivity(intent);
+		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+	}
+
 	GestureDetector mGestureDetector;
 
 	NumberButton btn_good, btn_bad, btn_comment;
@@ -48,6 +70,7 @@ public class MessageActivity extends SherlockActivity implements
 			imageView_good;
 
 	MessageData mMessage = null;
+	String mCid = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +98,22 @@ public class MessageActivity extends SherlockActivity implements
 		imageView_image = (ImageView) findViewById(R.id.imageView_image);
 		imageView_background = (ImageView) findViewById(R.id.imageView_background);
 
-		mMessage = this.getIntent().getParcelableExtra("message");
+		mMessage = getIntent().getParcelableExtra("message");
+		mCid = getIntent().getStringExtra("cid");
 
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 
+		if (mMessage != null) {
+			displayMessage();
+			WhateverApplication.getMainTaskManager().startTask(
+					new MessageRefreshTask(TASK_TAG, mMessage.cid, this));
+		} else if (!TextUtils.isEmpty(mCid)) {
+			WhateverApplication.getMainTaskManager().startTask(
+					new MessageRefreshTask(TASK_TAG, mCid, this));
+		}
+	}
+
+	private void displayMessage() {
 		if (mMessage != null) {
 			setupButtons();
 
@@ -103,8 +138,6 @@ public class MessageActivity extends SherlockActivity implements
 			} else {
 				imageView_image.setVisibility(View.GONE);
 			}
-			WhateverApplication.getMainTaskManager().startTask(
-					new MessageRefreshTask(TASK_TAG, mMessage.cid, this));
 		}
 	}
 
@@ -356,12 +389,13 @@ public class MessageActivity extends SherlockActivity implements
 
 	@Override
 	public void onMessageRefresh(int result, String cid, MessageData message) {
-		if (cid != mMessage.cid)
+		if (mCid != cid && (mMessage != null && cid != mMessage.cid)) {
 			return;
+		}
 
 		if (result == MessageRefreshTask.REFRESH_SUCCESS) {
 			mMessage = message;
-			refresh(message);
+			displayMessage();
 		} else if (result == MessageRefreshTask.REFRESH_FAIL_DELETED) {
 			Toast.makeText(this, "这条状态已被删除", Toast.LENGTH_SHORT).show();
 			finish();
