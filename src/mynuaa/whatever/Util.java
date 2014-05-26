@@ -431,6 +431,8 @@ public class Util {
 					}
 				});
 
+		viewTitleBar.findViewById(R.id.right_btn).setVisibility(View.GONE);
+
 		((TextView) viewTitleBar.findViewById(android.R.id.title))
 				.setText(titleRes);
 	}

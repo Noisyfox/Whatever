@@ -176,8 +176,9 @@ public class SettingsFragment extends SherlockFragment implements
 
 	@Override
 	public void onDetach() {
-		super.onDetach();
 		WhateverApplication.getMainTaskManager().deactivateTag(TASK_TAG);
+
+		super.onDetach();
 	}
 
 	@Override

@@ -19,4 +19,15 @@
         android:background="@drawable/actionbar_return_button"
         android:src="@drawable/ic_action_previous_item" />
 
+    <Button
+        android:id="@+id/right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginLeft="0dp"
+        android:background="@drawable/actionbar_return_button"
+        android:minWidth="48dp"
+        android:text="@string/btn_write_message_sned"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </FrameLayout>

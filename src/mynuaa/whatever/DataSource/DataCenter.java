@@ -67,6 +67,19 @@ public class DataCenter {
 	public static final String DB_PMCACHE_COLUMN_FROM = "pm_from";// 来自自己还是对方
 	public static final String DB_PMCACHE_COLUMN_STATUS = "status";// 消息发送状态
 
+	public static final String DB_NOTICACHE_NAME = "noti_cache";
+	public static final String DB_NOTICACHE_COLUMN_ID = "ntid";
+	public static final String DB_NOTICACHE_COLUMN_TYPE = "type";
+	public static final String DB_NOTICACHE_COLUMN_TIME = "time";
+	public static final String DB_NOTICACHE_COLUMN_CONTENT = "content";
+	public static final String DB_NOTICACHE_COLUMN_CID = "cid";
+	public static final String DB_NOTICACHE_COLUMN_NCID = "ncid";
+	public static final String DB_NOTICACHE_COLUMN_COUNT = "count";
+	public static final String DB_NOTICACHE_COLUMN_PMSESSION = "pmsession";
+	public static final String DB_NOTICACHE_COLUMN_ISREAD = "isread";
+	public static final String DB_NOTICACHE_COLUMN_COLOR = "color";
+	public static final String DB_NOTICACHE_COLUMN_NOTE = "note";
+
 	protected static Context mContext;
 	protected static SQLiteOpenHelper mSQLiteHelper;
 	protected static ImageCacheManager mImageCacheManager;
@@ -354,6 +367,18 @@ public class DataCenter {
 							DB_PMCACHE_COLUMN_SESSION, DB_PMCACHE_COLUMN_TIME,
 							DB_PMCACHE_COLUMN_TIMEL, DB_PMCACHE_COLUMN_FROM,
 							DB_PMCACHE_COLUMN_STATUS);
+			db.execSQL(sql);
+
+			sql = String
+					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+							DB_NOTICACHE_NAME, DB_NOTICACHE_COLUMN_ID,
+							DB_NOTICACHE_COLUMN_TYPE, DB_NOTICACHE_COLUMN_TIME,
+							DB_NOTICACHE_COLUMN_CONTENT,
+							DB_NOTICACHE_COLUMN_CID, DB_NOTICACHE_COLUMN_NCID,
+							DB_NOTICACHE_COLUMN_COUNT,
+							DB_NOTICACHE_COLUMN_PMSESSION,
+							DB_NOTICACHE_COLUMN_ISREAD,
+							DB_NOTICACHE_COLUMN_COLOR, DB_NOTICACHE_COLUMN_NOTE);
 			db.execSQL(sql);
 		}
 

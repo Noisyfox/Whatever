@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class CommentActivity extends SherlockFragmentActivity implements
 	private CommentAdapter mCommentAdapter = new CommentAdapter();
 
 	private String mMessage_cid;
+	private boolean mReturn_message;
 
 	private int mReplyTo = -1;
 	private String mReplyToPrefix = "";
@@ -80,6 +82,7 @@ public class CommentActivity extends SherlockFragmentActivity implements
 		isLoading = false;
 
 		mMessage_cid = getIntent().getStringExtra("message_cid");
+		mReturn_message = getIntent().getBooleanExtra("return_message", false);
 
 		listView_comment = (ListView) findViewById(R.id.listView_comment);
 		editText_comment = (EditText) findViewById(R.id.editText_comment);
@@ -95,6 +98,22 @@ public class CommentActivity extends SherlockFragmentActivity implements
 
 		Util.hideHintOnFocused(editText_comment);
 		Util.setupCommonActionBar(this, R.string.comment_title);
+
+		if (mReturn_message) {
+			Button btn_send = (Button) getSupportActionBar().getCustomView()
+					.findViewById(R.id.right_btn);
+			btn_send.setVisibility(View.VISIBLE);
+			btn_send.setText(R.string.btn_back_to_message);
+			btn_send.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+
+					MessageActivity.showMessage(CommentActivity.this,
+							mMessage_cid);
+				}
+			});
+		}
 
 		listView_comment.addFooterView(loadingView);
 		listView_comment.setAdapter(mCommentAdapter);

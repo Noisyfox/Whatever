@@ -59,8 +59,11 @@ public class PMPostTask extends Task {
 
 			if (errorCode == 0) {
 				String cid = jsonObj.getString("Pid");
+				String time = jsonObj.getString("time");
 				int cidI = Integer.parseInt(cid);
 				mPMData.cid = cidI;
+				mPMData.time = time;
+				mPMData.timeL = Util.parseServerTime(time);
 				mResult = POST_SUCCESS;
 			} else {
 				mResult = POST_FAIL_INNER_ERROR;

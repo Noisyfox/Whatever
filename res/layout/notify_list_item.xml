@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp" >
@@ -20,8 +20,8 @@
             android:text="@string/mymessage_prefix"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <com.rockerhieu.emojicon.EmojiconTextView
+            android:id="@+id/textView_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
@@ -30,12 +30,25 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
+    <com.rockerhieu.emojicon.EmojiconTextView
+        android:id="@+id/textView_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="30dp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:text="@string/mymessage_test"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/mymessage_r_text"
+        android:textSize="12sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -47,7 +60,7 @@
             android:textColor="@color/mymessage_r_text" />
 
         <mynuaa.whatever.TriangleCornerView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView_corner"
             android:layout_width="28dp"
             android:layout_height="match_parent"
             triangle:color="@color/message_list_item_color_test" />

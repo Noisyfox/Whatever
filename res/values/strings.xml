@@ -12,8 +12,7 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
--->
+  limitations under the License.-->
 
 <resources>
 
@@ -57,6 +56,7 @@
     <string name="mymessage_test">“啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊”</string>
     <string name="mymessage_r_test">收到1个赞</string>
     <string name="footer_more">more</string>
+    <string name="footer_read">显示已读消息</string>
     <string name="footer_loading">载入中</string>
     <string name="path_good">赞过</string>
     <string name="path_bad">踩过</string>
@@ -95,6 +95,13 @@
     <string name="pm_history_delete">删除</string>
     <string name="pm_history_delete_ask_title">删除私信记录</string>
     <string name="pm_history_delete_ask">确认删除和Ta的私信记录</string>
+    <string name="notify_type_good">收到%1$d个赞</string>
+    <string name="notify_type_bad">收到%1$d个踩</string>
+    <string name="notify_type_comment">收到%1$d条评论</string>
+    <string name="notify_type_pm">收到%1$d条私信</string>
+    <string name="notify_type_report">收到%1$d个举报</string>
+    <string name="notify_type_who">收到%1$d个WHO</string>
+    <string name="btn_back_to_message">返回状态</string>
 
     <string-array name="report_default">
         <item></item>

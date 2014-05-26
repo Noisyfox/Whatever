@@ -34,20 +34,22 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 public class NetworkHelper {
-	static final String STR_SERVER_URL_LOGIN = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Login/login";
-	static final String STR_SERVER_URL_USERINFO_UPDATE = "http://my.nuaa.edu.cn/zfjapp/index.php/home/User/updateinfo/";
-	static final String STR_SERVER_URL_MESSAGE_POST = "http://my.nuaa.edu.cn/zfjapp/index.php/home/News/post/";
-	static final String STR_SERVER_URL_IMAGE_UPLOAD = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Image/upload";
-	static final String STR_SERVER_URL_MESSAGE_GET = "http://my.nuaa.edu.cn/zfjapp/index.php/home/News/get";
-	static final String STR_SERVER_URL_COMMENT_POST = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Comment/post";
-	static final String STR_SERVER_URL_COMMENT_GET = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Comment/get";
-	static final String STR_SERVER_URL_MANNER_PUT = "http://my.nuaa.edu.cn/zfjapp/index.php/home/news/manner";
-	static final String STR_SERVER_URL_TRACE_GET = "http://my.nuaa.edu.cn/zfjapp/index.php/home/trace/";
-	static final String STR_SERVER_URL_CONTACT_SYNC = "http://my.nuaa.edu.cn/zfjapp/index.php/home/User/updatecontact";
-	static final String STR_SERVER_URL_REPORT = "http://my.nuaa.edu.cn/zfjapp/index.php/home/report/post/";
-	static final String STR_SERVER_URL_PM_REQUIRESESSION = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Pm/getsid";
-	static final String STR_SERVER_URL_PM_POST = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Pm/post";
-	static final String STR_SERVER_URL_PM_GET = "http://my.nuaa.edu.cn/zfjapp/index.php/home/Pm/get";
+	static final String STR_SERVER_URL = "http://my.nuaa.edu.cn/zfjapp/index.php/home/";
+	static final String STR_SERVER_URL_LOGIN = STR_SERVER_URL + "Login/login";
+	static final String STR_SERVER_URL_USERINFO_UPDATE = STR_SERVER_URL + "User/updateinfo/";
+	static final String STR_SERVER_URL_MESSAGE_POST = STR_SERVER_URL + "News/post/";
+	static final String STR_SERVER_URL_IMAGE_UPLOAD = STR_SERVER_URL + "Image/upload";
+	static final String STR_SERVER_URL_MESSAGE_GET = STR_SERVER_URL + "News/get";
+	static final String STR_SERVER_URL_COMMENT_POST = STR_SERVER_URL + "Comment/post";
+	static final String STR_SERVER_URL_COMMENT_GET = STR_SERVER_URL + "Comment/get";
+	static final String STR_SERVER_URL_MANNER_PUT = STR_SERVER_URL + "news/manner";
+	static final String STR_SERVER_URL_TRACE_GET = STR_SERVER_URL + "trace/";
+	static final String STR_SERVER_URL_CONTACT_SYNC = STR_SERVER_URL + "User/updatecontact";
+	static final String STR_SERVER_URL_REPORT = STR_SERVER_URL + "report/post/";
+	static final String STR_SERVER_URL_PM_REQUIRESESSION = STR_SERVER_URL + "Pm/getsid";
+	static final String STR_SERVER_URL_PM_POST = STR_SERVER_URL + "Pm/post";
+	static final String STR_SERVER_URL_PM_GET = STR_SERVER_URL + "Pm/get";
+	static final String STR_SERVER_URL_NOTIFY_GET = STR_SERVER_URL + "Notification/get";
 
 	public static String doHttpRequest(String url,
 			Set<Entry<Object, Object>> data) {

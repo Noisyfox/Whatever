@@ -486,7 +486,8 @@ public class MainFragment extends SherlockFragment implements
 				}
 			}
 		}
-		if (refresh)
+		if (refresh) {
 			customAdapter.notifyDataSetChanged();
+		}
 	}
 }

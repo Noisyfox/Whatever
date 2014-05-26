@@ -7,7 +7,6 @@ import mynuaa.whatever.DataSource.MessageData;
 import mynuaa.whatever.DataSource.MessagePostTask;
 import mynuaa.whatever.DataSource.MessagePostTask.OnMessagePostListener;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import android.app.Dialog;
@@ -25,7 +24,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,29 +72,12 @@ public class WriteMessageActivity extends SherlockActivity implements
 		textView_addImage = (TextView) findViewById(R.id.textView_addImage);
 		imageView_image = (ImageView) findViewById(R.id.imageView_image);
 
-		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-				ActionBar.LayoutParams.MATCH_PARENT,
-				ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-
-		View viewTitleBar = getLayoutInflater().inflate(
-				R.layout.write_message_actionbar, null);
-
-		getSupportActionBar().setCustomView(viewTitleBar, lp);
-		getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		getSupportActionBar().setDisplayShowCustomEnabled(true);
-
-		viewTitleBar.findViewById(R.id.left_btn).setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						askForCancel();
-					}
-				});
-
-		btn_send = (Button) viewTitleBar.findViewById(R.id.right_btn);
-
+		Util.setupCommonActionBar(this, R.string.write_message_title);
+		btn_send = (Button) getSupportActionBar().getCustomView().findViewById(
+				R.id.right_btn);
+		btn_send.setVisibility(View.VISIBLE);
+		btn_send.setText(R.string.btn_write_message_sned);
 		btn_send.setOnClickListener(this);
-
 		btn_send.setEnabled(false);
 
 		final HListView hv_color = (HListView) findViewById(R.id.listView_color);
