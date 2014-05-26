@@ -30,6 +30,7 @@ public class TriangleCornerView extends View {
 
 	public void setColor(int color) {
 		p.setColor(color);
+		invalidate();
 	}
 
 	public int getColor() {
