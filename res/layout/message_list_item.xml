@@ -8,60 +8,75 @@
         android:layout_width="match_parent"
         android:layout_height="8dp" />
 
-    <LinearLayout
-        android:id="@+id/view_background"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="@drawable/message_list_item_background"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
-
-        <com.rockerhieu.emojicon.EmojiconTextView
-            android:id="@+id/textView_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="40dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@string/message_test"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="20sp" />
-
-        <mynuaa.whatever.SmartImageView
-            android:id="@+id/imageView_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="8dp"
-            android:adjustViewBounds="true"
-            android:background="@color/message_image_loading_background"
-            android:maxHeight="200dp"
-            android:maxWidth="200dp"
-            android:minHeight="62dp"
-            android:minWidth="100dp" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
+            android:id="@+id/view_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/message_list_item_background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView_time"
-                android:layout_width="0dp"
+            <com.rockerhieu.emojicon.EmojiconTextView
+                android:id="@+id/textView_content"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="7dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="40dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/message_test"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20sp" />
+
+            <mynuaa.whatever.SmartImageView
+                android:id="@+id/imageView_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:text="@string/message_test_time"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/message_list_item_time" />
+                android:adjustViewBounds="true"
+                android:background="@color/message_image_loading_background"
+                android:maxHeight="200dp"
+                android:maxWidth="200dp"
+                android:minHeight="62dp"
+                android:minWidth="100dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/message_test_time"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/message_list_item_time" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView_mine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="21dp"
+            android:src="@drawable/news_mine" />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

@@ -296,48 +296,69 @@ public class MainFragment extends SherlockFragment implements
 			return position;
 		}
 
+		private class ViewHolder {
+			TextView textView_context;
+			TextView textView_time;
+			ImageView imageView_image;
+			View view_background;
+			View view_mine;
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null)
+			ViewHolder holder;
+
+			if (convertView == null) {
 				convertView = LayoutInflater.from(
 						MainFragment.this.getActivity()).inflate(
 						R.layout.message_list_item, null);
+				holder = new ViewHolder();
+
+				holder.textView_context = (TextView) convertView
+						.findViewById(R.id.textView_content);
+				holder.textView_time = (TextView) convertView
+						.findViewById(R.id.textView_time);
+				holder.imageView_image = (ImageView) convertView
+						.findViewById(R.id.imageView_image);
+				holder.view_background = convertView
+						.findViewById(R.id.view_background);
+				holder.view_mine = convertView
+						.findViewById(R.id.imageView_mine);
+
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
 
 			MessageData md = (MessageData) getItem(position);
 
-			TextView textView_context = (TextView) convertView
-					.findViewById(R.id.textView_content);
-			TextView textView_time = (TextView) convertView
-					.findViewById(R.id.textView_time);
-			ImageView imageView_image = (ImageView) convertView
-					.findViewById(R.id.imageView_image);
-			View view_background = convertView
-					.findViewById(R.id.view_background);
-
-			textView_context.setText(md.content);
-			textView_time.setText(md.time);
-			GradientDrawable sd = (GradientDrawable) view_background
+			holder.textView_context.setText(md.content);
+			holder.textView_time.setText(md.time);
+			GradientDrawable sd = (GradientDrawable) holder.view_background
 					.getBackground();
 			sd.setColor(MessageTheme.getColor(md.background_color_index,
 					MessageTheme.COLOR_CORNER));
 			int textC = MessageTheme.getColor(md.background_color_index,
 					MessageTheme.COLOR_TEXT);
-			textView_context.setTextColor(textC);
+			holder.textView_context.setTextColor(textC);
 			textC = (textC & 0x00FFFFFF) | 0x80000000;
-			textView_time.setTextColor(textC);
+			holder.textView_time.setTextColor(textC);
+
+			holder.view_mine.setVisibility(md.is_me ? View.VISIBLE : View.GONE);
 
 			if (!md.image_cid.isEmpty()) {
-				imageView_image.setVisibility(View.VISIBLE);
+				holder.imageView_image.setVisibility(View.VISIBLE);
 				if (md.image_load_fail) {
-					imageView_image.setBackgroundColor(0xffcccccc);
-					imageView_image.setImageResource(R.drawable.image_broken_n);
-					imageView_image.setScaleType(ScaleType.CENTER);
+					holder.imageView_image.setBackgroundColor(0xffcccccc);
+					holder.imageView_image
+							.setImageResource(R.drawable.image_broken_n);
+					holder.imageView_image.setScaleType(ScaleType.CENTER);
 				} else {
-					imageView_image
+					holder.imageView_image
 							.setBackgroundColor(md.image_prev == null ? 0xffcccccc
 									: 0);
-					imageView_image.setImageBitmap(md.image_prev);
-					imageView_image.setScaleType(ScaleType.FIT_CENTER);
+					holder.imageView_image.setImageBitmap(md.image_prev);
+					holder.imageView_image.setScaleType(ScaleType.FIT_CENTER);
 				}
 
 				if (md.image_prev == null && !md.image_load_fail) {
@@ -346,7 +367,7 @@ public class MainFragment extends SherlockFragment implements
 									"small", MainFragment.this));
 				}
 			} else {
-				imageView_image.setVisibility(View.GONE);
+				holder.imageView_image.setVisibility(View.GONE);
 			}
 
 			return convertView;
