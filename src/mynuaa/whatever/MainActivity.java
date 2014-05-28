@@ -34,6 +34,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.ActionProvider;
 import android.view.SubMenu;
 import android.view.View;
@@ -87,12 +88,16 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (intent.getBooleanExtra("notification", false)) {
 			selectItem(2);
 		}
+
+		Log.d("aaa", "onNewIntent");
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		Log.d("aaa", "onCreate");
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,7 +148,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 		boolean needChkNotiNow = NotificationCheckTask.checkEnabled(this);
 		if (getIntent().getBooleanExtra("notification", false)) {
-			needChkNotiNow = false;
+			// needChkNotiNow = false;
 			selectItem(2);
 		} else if (savedInstanceState == null) {
 			selectItem(1);
@@ -154,6 +159,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 		WhateverApplication.getApplication()
 				.registerOnNotificationCheckListener(this);
+		AlarmReceiver.startAlarm(this);
 
 		DataCenter.startLoactionService();
 
@@ -169,10 +175,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 		WhateverApplication.getApplication()
 				.registerOnNotificationCheckListener(this);
+		AlarmReceiver.startAlarm(this);
 	}
 
 	@Override
 	protected void onDestroy() {
+		AlarmReceiver.stopAlarm(this);
 		WhateverApplication.getMainTaskManager().deactivateTag(TASK_TAG);
 		WhateverApplication.getApplication()
 				.unregisterOnNotificationCheckListener(this);
@@ -271,239 +279,238 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 			@Override
 			public boolean collapseActionView() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public boolean expandActionView() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public ActionProvider getActionProvider() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public View getActionView() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public char getAlphabeticShortcut() {
-				// TODO Auto-generated method stub
+
 				return 0;
 			}
 
 			@Override
 			public int getGroupId() {
-				// TODO Auto-generated method stub
+
 				return 0;
 			}
 
 			@Override
 			public Drawable getIcon() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public Intent getIntent() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public ContextMenuInfo getMenuInfo() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public char getNumericShortcut() {
-				// TODO Auto-generated method stub
+
 				return 0;
 			}
 
 			@Override
 			public int getOrder() {
-				// TODO Auto-generated method stub
+
 				return 0;
 			}
 
 			@Override
 			public SubMenu getSubMenu() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public CharSequence getTitle() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public CharSequence getTitleCondensed() {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public boolean hasSubMenu() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public boolean isActionViewExpanded() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public boolean isCheckable() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public boolean isChecked() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public boolean isVisible() {
-				// TODO Auto-generated method stub
+
 				return false;
 			}
 
 			@Override
 			public android.view.MenuItem setActionProvider(
 					ActionProvider actionProvider) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setActionView(View view) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setActionView(int resId) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setAlphabeticShortcut(char alphaChar) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setCheckable(boolean checkable) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setChecked(boolean checked) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setEnabled(boolean enabled) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setIcon(Drawable icon) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setIcon(int iconRes) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setIntent(Intent intent) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setNumericShortcut(char numericChar) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setOnActionExpandListener(
 					OnActionExpandListener listener) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setOnMenuItemClickListener(
 					OnMenuItemClickListener menuItemClickListener) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setShortcut(char numericChar,
 					char alphaChar) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public void setShowAsAction(int actionEnum) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public android.view.MenuItem setShowAsActionFlags(int actionEnum) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setTitle(CharSequence title) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setTitle(int title) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setTitleCondensed(CharSequence title) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 
 			@Override
 			public android.view.MenuItem setVisible(boolean visible) {
-				// TODO Auto-generated method stub
+
 				return null;
 			}
 		};
@@ -629,8 +636,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onNotificationCheck(int result, int unreadCount) {
 		UserSession session = UserSession.getCurrentSession();
-		if (result == NotificationCheckTask.CHECK_SUCCESS && unreadCount != 0) {
-			session.addUnreadNotification(unreadCount);
+		if (result == NotificationCheckTask.CHECK_SUCCESS && unreadCount != 0
+				&& unreadCount > session.getUnreadNotificationCount()) {
+
+			session.setUnreadNotification(unreadCount);
 			session.saveAsLocalSession(this);
 
 			// 消息通知栏
@@ -647,14 +656,17 @@ public class MainActivity extends SherlockFragmentActivity implements
 			Context context = getApplicationContext();
 			CharSequence contentTitle = "你收到" + unreadCount + "条新消息";
 			CharSequence contentText = "点击查看";
-			Intent notificationIntent = new Intent(this, MainActivity.class);
-			notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			notificationIntent.putExtra("notification", true);
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_LAUNCHER);
+			intent.setClass(this, StartupActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+			intent.putExtra("notification", true);
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-					notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+					intent, PendingIntent.FLAG_UPDATE_CURRENT);
 			notification.setLatestEventInfo(context, contentTitle, contentText,
 					contentIntent);
-			notification.flags = Notification.FLAG_AUTO_CANCEL;
+			notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
 			// 用mNotificationManager的notify方法通知用户生成标题栏消息通知
 			mNotificationManager.notify(1, notification);
@@ -663,6 +675,44 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (session.getUnreadNotificationCount() > 0) {
 			mDrawerAdapter.setNotification(R.id.drawer_message, true);
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	private void testNoty() {
+		// 消息通知栏
+		// 定义NotificationManager
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+		// 定义通知栏展现的内容信息
+		int icon = R.drawable.ic_launcher;
+		CharSequence tickerText = "你收到" + 11111 + "条新消息，点击查看";
+		long when = System.currentTimeMillis();
+		Notification notification = new Notification(icon, tickerText, when);
+
+		// 定义下拉通知栏时要展现的内容信息
+		Context context = getApplicationContext();
+		CharSequence contentTitle = "你收到" + 1111 + "条新消息";
+		CharSequence contentText = "点击查看";
+
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+		intent.setClass(this, StartupActivity.class);
+
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+
+		intent.putExtra("notification", true);
+
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+				intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		notification.setLatestEventInfo(context, contentTitle, contentText,
+				contentIntent);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+		// 用mNotificationManager的notify方法通知用户生成标题栏消息通知
+		mNotificationManager.notify(1, notification);
 	}
 
 	public void clearNotification() {

@@ -81,11 +81,11 @@ public class UserSession {
 		return mCurrentSession;
 	}
 
-	public void addUnreadNotification(int count) {
-		mUnreadNotificationCount += count;
+	public void setUnreadNotification(int count) {
+		mUnreadNotificationCount = count;
 	}
 
-	public void cleadUnreadNotification() {
+	public void clearUnreadNotification() {
 		mUnreadNotificationCount = 0;
 	}
 

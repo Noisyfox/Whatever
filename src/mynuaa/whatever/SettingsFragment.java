@@ -129,7 +129,18 @@ public class SettingsFragment extends SherlockFragment implements
 					}
 				}));
 		settingsAdapter.addSetting(new ToggleSetting("新消息通知", "messageNoti",
-				null));
+				new OnToggleSettingChangeListener() {
+					@Override
+					public boolean onValueChange(ToggleSetting ts,
+							boolean newValue) {
+						if (newValue) {
+							AlarmReceiver.startAlarm(getActivity());
+						} else {
+							AlarmReceiver.stopAlarm(getActivity());
+						}
+						return true;
+					}
+				}));
 		settingsAdapter.addSetting(new ButtonSetting("清除缓存", "clearCache") {
 			@Override
 			public void OnClick() {

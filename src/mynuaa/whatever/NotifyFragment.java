@@ -54,10 +54,6 @@ public class NotifyFragment extends SherlockFragment implements
 		View rootView = inflater.inflate(R.layout.fragment_notify, container,
 				false);
 
-		UserSession session = UserSession.getCurrentSession();
-		session.cleadUnreadNotification();
-		session.saveAsLocalSession(getActivity());
-
 		loadingView = inflater.inflate(R.layout.footer, null);
 		((TextView) loadingView.findViewById(R.id.textView_footer))
 				.setText(R.string.footer_read);
@@ -207,6 +203,7 @@ public class NotifyFragment extends SherlockFragment implements
 			case NotificationData.TYPE_REPORT:
 				holder.tv_type.setText(res.getString(
 						R.string.notify_type_report, nd.count));
+				holder.tv_note.setVisibility(View.GONE);
 				break;
 			case NotificationData.TYPE_WHO: {
 				String userName;
@@ -249,6 +246,10 @@ public class NotifyFragment extends SherlockFragment implements
 			List<NotificationData> nds) {
 		if (result == NotificationGetTask.GET_SUCCESS) {
 			if (type == NotificationGetTask.TYPE_UNREAD) {
+				UserSession session = UserSession.getCurrentSession();
+				session.clearUnreadNotification();
+				session.saveAsLocalSession(getActivity());
+
 				notifyAdapter.mergeData(true, nds);
 				clearLoading();
 			} else if (type == NotificationGetTask.TYPE_READ) {
@@ -308,8 +309,8 @@ public class NotifyFragment extends SherlockFragment implements
 			nd.isRead = true;
 			NotificationData.setRead(nd.cid);
 			notifyAdapter.notifyDataSetChanged();
-			
-			((MainActivity)getActivity()).clearNotification();
+
+			((MainActivity) getActivity()).clearNotification();
 
 			switch (nd.type) {
 			case NotificationData.TYPE_GOOD:
