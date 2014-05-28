@@ -141,7 +141,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			mDrawerAdapter.setNotification(R.id.drawer_message, true);
 		}
 
-		boolean needChkNotiNow = true;
+		boolean needChkNotiNow = NotificationCheckTask.checkEnabled(this);
 		if (getIntent().getBooleanExtra("notification", false)) {
 			needChkNotiNow = false;
 			selectItem(2);
