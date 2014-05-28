@@ -5,12 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 public class PMHistoryDeleteTask extends Task {
 
 	private final OnHistoryDeleteListener mOnCacheClearListener;
-	private final String mSession;
+	private final String mPMSession;
 
-	public PMHistoryDeleteTask(String tag, String session,
+	public PMHistoryDeleteTask(String tag, String pmSession,
 			OnHistoryDeleteListener onHistoryDeleteListener) {
 		super(tag);
-		mSession = session;
+		mPMSession = pmSession;
 		mOnCacheClearListener = onHistoryDeleteListener;
 	}
 
@@ -19,13 +19,13 @@ public class PMHistoryDeleteTask extends Task {
 		SQLiteDatabase db = DataCenter.getDatabase(true);
 		db.delete(DataCenter.DB_PMCACHE_NAME,
 				DataCenter.DB_PMCACHE_COLUMN_SESSION + "=?",
-				new String[] { mSession });
+				new String[] { mPMSession });
 	}
 
 	@Override
 	public void callback() {
 		if (mOnCacheClearListener != null) {
-			mOnCacheClearListener.onHistoryDelete(mSession);
+			mOnCacheClearListener.onHistoryDelete(mPMSession);
 		}
 	}
 

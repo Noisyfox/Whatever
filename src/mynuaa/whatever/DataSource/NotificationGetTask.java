@@ -67,7 +67,7 @@ public class NotificationGetTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("isread", String.valueOf(mType));
 		if (mLastId != null) {
 			params.put("last_noticeid", mLastId);

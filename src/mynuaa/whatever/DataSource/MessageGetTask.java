@@ -86,7 +86,7 @@ public class MessageGetTask extends Task {
 		}
 
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("location_x", String.valueOf(longitude));
 		params.put("location_y", String.valueOf(latitude));
 		if (mPrevId != null) {
@@ -101,7 +101,7 @@ public class MessageGetTask extends Task {
 
 	private void getContact() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("contact", "1");
 		if (mPrevId != null) {
 			params.put("last_nid", mPrevId);

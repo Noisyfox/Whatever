@@ -76,6 +76,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 		}
 	}
 
+	public void forceFinish() {
+		super.finish();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+
+		if (intent.getBooleanExtra("notification", false)) {
+			selectItem(2);
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

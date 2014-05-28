@@ -47,18 +47,17 @@ public class ImageLoadTask extends Task {
 
 	@Override
 	public void doTask() {
-		mResult = loadBitmap(mCid, true, mSize);
+		mResult = loadBitmap(mSessionId, mCid, true, mSize);
 	}
 
-	protected static Bitmap loadBitmap(String cid, boolean checkCache,
-			String size) {
+	protected static Bitmap loadBitmap(String session, String cid,
+			boolean checkCache, String size) {
 		ImageCacheManager imageCacheManager = DataCenter.getImageCacheManager();
 		Bitmap b = imageCacheManager.getImageCache(cid, size);
 		if (b == null || !checkCache) {
 			try {
 				List<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
-				postData.add(new BasicNameValuePair("session", UserSession
-						.getCurrentSession().mSession));
+				postData.add(new BasicNameValuePair("session", session));
 				postData.add(new BasicNameValuePair("size", size));
 				postData.add(new BasicNameValuePair("id", cid));
 

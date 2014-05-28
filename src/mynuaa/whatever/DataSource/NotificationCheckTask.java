@@ -28,7 +28,7 @@ public class NotificationCheckTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 
 		String result = NetworkHelper.doHttpRequest(
 				NetworkHelper.STR_SERVER_URL_NOTIFY_CHECK, params.entrySet());

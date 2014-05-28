@@ -35,7 +35,6 @@ public class MessagePostTask extends Task {
 
 	@Override
 	public void doTask() {
-		String session = UserSession.getCurrentSession().mSession;
 		String image_cid = "";
 
 		// 定位
@@ -48,7 +47,7 @@ public class MessagePostTask extends Task {
 		// 上传图片
 		if (mMessage.image != null) {
 			String result = NetworkHelper.uploadImage(
-					NetworkHelper.STR_SERVER_URL_IMAGE_UPLOAD, session,
+					NetworkHelper.STR_SERVER_URL_IMAGE_UPLOAD, mSessionId,
 					mMessage.image);
 
 			if (TextUtils.isEmpty(result)) {
@@ -86,7 +85,7 @@ public class MessagePostTask extends Task {
 		}
 
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", session);
+		params.put("session", mSessionId);
 		params.put("content", Util.messageEncode(mMessage.content));
 		params.put("location_x", String.valueOf(l.getLongitude()));
 		params.put("location_y", String.valueOf(l.getLatitude()));

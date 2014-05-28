@@ -70,7 +70,8 @@ public class SettingsFragment extends SherlockFragment implements
 												i.putExtra("skipSplash", true);
 												getActivity().startActivity(i);
 
-												getActivity().finish();
+												((MainActivity) getActivity())
+														.forceFinish();
 
 												return true;
 											}

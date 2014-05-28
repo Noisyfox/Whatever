@@ -48,7 +48,7 @@ public class ContactSyncTask extends Task {
 		String jaS = ja.toString();
 
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("contact", jaS);
 
 		String result = NetworkHelper.doHttpRequest(

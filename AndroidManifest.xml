@@ -61,7 +61,7 @@
         <activity
             android:name="mynuaa.whatever.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" android:launchMode="singleTask">
         </activity>
         <activity
             android:name="mynuaa.whatever.MessageActivity"

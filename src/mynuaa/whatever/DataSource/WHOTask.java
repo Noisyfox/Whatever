@@ -51,7 +51,7 @@ public class WHOTask extends Task {
 
 	private void doAsk() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("nid", mCid);
 
 		String result = NetworkHelper.doHttpRequest(

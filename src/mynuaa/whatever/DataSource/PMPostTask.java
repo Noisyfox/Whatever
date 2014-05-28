@@ -32,7 +32,7 @@ public class PMPostTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("Pm_sid", mPMData.session);
 		params.put("content", Util.messageEncode(mPMData.content));
 

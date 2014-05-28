@@ -23,22 +23,23 @@ public class PMGetTask extends Task {
 	public static final int TYPE_UNREAD = 1;
 
 	private final OnPMGetListener mOnPMGetListener;
-	private final String mSession;
+	private final String mPMSession;
 	private final int mType;
 
 	private int mResult = GET_SUCCESS;
 	private List<PMData> mPMData = new ArrayList<PMData>();
 
 	// 获取未读消息
-	public PMGetTask(String tag, String session, OnPMGetListener onPMGetListener) {
-		this(tag, session, TYPE_UNREAD, onPMGetListener);
+	public PMGetTask(String tag, String pmSession,
+			OnPMGetListener onPMGetListener) {
+		this(tag, pmSession, TYPE_UNREAD, onPMGetListener);
 	}
 
-	public PMGetTask(String tag, String session, int type,
+	public PMGetTask(String tag, String pmSession, int type,
 			OnPMGetListener onPMGetListener) {
 		super(tag);
 
-		mSession = session;
+		mPMSession = pmSession;
 		mOnPMGetListener = onPMGetListener;
 		mType = type;
 	}
@@ -46,8 +47,8 @@ public class PMGetTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
-		params.put("Pm_sid", mSession);
+		params.put("session", mSessionId);
+		params.put("Pm_sid", mPMSession);
 		switch (mType) {
 		case TYPE_NORMAL:
 			params.put("isread", "2");

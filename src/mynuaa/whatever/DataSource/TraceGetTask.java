@@ -45,7 +45,7 @@ public class TraceGetTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		if (mSelectId != null) {
 			params.put("select_id", mSelectId);
 		}

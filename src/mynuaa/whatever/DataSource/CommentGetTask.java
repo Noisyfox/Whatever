@@ -38,7 +38,7 @@ public class CommentGetTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", UserSession.getCurrentSession().mSession);
+		params.put("session", mSessionId);
 		params.put("nid", mMessageId);
 		if (mPrevId != null) {
 			params.put("cid", mPrevId);

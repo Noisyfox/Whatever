@@ -136,7 +136,8 @@ public class UserSession {
 		}
 
 		protected void loadHeadBitmap(boolean checkCache) {
-			mHead_img = ImageLoadTask.loadBitmap(mHead, checkCache, "big");
+			mHead_img = ImageLoadTask.loadBitmap(mSession, mHead, checkCache,
+					"big");
 			if (mHead_img == null) {
 				mHead_blur_img = null;
 			} else {

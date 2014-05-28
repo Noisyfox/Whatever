@@ -33,10 +33,8 @@ public class CommentPostTask extends Task {
 
 	@Override
 	public void doTask() {
-		String session = UserSession.getCurrentSession().mSession;
-
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("session", session);
+		params.put("session", mSessionId);
 		params.put("nid", mComment.message_cid);
 		params.put("content", Util.messageEncode(mComment.content));
 		params.put("reply_to", String.valueOf(mComment.replyTo));
