@@ -104,6 +104,7 @@
     <string name="notify_type_who"><Data><![CDATA[机友 <font color="#3581C2">%1$s</font> 想知道你是谁]]></Data></string>
     <string name="notify_type_who_reply">来自WHO的回复</string>
     <string name="btn_back_to_message">返回状态</string>
+    <string name="mark_all_read">全部标记已读</string>
 
     <string-array name="report_default">
         <item></item>

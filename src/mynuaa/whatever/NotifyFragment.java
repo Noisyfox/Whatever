@@ -33,6 +33,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -53,6 +56,8 @@ public class NotifyFragment extends SherlockFragment implements
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_notify, container,
 				false);
+
+		setHasOptionsMenu(true);
 
 		loadingView = inflater.inflate(R.layout.footer, null);
 		((TextView) loadingView.findViewById(R.id.textView_footer))
@@ -77,6 +82,20 @@ public class NotifyFragment extends SherlockFragment implements
 		updateCurrendData(true);
 
 		return rootView;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.notipage, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.mark_all_read) {
+			notifyAdapter.markAllRead();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -127,6 +146,16 @@ public class NotifyFragment extends SherlockFragment implements
 				notifyDataSetChanged();
 			}
 			return isModified;
+		}
+
+		public synchronized void markAllRead() {
+			for (NotificationData nd : mData) {
+				if (!nd.isRead) {
+					nd.isRead = true;
+					NotificationData.setRead(nd.cid);
+				}
+			}
+			notifyDataSetChanged();
 		}
 
 		public synchronized String getLastId() {
