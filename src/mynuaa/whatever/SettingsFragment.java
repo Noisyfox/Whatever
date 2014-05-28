@@ -90,7 +90,7 @@ public class SettingsFragment extends SherlockFragment implements
 		settingsAdapter.addSetting(new ToggleSetting("匹配手机通讯录", "autoContact",
 				new OnToggleSettingChangeListener() {
 					@Override
-					public boolean onValueChange(ToggleSetting ts,
+					public boolean onValueChange(final ToggleSetting ts,
 							boolean newValue) {
 						if (newValue) {
 							final SharedPreferences sp = ts
@@ -115,7 +115,7 @@ public class SettingsFragment extends SherlockFragment implements
 																SP_READ_CONTACT_NOTIFY,
 																true);
 														e.commit();
-
+														ts.setChceked(true);
 														return true;
 													}
 												})

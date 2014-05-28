@@ -62,6 +62,10 @@ public class ToggleSetting extends Setting {
 
 		return arg1;
 	}
+	
+	public void setChceked(boolean checked){
+		mSwitch.setChecked(checked);
+	}
 
 	@Override
 	public void load(SharedPreferences sp) {
