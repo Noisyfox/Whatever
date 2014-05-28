@@ -38,6 +38,7 @@ public class DataCenter {
 	public static final String DB_USER_COLUMN_NAME = "name";
 	public static final String DB_USER_COLUMN_PHONE = "phone";
 	public static final String DB_USER_COLUMN_HEADCID = "head_cid";
+	public static final String DB_USER_COLUMN_NOTI_UNREAD = "noti_unread";
 
 	public static final String DB_MESSAGECACHE_NAME = "message_cache";
 	public static final String DB_MESSAGECACHE_COLUMN_ID = "mid";
@@ -52,6 +53,7 @@ public class DataCenter {
 	public static final String DB_MESSAGECACHE_COLUMN_COLOR = "color";
 	public static final String DB_MESSAGECACHE_COLUMN_FILTER = "filter";
 	public static final String DB_MESSAGECACHE_COLUMN_MANNER = "manner";
+	public static final String DB_MESSAGECACHE_COLUMN_ISME = "isme"; // 是否是自己发布的状态
 
 	public static final String DB_CONTACTCACHE_NAME = "contact_cache";
 	public static final String DB_CONTACTCACHE_COLUMN_DATA = "data";
@@ -79,6 +81,7 @@ public class DataCenter {
 	public static final String DB_NOTICACHE_COLUMN_ISREAD = "isread";
 	public static final String DB_NOTICACHE_COLUMN_COLOR = "color";
 	public static final String DB_NOTICACHE_COLUMN_NOTE = "note";
+	public static final String DB_NOTICACHE_COLUMN_EXT = "ext";
 
 	protected static Context mContext;
 	protected static SQLiteOpenHelper mSQLiteHelper;
@@ -327,10 +330,11 @@ public class DataCenter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			String sql = String.format("CREATE TABLE %s(%s, %s, %s, %s, %s);",
-					DB_USER_NAME, DB_USER_COLUMN_SESSION,
-					DB_USER_COLUMN_USERID, DB_USER_COLUMN_NAME,
-					DB_USER_COLUMN_PHONE, DB_USER_COLUMN_HEADCID);
+			String sql = String.format(
+					"CREATE TABLE %s(%s, %s, %s, %s, %s, %s);", DB_USER_NAME,
+					DB_USER_COLUMN_SESSION, DB_USER_COLUMN_USERID,
+					DB_USER_COLUMN_NAME, DB_USER_COLUMN_PHONE,
+					DB_USER_COLUMN_HEADCID, DB_USER_COLUMN_NOTI_UNREAD);
 			db.execSQL(sql);
 
 			sql = String
@@ -340,7 +344,7 @@ public class DataCenter {
 			db.execSQL(sql);
 
 			sql = String
-					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
 							DB_MESSAGECACHE_NAME, DB_MESSAGECACHE_COLUMN_ID,
 							DB_MESSAGECACHE_COLUMN_CID,
 							DB_MESSAGECACHE_COLUMN_CONTENT,
@@ -352,7 +356,8 @@ public class DataCenter {
 							DB_MESSAGECACHE_COLUMN_TEXTURE,
 							DB_MESSAGECACHE_COLUMN_COLOR,
 							DB_MESSAGECACHE_COLUMN_FILTER,
-							DB_MESSAGECACHE_COLUMN_MANNER);
+							DB_MESSAGECACHE_COLUMN_MANNER,
+							DB_MESSAGECACHE_COLUMN_ISME);
 			db.execSQL(sql);
 
 			sql = String.format("CREATE TABLE %s(%s);", DB_CONTACTCACHE_NAME,
@@ -370,7 +375,7 @@ public class DataCenter {
 			db.execSQL(sql);
 
 			sql = String
-					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
 							DB_NOTICACHE_NAME, DB_NOTICACHE_COLUMN_ID,
 							DB_NOTICACHE_COLUMN_TYPE, DB_NOTICACHE_COLUMN_TIME,
 							DB_NOTICACHE_COLUMN_CONTENT,
@@ -378,7 +383,8 @@ public class DataCenter {
 							DB_NOTICACHE_COLUMN_COUNT,
 							DB_NOTICACHE_COLUMN_PMSESSION,
 							DB_NOTICACHE_COLUMN_ISREAD,
-							DB_NOTICACHE_COLUMN_COLOR, DB_NOTICACHE_COLUMN_NOTE);
+							DB_NOTICACHE_COLUMN_COLOR,
+							DB_NOTICACHE_COLUMN_NOTE, DB_NOTICACHE_COLUMN_EXT);
 			db.execSQL(sql);
 		}
 

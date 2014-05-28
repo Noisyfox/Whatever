@@ -36,20 +36,34 @@ import android.util.Log;
 public class NetworkHelper {
 	static final String STR_SERVER_URL = "http://my.nuaa.edu.cn/zfjapp/index.php/home/";
 	static final String STR_SERVER_URL_LOGIN = STR_SERVER_URL + "Login/login";
-	static final String STR_SERVER_URL_USERINFO_UPDATE = STR_SERVER_URL + "User/updateinfo/";
-	static final String STR_SERVER_URL_MESSAGE_POST = STR_SERVER_URL + "News/post/";
-	static final String STR_SERVER_URL_IMAGE_UPLOAD = STR_SERVER_URL + "Image/upload";
-	static final String STR_SERVER_URL_MESSAGE_GET = STR_SERVER_URL + "News/get";
-	static final String STR_SERVER_URL_COMMENT_POST = STR_SERVER_URL + "Comment/post";
-	static final String STR_SERVER_URL_COMMENT_GET = STR_SERVER_URL + "Comment/get";
-	static final String STR_SERVER_URL_MANNER_PUT = STR_SERVER_URL + "news/manner";
+	static final String STR_SERVER_URL_USERINFO_UPDATE = STR_SERVER_URL
+			+ "User/updateinfo/";
+	static final String STR_SERVER_URL_MESSAGE_POST = STR_SERVER_URL
+			+ "News/post/";
+	static final String STR_SERVER_URL_IMAGE_UPLOAD = STR_SERVER_URL
+			+ "Image/upload";
+	static final String STR_SERVER_URL_MESSAGE_GET = STR_SERVER_URL
+			+ "News/get";
+	static final String STR_SERVER_URL_COMMENT_POST = STR_SERVER_URL
+			+ "Comment/post";
+	static final String STR_SERVER_URL_COMMENT_GET = STR_SERVER_URL
+			+ "Comment/get";
+	static final String STR_SERVER_URL_MANNER_PUT = STR_SERVER_URL
+			+ "news/manner";
 	static final String STR_SERVER_URL_TRACE_GET = STR_SERVER_URL + "trace/";
-	static final String STR_SERVER_URL_CONTACT_SYNC = STR_SERVER_URL + "User/updatecontact";
+	static final String STR_SERVER_URL_CONTACT_SYNC = STR_SERVER_URL
+			+ "User/updatecontact";
 	static final String STR_SERVER_URL_REPORT = STR_SERVER_URL + "report/post/";
-	static final String STR_SERVER_URL_PM_REQUIRESESSION = STR_SERVER_URL + "Pm/getsid";
+	static final String STR_SERVER_URL_PM_REQUIRESESSION = STR_SERVER_URL
+			+ "Pm/getsid";
 	static final String STR_SERVER_URL_PM_POST = STR_SERVER_URL + "Pm/post";
 	static final String STR_SERVER_URL_PM_GET = STR_SERVER_URL + "Pm/get";
-	static final String STR_SERVER_URL_NOTIFY_GET = STR_SERVER_URL + "Notification/get";
+	static final String STR_SERVER_URL_NOTIFY_GET = STR_SERVER_URL
+			+ "Notification/get";
+	static final String STR_SERVER_URL_NOTIFY_CHECK = STR_SERVER_URL
+			+ "Notification/check";
+	static final String STR_SERVER_URL_WHO_ASK = STR_SERVER_URL + "Who/post";
+	static final String STR_SERVER_URL_WHO_REPLY = STR_SERVER_URL + "Who/reply";
 
 	public static String doHttpRequest(String url,
 			Set<Entry<Object, Object>> data) {

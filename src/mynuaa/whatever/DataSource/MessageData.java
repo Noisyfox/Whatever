@@ -20,6 +20,7 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 	public int good_count, bad_count, comment_count;
 	public boolean put_good, put_bad;
 	public String select_id;
+	public boolean is_me;
 
 	public Bitmap image;
 	public Bitmap image_prev;
@@ -75,6 +76,10 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 						.getInt(c
 								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_MANNER));
 
+				int is_me = c
+						.getInt(c
+								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_ISME));
+
 				if ("0".equals(image_cid)) {
 					image_cid = "";
 				}
@@ -98,6 +103,7 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 					md.put_good = true;
 					break;
 				}
+				md.is_me = is_me == 1;
 
 				messages.add(md);
 			} while (c.moveToNext());
@@ -140,6 +146,7 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 					String.valueOf(messageFilter));
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_MANNER,
 					(m.put_bad ? 1 : 0) + (m.put_good ? 2 : 0));
+			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_ISME, m.is_me ? 1 : 0);
 
 			if (!c.moveToFirst()) {
 				db.insert(DataCenter.DB_MESSAGECACHE_NAME, null, cv);
@@ -171,7 +178,7 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 		dest.writeInt(good_count);
 		dest.writeInt(bad_count);
 		dest.writeInt(comment_count);
-		dest.writeBooleanArray(new boolean[] { put_good, put_bad });
+		dest.writeBooleanArray(new boolean[] { put_good, put_bad, is_me });
 	}
 
 	public static final Parcelable.Creator<MessageData> CREATOR = new Parcelable.Creator<MessageData>() {
@@ -188,10 +195,11 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 			md.good_count = source.readInt();
 			md.bad_count = source.readInt();
 			md.comment_count = source.readInt();
-			boolean _b[] = new boolean[2];
+			boolean _b[] = new boolean[3];
 			source.readBooleanArray(_b);
 			md.put_good = _b[0];
 			md.put_bad = _b[1];
+			md.is_me = _b[2];
 
 			return md;
 		}

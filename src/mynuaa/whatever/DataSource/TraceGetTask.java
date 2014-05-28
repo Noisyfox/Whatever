@@ -25,6 +25,7 @@ public class TraceGetTask extends Task {
 	public static final int FILTER_SEND = 4;
 	public static final int FILTER_REPORT = 5;
 	public static final int FILTER_PM = 6;
+	public static final int FILTER_WHO = 7;
 
 	private final int mFilter;
 	private final String mSelectId;
@@ -69,6 +70,9 @@ public class TraceGetTask extends Task {
 			break;
 		case FILTER_PM:
 			url += "pm";
+			break;
+		case FILTER_WHO:
+			url += "who";
 			break;
 		default:
 

@@ -12,7 +12,8 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.-->
+  limitations under the License.
+-->
 
 <resources>
 
@@ -100,7 +101,8 @@
     <string name="notify_type_comment">收到%1$d条评论</string>
     <string name="notify_type_pm">收到%1$d条私信</string>
     <string name="notify_type_report">收到%1$d个举报</string>
-    <string name="notify_type_who">收到%1$d个WHO</string>
+    <string name="notify_type_who"><Data><![CDATA[机友 <font color="#3581C2">%1$s</font> 想知道你是谁]]></Data></string>
+    <string name="notify_type_who_reply">来自WHO的回复</string>
     <string name="btn_back_to_message">返回状态</string>
 
     <string-array name="report_default">

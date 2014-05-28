@@ -4,14 +4,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import mynuaa.whatever.DataSource.ContactSyncTask;
 import mynuaa.whatever.DataSource.NotificationData;
 import mynuaa.whatever.DataSource.NotificationGetTask;
+import mynuaa.whatever.DataSource.UserSession;
 import mynuaa.whatever.DataSource.NotificationGetTask.OnNotificationGetListener;
+import mynuaa.whatever.DataSource.WHOTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +53,10 @@ public class NotifyFragment extends SherlockFragment implements
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_notify, container,
 				false);
+
+		UserSession session = UserSession.getCurrentSession();
+		session.cleadUnreadNotification();
+		session.saveAsLocalSession(getActivity());
 
 		loadingView = inflater.inflate(R.layout.footer, null);
 		((TextView) loadingView.findViewById(R.id.textView_footer))
@@ -193,9 +208,33 @@ public class NotifyFragment extends SherlockFragment implements
 				holder.tv_type.setText(res.getString(
 						R.string.notify_type_report, nd.count));
 				break;
-			case NotificationData.TYPE_WHO:
-				holder.tv_type.setText(res.getString(R.string.notify_type_who,
-						nd.count));
+			case NotificationData.TYPE_WHO: {
+				String userName;
+				try {
+					JSONTokener jsonParser = new JSONTokener(nd.ext);
+
+					jsonParser.nextTo('{');
+					if (!jsonParser.more()) {
+						throw new JSONException("Failed to read return value.");
+					}
+					JSONObject jsonObj = (JSONObject) jsonParser.nextValue();
+
+					userName = jsonObj.getString("username");
+				} catch (JSONException e) {
+					e.printStackTrace();
+					break;
+				}
+
+				holder.tv_type.setText(Html.fromHtml(res.getString(
+						R.string.notify_type_who, userName)));
+				holder.tv_note.setVisibility(View.GONE);
+				break;
+			}
+			case NotificationData.TYPE_WHO_REPLY:
+				holder.tv_type.setText(res
+						.getString(R.string.notify_type_who_reply));
+				holder.tv_note.setVisibility(View.VISIBLE);
+				holder.tv_note.setText("\"" + nd.note + "\"");
 				break;
 			default:
 			}
@@ -263,12 +302,14 @@ public class NotifyFragment extends SherlockFragment implements
 		if (view == loadingView) {
 			updateCurrendData(false);
 		} else {
-			NotificationData nd = (NotificationData) parent.getAdapter()
+			final NotificationData nd = (NotificationData) parent.getAdapter()
 					.getItem(position);
 
 			nd.isRead = true;
 			NotificationData.setRead(nd.cid);
 			notifyAdapter.notifyDataSetChanged();
+			
+			((MainActivity)getActivity()).clearNotification();
 
 			switch (nd.type) {
 			case NotificationData.TYPE_GOOD:
@@ -293,7 +334,130 @@ public class NotifyFragment extends SherlockFragment implements
 				break;
 			case NotificationData.TYPE_REPORT:
 				break;
-			case NotificationData.TYPE_WHO:
+			case NotificationData.TYPE_WHO: {
+				String phone, realName, userName;
+				try {
+					JSONTokener jsonParser = new JSONTokener(nd.ext);
+
+					jsonParser.nextTo('{');
+					if (!jsonParser.more()) {
+						throw new JSONException("Failed to read return value.");
+					}
+					JSONObject jsonObj = (JSONObject) jsonParser.nextValue();
+
+					phone = jsonObj.getString("phone");
+					realName = jsonObj.getString("real_name");
+					userName = jsonObj.getString("username");
+				} catch (JSONException e) {
+					e.printStackTrace();
+					break;
+				}
+
+				String contactName = ContactSyncTask
+						.contactEnabled(getActivity()) ? Util
+						.findContactNameByNumber(getActivity(), phone) : null;
+
+				StringBuilder sb = new StringBuilder();
+				sb.append(userName);
+				sb.append(',');
+				sb.append(realName);
+				sb.append(',');
+				sb.append(phone);
+				if (!TextUtils.isEmpty(contactName)) {
+					sb.append(',');
+					sb.append(contactName);
+				}
+				sb.append('\n');
+				sb.append("\u3000\u3000一旦同意WHO请求，对方将收到你的信息（姓名、手机号），是否同意？");
+
+				Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
+						.setTitle("WHO")
+						.setIcon(R.drawable.message_who)
+						.setMessage(sb.toString())
+						.setPositiveButton("同意",
+								new MyAlertDialog.OnClickListener() {
+									@Override
+									public boolean onClick(
+											DialogInterface dialog, int which) {
+										WhateverApplication
+												.getMainTaskManager()
+												.startTask(
+														new WHOTask(
+																TASK_TAG,
+																nd.pmsession,
+																true,
+																WhateverApplication
+																		.getApplication()));
+
+										return true;
+									}
+								})
+						.setNegativeButton("拒绝",
+								new MyAlertDialog.OnClickListener() {
+									@Override
+									public boolean onClick(
+											DialogInterface dialog, int which) {
+										WhateverApplication
+												.getMainTaskManager()
+												.startTask(
+														new WHOTask(
+																TASK_TAG,
+																nd.pmsession,
+																false,
+																WhateverApplication
+																		.getApplication()));
+
+										return true;
+									}
+								}).create();
+				alertDialog.show();
+				break;
+			}
+			case NotificationData.TYPE_WHO_REPLY:
+				if (!TextUtils.isEmpty(nd.ext)) {
+					String phone, realName, userName;
+					try {
+						JSONTokener jsonParser = new JSONTokener(nd.ext);
+
+						jsonParser.nextTo('{');
+						if (!jsonParser.more()) {
+							throw new JSONException(
+									"Failed to read return value.");
+						}
+						JSONObject jsonObj = (JSONObject) jsonParser
+								.nextValue();
+
+						phone = jsonObj.getString("phone");
+						realName = jsonObj.getString("real_name");
+						userName = jsonObj.getString("username");
+					} catch (JSONException e) {
+						e.printStackTrace();
+						break;
+					}
+
+					String contactName = ContactSyncTask
+							.contactEnabled(getActivity()) ? Util
+							.findContactNameByNumber(getActivity(), phone)
+							: null;
+
+					StringBuilder sb = new StringBuilder();
+					sb.append(userName);
+					sb.append(',');
+					sb.append(realName);
+					sb.append(',');
+					sb.append(phone);
+					if (!TextUtils.isEmpty(contactName)) {
+						sb.append(',');
+						sb.append(contactName);
+					}
+
+					Dialog alertDialog = new MyAlertDialog.Builder(
+							getActivity()).setTitle("WHO")
+							.setIcon(R.drawable.message_who)
+							.setMessage(sb.toString())
+							.setPositiveButton("我知道了", null).create();
+					alertDialog.show();
+				}
 				break;
 			}
 		}

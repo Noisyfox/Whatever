@@ -17,7 +17,7 @@ public class PathFragment extends SherlockFragment implements OnClickListener/*
 	// private static final String TASK_TAG = "task_path_fragment";
 
 	View button_bad, button_good, button_comment, button_send, button_report,
-			button_pm;
+			button_pm, button_who;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +32,7 @@ public class PathFragment extends SherlockFragment implements OnClickListener/*
 		button_send = rootView.findViewById(R.id.button_send);
 		button_report = rootView.findViewById(R.id.button_report);
 		button_pm = rootView.findViewById(R.id.button_pm);
+		button_who = rootView.findViewById(R.id.button_who);
 
 		// WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 
@@ -47,6 +48,7 @@ public class PathFragment extends SherlockFragment implements OnClickListener/*
 		button_send.setOnClickListener(this);
 		button_report.setOnClickListener(this);
 		button_pm.setOnClickListener(this);
+		button_who.setOnClickListener(this);
 	}
 
 	private void show_list(int filter) {
@@ -72,6 +74,8 @@ public class PathFragment extends SherlockFragment implements OnClickListener/*
 			show_list(TraceGetTask.FILTER_REPORT);
 		} else if (v == button_pm) {
 			show_list(TraceGetTask.FILTER_PM);
+		} else if (v == button_who) {
+			show_list(TraceGetTask.FILTER_WHO);
 		}
 	}
 

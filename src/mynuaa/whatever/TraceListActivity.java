@@ -77,6 +77,9 @@ public class TraceListActivity extends SherlockActivity implements
 		case TraceGetTask.FILTER_PM:
 			Util.setupCommonActionBar(this, R.string.path_pm);
 			break;
+		case TraceGetTask.FILTER_WHO:
+			Util.setupCommonActionBar(this, R.string.path_WHO);
+			break;
 		default:
 		}
 

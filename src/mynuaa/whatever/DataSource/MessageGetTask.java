@@ -157,6 +157,7 @@ public class MessageGetTask extends Task {
 				String good_count = messageObj.getString("goods");
 				String bad_count = messageObj.getString("bads");
 				String comment_count = messageObj.getString("replys");
+				String is_me = messageObj.getString("isme");
 				// String manner = messageObj.getString("manner");
 
 				int background_color_index_i = Integer
@@ -166,6 +167,7 @@ public class MessageGetTask extends Task {
 				int good_count_i = Integer.parseInt(good_count);
 				int bad_count_i = Integer.parseInt(bad_count);
 				int comment_count_i = Integer.parseInt(comment_count);
+				boolean is_me_b = "1".equals(is_me);
 				// int manner_i = Integer.parseInt(manner);
 
 				if ("0".equals(image_cid)) {
@@ -184,6 +186,7 @@ public class MessageGetTask extends Task {
 				md.good_count = good_count_i;
 				md.bad_count = bad_count_i;
 				md.comment_count = comment_count_i;
+				md.is_me = is_me_b;
 				// switch (manner_i) {
 				// case 1:
 				// md.put_bad = true;

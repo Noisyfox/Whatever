@@ -16,6 +16,7 @@ public class NotificationData {
 	public static final int TYPE_PM = 4;
 	public static final int TYPE_REPORT = 5;
 	public static final int TYPE_WHO = 6;
+	public static final int TYPE_WHO_REPLY = 7;
 
 	public int type;
 	public String time;
@@ -27,6 +28,7 @@ public class NotificationData {
 	public String pmsession;
 	public boolean isRead;
 	public int theme_color;
+	public String ext;
 
 	public static List<NotificationData> getUnreadNotification() {
 		SQLiteDatabase db = DataCenter.getDatabase(false);
@@ -73,6 +75,7 @@ public class NotificationData {
 			cv.put(DataCenter.DB_NOTICACHE_COLUMN_ISREAD, nd.isRead ? 1 : 0);
 			cv.put(DataCenter.DB_NOTICACHE_COLUMN_COLOR, nd.theme_color);
 			cv.put(DataCenter.DB_NOTICACHE_COLUMN_NOTE, nd.note);
+			cv.put(DataCenter.DB_NOTICACHE_COLUMN_EXT, nd.ext);
 
 			if (!c.moveToFirst()) {
 				db.insert(DataCenter.DB_NOTICACHE_NAME, null, cv);
@@ -116,6 +119,8 @@ public class NotificationData {
 				.getColumnIndex(DataCenter.DB_NOTICACHE_COLUMN_COLOR));
 		String note = c.getString(c
 				.getColumnIndex(DataCenter.DB_NOTICACHE_COLUMN_NOTE));
+		String ext = c.getString(c
+				.getColumnIndex(DataCenter.DB_NOTICACHE_COLUMN_EXT));
 
 		NotificationData nd = new NotificationData();
 
@@ -129,6 +134,7 @@ public class NotificationData {
 		nd.isRead = isRead_i == 1;
 		nd.theme_color = color;
 		nd.note = note;
+		nd.ext = ext;
 
 		return nd;
 	}

@@ -30,6 +30,7 @@ public class NotificationGetTask extends Task {
 	private static final String NOTYPE_REPORT = "report";
 	private static final String NOTYPE_PM = "pm";
 	private static final String NOTYPE_WHO = "who";
+	private static final String NOTYPE_WHO_REPLY = "who_reply";
 
 	private final OnNotificationGetListener mOnNotificationGetListener;
 	private final int mType;
@@ -114,6 +115,7 @@ public class NotificationGetTask extends Task {
 				String ncid = notifyObj.getString("nid");
 				String color = notifyObj.getString("color");
 				String isRead = notifyObj.getString("isread");
+				String ext = notifyObj.getString("ext");
 
 				int count_i = Integer.parseInt(count);
 				int color_i = Integer.parseInt(color);
@@ -132,6 +134,8 @@ public class NotificationGetTask extends Task {
 					nd.type = NotificationData.TYPE_REPORT;
 				} else if (NOTYPE_WHO.equals(type)) {
 					nd.type = NotificationData.TYPE_WHO;
+				} else if (NOTYPE_WHO_REPLY.equals(type)) {
+					nd.type = NotificationData.TYPE_WHO_REPLY;
 				} else {
 					throw new RuntimeException("Known notification type:"
 							+ type);
@@ -146,6 +150,7 @@ public class NotificationGetTask extends Task {
 				nd.pmsession = typeId;
 				nd.isRead = String.valueOf(TYPE_READ).equals(isRead);
 				nd.theme_color = color_i;
+				nd.ext = ext;
 
 				notis.add(nd);
 			}

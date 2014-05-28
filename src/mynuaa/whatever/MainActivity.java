@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import mynuaa.whatever.DataSource.DataCenter;
+import mynuaa.whatever.DataSource.NotificationCheckTask;
+import mynuaa.whatever.DataSource.NotificationCheckTask.OnNotificationCheckListener;
+import mynuaa.whatever.DataSource.NotificationData;
 import mynuaa.whatever.DataSource.UserInfoSyncTask.OnUserInfoSyncListener;
 import mynuaa.whatever.DataSource.UserInfoSyncTask;
 import mynuaa.whatever.DataSource.UserSession;
@@ -13,6 +16,10 @@ import mynuaa.whatever.DrawerAdapter.DrawerItem;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -36,7 +43,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		OnUserInfoSyncListener {
+		OnUserInfoSyncListener, OnNotificationCheckListener {
 	private static final String TASK_TAG = "task_main_activity";
 	private static long exitFirstTime = 0;
 
@@ -117,28 +124,45 @@ public class MainActivity extends SherlockFragmentActivity implements
 		mMainFragment.mMessageGroupIsContact = sp.getBoolean("mainLastGroup",
 				false);
 
-		if (savedInstanceState == null) {
+		if (NotificationData.getUnreadNotification().size() > 0) {
+			mDrawerAdapter.setNotification(R.id.drawer_message, true);
+		}
+
+		boolean needChkNotiNow = true;
+		if (getIntent().getBooleanExtra("notification", false)) {
+			needChkNotiNow = false;
+			selectItem(2);
+		} else if (savedInstanceState == null) {
 			selectItem(1);
 		}
 
 		updateUserInfo();
 
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
+		WhateverApplication.getApplication()
+				.registerOnNotificationCheckListener(this);
 
 		DataCenter.startLoactionService();
 
 		userInfoSync(UserInfoSyncTask.LOCAL);
+		if (needChkNotiNow) {
+			WhateverApplication.getApplication().checkNoitifcation();
+		}
 	}
 
 	@Override
 	protected void onPostResume() {
 		super.onPostResume();
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
+		WhateverApplication.getApplication()
+				.registerOnNotificationCheckListener(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		WhateverApplication.getMainTaskManager().deactivateTag(TASK_TAG);
+		WhateverApplication.getApplication()
+				.unregisterOnNotificationCheckListener(this);
 		DataCenter.stopLocationService();
 
 		SharedPreferences sp = PreferenceManager
@@ -586,6 +610,54 @@ public class MainActivity extends SherlockFragmentActivity implements
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onNotificationCheck(int result, int unreadCount) {
+		UserSession session = UserSession.getCurrentSession();
+		if (result == NotificationCheckTask.CHECK_SUCCESS && unreadCount != 0) {
+			session.addUnreadNotification(unreadCount);
+			session.saveAsLocalSession(this);
+
+			// 消息通知栏
+			// 定义NotificationManager
+			String ns = Context.NOTIFICATION_SERVICE;
+			NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+			// 定义通知栏展现的内容信息
+			int icon = R.drawable.ic_launcher;
+			CharSequence tickerText = "你收到" + unreadCount + "条新消息，点击查看";
+			long when = System.currentTimeMillis();
+			Notification notification = new Notification(icon, tickerText, when);
+
+			// 定义下拉通知栏时要展现的内容信息
+			Context context = getApplicationContext();
+			CharSequence contentTitle = "你收到" + unreadCount + "条新消息";
+			CharSequence contentText = "点击查看";
+			Intent notificationIntent = new Intent(this, MainActivity.class);
+			notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			notificationIntent.putExtra("notification", true);
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+					notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			notification.setLatestEventInfo(context, contentTitle, contentText,
+					contentIntent);
+			notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+			// 用mNotificationManager的notify方法通知用户生成标题栏消息通知
+			mNotificationManager.notify(1, notification);
+		}
+
+		if (session.getUnreadNotificationCount() > 0) {
+			mDrawerAdapter.setNotification(R.id.drawer_message, true);
+		}
+	}
+
+	public void clearNotification() {
+		UserSession session = UserSession.getCurrentSession();
+		if (session.getUnreadNotificationCount() == 0
+				&& NotificationData.getUnreadNotification().size() == 0) {
+			mDrawerAdapter.setNotification(R.id.drawer_message, false);
+		}
 	}
 
 }

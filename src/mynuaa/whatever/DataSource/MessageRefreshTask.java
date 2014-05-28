@@ -76,6 +76,7 @@ public class MessageRefreshTask extends Task {
 				String bad_count = messageObj.getString("bads");
 				String comment_count = messageObj.getString("replys");
 				String manner = messageObj.getString("manner");
+				String is_me = messageObj.getString("isme");
 
 				int background_color_index_i = Integer
 						.parseInt(background_color_index);
@@ -85,6 +86,7 @@ public class MessageRefreshTask extends Task {
 				int bad_count_i = Integer.parseInt(bad_count);
 				int comment_count_i = Integer.parseInt(comment_count);
 				int manner_i = Integer.parseInt(manner);
+				boolean is_me_b = "1".equals(is_me);
 
 				if ("0".equals(image_cid)) {
 					image_cid = "";
@@ -102,6 +104,7 @@ public class MessageRefreshTask extends Task {
 				md.good_count = good_count_i;
 				md.bad_count = bad_count_i;
 				md.comment_count = comment_count_i;
+				md.is_me = is_me_b;
 				switch (manner_i) {
 				case 1:
 					md.put_bad = true;

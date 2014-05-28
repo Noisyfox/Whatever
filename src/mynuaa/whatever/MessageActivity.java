@@ -8,6 +8,8 @@ import mynuaa.whatever.DataSource.MessageMannerTask.OnMannerPutListener;
 import mynuaa.whatever.DataSource.MessageRefreshTask;
 import mynuaa.whatever.DataSource.MessageRefreshTask.OnMessageRefreshListener;
 import mynuaa.whatever.DataSource.ReportTask;
+import mynuaa.whatever.DataSource.WHOTask;
+import mynuaa.whatever.DataSource.WHOTask.OnWHOListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -37,7 +39,7 @@ import android.widget.TextView;
 
 public class MessageActivity extends SherlockActivity implements
 		OnGestureListener, OnImageLoadListener, OnClickListener,
-		OnMessageRefreshListener, OnMannerPutListener {
+		OnMessageRefreshListener, OnMannerPutListener, OnWHOListener {
 	private static final String TASK_TAG = "task_message_activity";
 
 	public static void showMessage(Activity activity, MessageData md) {
@@ -69,6 +71,9 @@ public class MessageActivity extends SherlockActivity implements
 	ImageView imageView_image, imageView_background, imageView_bad,
 			imageView_good;
 
+	View button_bottom, button_bottom_1, button_bottom_2, button_bottom_3,
+			bkg_normal, bkg_trans;
+
 	MessageData mMessage = null;
 	String mCid = null;
 
@@ -80,6 +85,13 @@ public class MessageActivity extends SherlockActivity implements
 		Util.setupCommonActionBar(this, R.string.message_title);
 
 		mGestureDetector = new GestureDetector(this, this);
+
+		button_bottom = findViewById(R.id.button_bottom);
+		button_bottom_1 = findViewById(R.id.button_bottom_1);
+		button_bottom_2 = findViewById(R.id.button_bottom_2);
+		button_bottom_3 = findViewById(R.id.button_bottom_3);
+		bkg_normal = findViewById(R.id.bkg_normal);
+		bkg_trans = findViewById(R.id.bkg_trans);
 
 		btn_good = (NumberButton) findViewById(R.id.button_good);
 		btn_bad = (NumberButton) findViewById(R.id.button_bad);
@@ -160,6 +172,26 @@ public class MessageActivity extends SherlockActivity implements
 	}
 
 	private void setupButtons() {
+		if (mMessage.is_me) {
+			button_bottom.setVisibility(View.GONE);
+			button_bottom_1.setVisibility(View.GONE);
+			button_bottom_2.setVisibility(View.GONE);
+			button_bottom_3.setVisibility(View.GONE);
+			bkg_normal
+					.setBackgroundResource(R.drawable.message_bottom_background_t);
+			bkg_trans
+					.setBackgroundResource(R.drawable.message_bottom_background_trans_t);
+		} else {
+			button_bottom.setVisibility(View.VISIBLE);
+			button_bottom_1.setVisibility(View.VISIBLE);
+			button_bottom_2.setVisibility(View.VISIBLE);
+			button_bottom_3.setVisibility(View.VISIBLE);
+			bkg_normal
+					.setBackgroundResource(R.drawable.message_bottom_background);
+			bkg_trans
+					.setBackgroundResource(R.drawable.message_bottom_background_trans);
+		}
+
 		btn_comment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -185,6 +217,17 @@ public class MessageActivity extends SherlockActivity implements
 									@Override
 									public boolean onClick(
 											DialogInterface dialog, int which) {
+
+										WhateverApplication
+												.getMainTaskManager()
+												.startTask(
+														new WHOTask(
+																TASK_TAG,
+																mMessage.cid,
+																MessageActivity.this));
+										Toast.makeText(MessageActivity.this,
+												"发送WHO请求中", Toast.LENGTH_SHORT)
+												.show();
 										return true;
 									}
 								}).setNegativeButton("取消", null).create();
@@ -444,6 +487,30 @@ public class MessageActivity extends SherlockActivity implements
 		} else {
 			Toast.makeText(this, "啊哦好像失败了~", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void onWHOAsked(int result, String cid) {
+		if (mMessage.cid.equals(cid)) {
+			switch (result) {
+			case WHOTask.WHO_SUCCESS:
+				Toast.makeText(MessageActivity.this, "请求发送成功",
+						Toast.LENGTH_SHORT).show();
+				break;
+			case WHOTask.WHO_FAIL_ALREADY:
+				Toast.makeText(MessageActivity.this, "不可以重复WHO哦~",
+						Toast.LENGTH_SHORT).show();
+				break;
+			case WHOTask.WHO_FAIL_INNER_ERROR:
+				Toast.makeText(MessageActivity.this, "失败啦~请稍后再试",
+						Toast.LENGTH_SHORT).show();
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void onWHOReplied(int result, String wid, boolean agree) {
 	}
 
 }

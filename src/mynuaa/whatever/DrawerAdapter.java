@@ -29,6 +29,7 @@ public class DrawerAdapter extends BaseAdapter {
 		String title;
 		int id;
 		Bitmap icon;
+		boolean hasNoti = false;
 	}
 
 	private List<DrawerItem> mItems = new ArrayList<DrawerItem>();
@@ -163,6 +164,16 @@ public class DrawerAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
+	public void setNotification(int id, boolean hasNoti) {
+		for (DrawerItem di : mItems) {
+			if (di.id == id) {
+				di.hasNoti = hasNoti;
+				break;
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	@Override
 	public int getCount() {
 		return mItems.size();
@@ -192,6 +203,11 @@ public class DrawerAdapter extends BaseAdapter {
 
 		tv.setText(i.title);
 		di.setIconBitmap(i.icon);
+		if (i.hasNoti) {
+			di.setStampId(R.drawable.drawer_stamp_notify);
+		} else {
+			di.setStampId(R.drawable.drawer_stamp);
+		}
 		convertView.setId(i.id);
 
 		return convertView;

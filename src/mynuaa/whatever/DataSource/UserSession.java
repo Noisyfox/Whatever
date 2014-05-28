@@ -15,6 +15,7 @@ public class UserSession {
 	protected UserInfo mUserInfo = new UserInfo();
 
 	protected String mSession;
+	protected int mUnreadNotificationCount;
 
 	protected UserSession() {
 	}
@@ -58,9 +59,12 @@ public class UserSession {
 					.getColumnIndex(DataCenter.DB_USER_COLUMN_PHONE));
 			head = c.getString(c
 					.getColumnIndex(DataCenter.DB_USER_COLUMN_HEADCID));
+			int noti = c.getInt(c
+					.getColumnIndex(DataCenter.DB_USER_COLUMN_NOTI_UNREAD));
 
 			UserSession _us = new UserSession();
 			_us.mSession = session;
+			_us.mUnreadNotificationCount = noti;
 			_us.mUserInfo.mUid = user_id;
 			_us.mUserInfo.mName = name;
 			_us.mUserInfo.mPhone = phone;
@@ -77,6 +81,18 @@ public class UserSession {
 		return mCurrentSession;
 	}
 
+	public void addUnreadNotification(int count) {
+		mUnreadNotificationCount += count;
+	}
+
+	public void cleadUnreadNotification() {
+		mUnreadNotificationCount = 0;
+	}
+
+	public int getUnreadNotificationCount() {
+		return mUnreadNotificationCount;
+	}
+
 	public UserInfo getUserInfo() {
 		return mUserInfo;
 	}
@@ -88,6 +104,7 @@ public class UserSession {
 
 		ContentValues cv = new ContentValues();
 		cv.put(DataCenter.DB_USER_COLUMN_SESSION, mSession);
+		cv.put(DataCenter.DB_USER_COLUMN_NOTI_UNREAD, mUnreadNotificationCount);
 		cv.put(DataCenter.DB_USER_COLUMN_USERID, mUserInfo.mUid);
 		cv.put(DataCenter.DB_USER_COLUMN_NAME, mUserInfo.mName);
 		cv.put(DataCenter.DB_USER_COLUMN_PHONE, mUserInfo.mPhone);
