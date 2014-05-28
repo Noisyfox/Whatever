@@ -214,24 +214,36 @@ public class CommentActivity extends SherlockFragmentActivity implements
 			return position;
 		}
 
+		private class ViewHolder {
+			TextView textView_user;
+			TextView textView_time;
+			TextView textView_comment;
+		}
+
 		@Override
 		public View getView(int arg0, View arg1, ViewGroup arg2) {
-			if (arg1 == null)
+			ViewHolder holder = new ViewHolder();
+
+			if (arg1 == null) {
 				arg1 = LayoutInflater.from(CommentActivity.this).inflate(
 						R.layout.comment_list_item, null);
-
-			TextView textView_user = (TextView) arg1
-					.findViewById(R.id.textView_user);
-			TextView textView_time = (TextView) arg1
-					.findViewById(R.id.textView_time);
-			TextView textView_comment = (TextView) arg1
-					.findViewById(R.id.textView_comment);
+				holder = new ViewHolder();
+				holder.textView_user = (TextView) arg1
+						.findViewById(R.id.textView_user);
+				holder.textView_time = (TextView) arg1
+						.findViewById(R.id.textView_time);
+				holder.textView_comment = (TextView) arg1
+						.findViewById(R.id.textView_comment);
+				arg1.setTag(holder);
+			} else {
+				holder = (ViewHolder) arg1.getTag();
+			}
 
 			CommentData md = (CommentData) getItem(arg0);
 
-			textView_user.setText(md.user_display);
-			textView_time.setText(md.time);
-			textView_comment.setText(md.content);
+			holder.textView_user.setText(md.user_display);
+			holder.textView_time.setText(md.time);
+			holder.textView_comment.setText(md.content);
 
 			if (md.user == mReplyTo) {
 				arg1.setBackgroundResource(R.color.comment_item_background_selected);

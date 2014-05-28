@@ -192,24 +192,35 @@ public class TraceListActivity extends SherlockActivity implements
 			return position;
 		}
 
+		private class ViewHolder {
+			TextView textView_context;
+			TextView textView_time;
+			TriangleCornerView triangleCornerView_corner;
+		}
+
 		@Override
 		public View getView(int arg0, View convertView, ViewGroup arg2) {
-			if (convertView == null)
+			ViewHolder holder;
+			if (convertView == null) {
 				convertView = LayoutInflater.from(TraceListActivity.this)
 						.inflate(R.layout.trace_list_item, null);
-
-			TextView textView_context = (TextView) convertView
-					.findViewById(R.id.textView_content);
-			TextView textView_time = (TextView) convertView
-					.findViewById(R.id.textView_time);
-			TriangleCornerView triangleCornerView_corner = (TriangleCornerView) convertView
-					.findViewById(R.id.TriangleCornerView_corner);
+				holder = new ViewHolder();
+				holder.textView_context = (TextView) convertView
+						.findViewById(R.id.textView_content);
+				holder.textView_time = (TextView) convertView
+						.findViewById(R.id.textView_time);
+				holder.triangleCornerView_corner = (TriangleCornerView) convertView
+						.findViewById(R.id.TriangleCornerView_corner);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
 
 			MessageData md = (MessageData) getItem(arg0);
 
-			textView_context.setText(md.content);
-			textView_time.setText(md.time);
-			triangleCornerView_corner.setColor(MessageTheme.getColor(
+			holder.textView_context.setText(md.content);
+			holder.textView_time.setText(md.time);
+			holder.triangleCornerView_corner.setColor(MessageTheme.getColor(
 					md.background_color_index, MessageTheme.COLOR_CORNER));
 
 			return convertView;

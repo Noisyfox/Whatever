@@ -105,13 +105,6 @@ public class NotifyFragment extends SherlockFragment implements
 		super.onDestroyView();
 	}
 
-	static class ViewHolder {
-		TextView tv_content;
-		TextView tv_note;
-		TextView tv_type;
-		TriangleCornerView tcv_corner;
-	}
-
 	class NotifyAdapter extends BaseAdapter {
 
 		private LinkedList<NotificationData> mData = new LinkedList<NotificationData>();
@@ -175,6 +168,13 @@ public class NotifyFragment extends SherlockFragment implements
 		@Override
 		public long getItemId(int arg0) {
 			return 0;
+		}
+
+		private class ViewHolder {
+			TextView tv_content;
+			TextView tv_note;
+			TextView tv_type;
+			TriangleCornerView tcv_corner;
 		}
 
 		@Override
