@@ -7,7 +7,10 @@ import mynuaa.whatever.DataSource.MessageData;
 import mynuaa.whatever.DataSource.MessagePostTask;
 import mynuaa.whatever.DataSource.MessagePostTask.OnMessagePostListener;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,8 +25,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,8 +43,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WriteMessageActivity extends SherlockActivity implements
-		TextWatcher, OnClickListener, OnMessagePostListener {
+public class WriteMessageActivity extends SherlockFragmentActivity implements
+		TextWatcher, OnClickListener, OnMessagePostListener,
+		EmojiconGridFragment.OnEmojiconClickedListener,
+		EmojiconsFragment.OnEmojiconBackspaceClickedListener {
 	private static final String TASK_TAG = "task_write_message_activity";
 
 	private static final int REQUEST_GETIMG = 1;
@@ -56,11 +64,14 @@ public class WriteMessageActivity extends SherlockActivity implements
 	private int selectedTexture = 0;
 	private Bitmap cachedBackground = null;
 
+	private Fragment fragment_emoji;
+
 	private ImageView imageView_background;
 	private EditText editText_message;
 	private TextView textView_addImage;
 	private Button btn_send;
 	private ImageView imageView_image;
+	private View button_emoji;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +82,12 @@ public class WriteMessageActivity extends SherlockActivity implements
 		editText_message = (EditText) findViewById(R.id.editText_message);
 		textView_addImage = (TextView) findViewById(R.id.textView_addImage);
 		imageView_image = (ImageView) findViewById(R.id.imageView_image);
+		button_emoji = findViewById(R.id.button_emoji);
+
+		FragmentManager fm = getSupportFragmentManager();
+		fragment_emoji = fm.findFragmentById(R.id.fragment_emoji);
+
+		button_emoji.setOnClickListener(this);
 
 		Util.setupCommonActionBar(this, R.string.write_message_title);
 		btn_send = (Button) getSupportActionBar().getCustomView().findViewById(
@@ -108,6 +125,7 @@ public class WriteMessageActivity extends SherlockActivity implements
 
 		editText_message.addTextChangedListener(this);
 		Util.hideHintOnFocused(editText_message);
+		editText_message.setOnClickListener(this);
 
 		textView_addImage.setOnClickListener(new OnClickListener() {
 			@Override
@@ -146,6 +164,14 @@ public class WriteMessageActivity extends SherlockActivity implements
 		DataCenter.requireLocation();
 
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		FragmentManager fm = getSupportFragmentManager();
+		Util.toggleEmojiFragment(fm, fragment_emoji, false);
 	}
 
 	@Override
@@ -385,23 +411,45 @@ public class WriteMessageActivity extends SherlockActivity implements
 
 	@Override
 	public void onClick(View arg0) {
-		String message = editText_message.getText().toString();
-		if (Util.isBlank(message)) {
-			Toast.makeText(this, "不可以什么都不说哦~", Toast.LENGTH_SHORT).show();
-			return;
+		if (arg0 == btn_send) {
+			String message = editText_message.getText().toString();
+			if (Util.isBlank(message)) {
+				Toast.makeText(this, "不可以什么都不说哦~", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			mPostDialog = ProgressDialog.show(this, "发布状态中", "请稍候", false);
+
+			MessageData md = new MessageData();
+
+			md.content = editText_message.getText().toString();
+			md.background_color_index = this.selectedColor;
+			md.background_texture_index = this.selectedTexture;
+			md.image = imageBitmap;
+			md.image_cid = "";
+
+			WhateverApplication.getMainTaskManager().startTask(
+					new MessagePostTask(TASK_TAG, md, this));
+		} else if (arg0 == button_emoji) {
+			Util.setInputMethod(this, false);
+
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, true);
+		} else if (arg0 == editText_message) {
+			FragmentManager fm = getSupportFragmentManager();
+			Util.toggleEmojiFragment(fm, fragment_emoji, false);
 		}
-		mPostDialog = ProgressDialog.show(this, "发布状态中", "请稍候", false);
+	}
 
-		MessageData md = new MessageData();
-
-		md.content = editText_message.getText().toString();
-		md.background_color_index = this.selectedColor;
-		md.background_texture_index = this.selectedTexture;
-		md.image = imageBitmap;
-		md.image_cid = "";
-
-		WhateverApplication.getMainTaskManager().startTask(
-				new MessagePostTask(TASK_TAG, md, this));
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (fragment_emoji.isVisible()) {
+				FragmentManager fm = getSupportFragmentManager();
+				Util.toggleEmojiFragment(fm, fragment_emoji, false);
+				return true;
+			}
+		}
+		return super.onKeyUp(keyCode, event);
 	}
 
 	@Override
@@ -418,6 +466,16 @@ public class WriteMessageActivity extends SherlockActivity implements
 		} else {
 			Toast.makeText(this, "发布失败", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void onEmojiconBackspaceClicked(View v) {
+		EmojiconsFragment.backspace(editText_message);
+	}
+
+	@Override
+	public void onEmojiconClicked(Emojicon emojicon) {
+		EmojiconsFragment.input(editText_message, emojicon);
 	}
 
 }

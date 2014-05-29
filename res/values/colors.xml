@@ -324,5 +324,6 @@
     <color name="dialog_button_pressed">#e3e3e3</color>
     <color name="pm_text_time">#4C000000</color>
     <color name="pm_text_from">#3581C2</color>
+    <color name="emoji_input_background">#fbfbfb</color>
 
 </resources>

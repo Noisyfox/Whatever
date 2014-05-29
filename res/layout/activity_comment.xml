@@ -49,10 +49,16 @@
             android:src="@drawable/ic_action_send_now" />
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/fragment_emoji"
-        android:name="com.rockerhieu.emojicon.EmojiconsFragment"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp" />
+        android:layout_height="wrap_content"
+        android:background="@color/emoji_input_background" >
+
+        <fragment
+            android:id="@+id/fragment_emoji"
+            android:name="com.rockerhieu.emojicon.EmojiconsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="220dp" />
+    </FrameLayout>
 
 </LinearLayout>
