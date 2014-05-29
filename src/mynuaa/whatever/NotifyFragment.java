@@ -149,6 +149,7 @@ public class NotifyFragment extends SherlockFragment implements
 				}
 			}
 			notifyDataSetChanged();
+			((MainActivity) getActivity()).clearNotification();
 		}
 
 		public synchronized String getLastId() {
