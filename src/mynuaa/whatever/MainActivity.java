@@ -208,6 +208,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	private void updateUserInfo() {
 		UserSession us = UserSession.getCurrentSession();
+		if (us == null) {
+			return;
+		}
+
 		UserInfo ui = us.getUserInfo();
 		String name = ui.getUid();
 		Bitmap head = ui.getHeadBitmap();
