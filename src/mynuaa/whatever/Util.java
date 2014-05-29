@@ -15,6 +15,7 @@ import org.json.JSONException;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.rockerhieu.emojicon.EmojiconHandler;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -363,10 +364,6 @@ public class Util {
 		return 0;
 	}
 
-	// public static String getDisplayTime(Date time){
-	// Date d = new Date(System.currentTimeMillis());
-	// }
-
 	public static String messageDecode(String orig) {
 		orig = orig.replace("\\\\", "\\");
 		String str = "[\"" + orig + "\"]";
@@ -375,7 +372,6 @@ public class Util {
 			str = ja.getString(0);
 			return str;
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String r = orig.replace("\\n", "\n");
@@ -384,19 +380,100 @@ public class Util {
 	}
 
 	public static String messageEncode(String orig) {
+		try {
+			return emojiEncode(orig);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// Oops! Something goes wrong! But luckily we have a fallback here!
 		StringBuilder sb = new StringBuilder();
 		char chars[] = orig.toCharArray();
 		for (char c : chars) {
-			// int ci = c;
-			// if ((c >> 12) == 0xe || c <= 0x1F) {
 			sb.append(String.format("\\u%04x", (int) c));
-			// } else {
-			// sb.append(c);
-			// }
 		}
-		// JSONArray ja = new JSONArray();
-		// ja.put(orig);
-		// String str = ja.toString();
+		return sb.toString();
+	}
+
+	// Some copy code from com.rockerhieu.emojicon.EmojiconHandler
+	private static String emojiEncode(String orig) {
+		StringBuilder sb = new StringBuilder();
+
+		char chars[] = orig.toCharArray();
+
+		int skip = 0;
+		for (int i = 0; i < chars.length; i += skip) {
+			int icon = 0;
+
+			char c = chars[i];
+			if (EmojiconHandler.isSoftBankEmoji(c)) {
+				icon = EmojiconHandler.getSoftbankEmojiResource(c);
+				skip = icon == 0 ? 0 : 1;
+			}
+
+			if (icon == 0) {
+				int unicode = Character.codePointAt(chars, i);
+				skip = Character.charCount(unicode);
+
+				if (unicode > 0xff) {
+					icon = EmojiconHandler.getEmojiResource(null, unicode);
+				}
+
+				if (icon == 0 && i + skip < chars.length) {
+					int followUnicode = Character.codePointAt(chars, i + skip);
+					if (followUnicode == 0x20e3) {
+						int followSkip = Character.charCount(followUnicode);
+						switch (unicode) {
+						case 0x0031:
+						case 0x0032:
+						case 0x0033:
+						case 0x0034:
+						case 0x0035:
+						case 0x0036:
+						case 0x0037:
+						case 0x0038:
+						case 0x0039:
+						case 0x0030:
+						case 0x0023:
+							icon = 1;
+							break;
+						default:
+							followSkip = 0;
+							break;
+						}
+						skip += followSkip;
+					} else {
+						int followSkip = Character.charCount(followUnicode);
+						switch (unicode) {
+						case 0x1f1ef:
+						case 0x1f1fa:
+						case 0x1f1eb:
+						case 0x1f1e9:
+						case 0x1f1ee:
+						case 0x1f1ec:
+						case 0x1f1ea:
+						case 0x1f1f7:
+						case 0x1f1e8:
+						case 0x1f1f0:
+							icon = 1;
+							break;
+						default:
+							followSkip = 0;
+							break;
+						}
+						skip += followSkip;
+					}
+				}
+			}
+
+			if (icon > 0) { // Emoji
+				for (int j = i; j < chars.length && j < i + skip; j++) {
+					sb.append(String.format("\\u%04x", (int) chars[j]));
+				}
+			} else {
+				sb.append(c);
+			}
+		}
+
 		return sb.toString();
 	}
 
