@@ -1,10 +1,13 @@
 package mynuaa.whatever;
 
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
 import mynuaa.whatever.DataSource.ContactSyncTask;
+import mynuaa.whatever.DataSource.ImageLoadTask;
+import mynuaa.whatever.DataSource.ImageLoadTask.OnImageLoadListener;
 import mynuaa.whatever.DataSource.NotificationData;
 import mynuaa.whatever.DataSource.NotificationGetTask;
 import mynuaa.whatever.DataSource.UserSession;
@@ -20,6 +23,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -29,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -327,6 +332,41 @@ public class NotifyFragment extends SherlockFragment implements
 		updateCurrendData(true);
 	}
 
+	private static class DialogWrapper implements OnImageLoadListener {
+		WeakReference<Dialog> wr_dialog;
+		WeakReference<ImageView> wr_image;
+
+		public DialogWrapper(Dialog fatherDialog, ImageView headView) {
+			wr_dialog = new WeakReference<Dialog>(fatherDialog);
+			wr_image = new WeakReference<ImageView>(headView);
+		}
+
+		@Override
+		public void onImageLoaded(int taskCode, String cid, String size,
+				Bitmap image) {
+			if (image == null) {
+				return;
+			}
+
+			Dialog d = wr_dialog.get();
+			if (d == null) {
+				return;
+			}
+
+			if (!d.isShowing()) {
+				return;
+			}
+
+			ImageView iv = wr_image.get();
+			if (iv == null) {
+				return;
+			}
+
+			iv.setImageBitmap(image);
+		}
+
+	}
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -366,7 +406,7 @@ public class NotifyFragment extends SherlockFragment implements
 			case NotificationData.TYPE_REPORT:
 				break;
 			case NotificationData.TYPE_WHO: {
-				String phone, realName, userName;
+				String phone, realName, userName, uid;
 				try {
 					JSONTokener jsonParser = new JSONTokener(nd.ext);
 
@@ -379,6 +419,7 @@ public class NotifyFragment extends SherlockFragment implements
 					phone = jsonObj.getString("phone");
 					realName = jsonObj.getString("real_name");
 					userName = jsonObj.getString("username");
+					uid = jsonObj.getString("uid");
 				} catch (JSONException e) {
 					e.printStackTrace();
 					break;
@@ -388,23 +429,29 @@ public class NotifyFragment extends SherlockFragment implements
 						.contactEnabled(getActivity()) ? Util
 						.findContactNameByNumber(getActivity(), phone) : null;
 
-				StringBuilder sb = new StringBuilder();
-				sb.append(userName);
-				sb.append(',');
-				sb.append(realName);
-				sb.append(',');
-				sb.append(phone);
-				if (!TextUtils.isEmpty(contactName)) {
-					sb.append(',');
-					sb.append(contactName);
-				}
-				sb.append('\n');
-				sb.append("\u3000\u3000一旦同意WHO请求，对方将收到你的信息（姓名、手机号），是否同意？");
+				final View askView = LayoutInflater.from(getActivity())
+						.inflate(R.layout.dialog_who, null);
+				final ImageView iv_head = (ImageView) askView
+						.findViewById(R.id.imageView_head);
 
+				TextView tv_id = (TextView) askView
+						.findViewById(R.id.textView_id), tv_name = (TextView) askView
+						.findViewById(R.id.textView_name), tv_phone = (TextView) askView
+						.findViewById(R.id.textView_phone), tv_contact = (TextView) askView
+						.findViewById(R.id.textView_contact);
+				tv_id.setText(userName);
+				tv_name.setText(realName);
+				tv_phone.setText(phone);
+				if (TextUtils.isEmpty(contactName)) {
+					tv_contact.setText(R.string.who_contact_no);
+				} else {
+					tv_contact.setText(getActivity().getResources().getString(
+							R.string.who_contact, contactName));
+				}
 				Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
 						.setTitle("WHO")
 						.setIcon(R.drawable.message_who)
-						.setMessage(sb.toString())
+						.setView(askView)
 						.setPositiveButton("同意",
 								new MyAlertDialog.OnClickListener() {
 									@Override
@@ -442,11 +489,16 @@ public class NotifyFragment extends SherlockFragment implements
 									}
 								}).create();
 				alertDialog.show();
+				DialogWrapper dw = new DialogWrapper(alertDialog, iv_head);
+				WhateverApplication.getMainTaskManager().startTask(
+						new ImageLoadTask(TASK_TAG, 0, "avatar_" + uid, "big",
+								dw));
+
 				break;
 			}
 			case NotificationData.TYPE_WHO_REPLY:
 				if (!TextUtils.isEmpty(nd.ext)) {
-					String phone, realName, userName;
+					String phone, realName, userName, uid;
 					try {
 						JSONTokener jsonParser = new JSONTokener(nd.ext);
 
@@ -461,6 +513,7 @@ public class NotifyFragment extends SherlockFragment implements
 						phone = jsonObj.getString("phone");
 						realName = jsonObj.getString("real_name");
 						userName = jsonObj.getString("username");
+						uid = jsonObj.getString("uid");
 					} catch (JSONException e) {
 						e.printStackTrace();
 						break;
@@ -471,23 +524,36 @@ public class NotifyFragment extends SherlockFragment implements
 							.findContactNameByNumber(getActivity(), phone)
 							: null;
 
-					StringBuilder sb = new StringBuilder();
-					sb.append(userName);
-					sb.append(',');
-					sb.append(realName);
-					sb.append(',');
-					sb.append(phone);
-					if (!TextUtils.isEmpty(contactName)) {
-						sb.append(',');
-						sb.append(contactName);
+					final View askView = LayoutInflater.from(getActivity())
+							.inflate(R.layout.dialog_who, null);
+					final ImageView iv_head = (ImageView) askView
+							.findViewById(R.id.imageView_head);
+					TextView tv_id = (TextView) askView
+							.findViewById(R.id.textView_id), tv_name = (TextView) askView
+							.findViewById(R.id.textView_name), tv_phone = (TextView) askView
+							.findViewById(R.id.textView_phone), tv_contact = (TextView) askView
+							.findViewById(R.id.textView_contact);
+					askView.findViewById(R.id.textView_allow).setVisibility(
+							View.GONE);
+					tv_id.setText(userName);
+					tv_name.setText(realName);
+					tv_phone.setText(phone);
+					if (TextUtils.isEmpty(contactName)) {
+						tv_contact.setText(R.string.who_contact_no);
+					} else {
+						tv_contact.setText(getActivity().getResources()
+								.getString(R.string.who_contact, contactName));
 					}
 
 					Dialog alertDialog = new MyAlertDialog.Builder(
 							getActivity()).setTitle("WHO")
-							.setIcon(R.drawable.message_who)
-							.setMessage(sb.toString())
+							.setIcon(R.drawable.message_who).setView(askView)
 							.setPositiveButton("我知道了", null).create();
 					alertDialog.show();
+					DialogWrapper dw = new DialogWrapper(alertDialog, iv_head);
+					WhateverApplication.getMainTaskManager().startTask(
+							new ImageLoadTask(TASK_TAG, 0, "avatar_" + uid,
+									"big", dw));
 				}
 				break;
 			}

@@ -239,7 +239,7 @@ public class MessageActivity extends SherlockActivity implements
 			@Override
 			public void onClick(View v) {
 				View reportView = LayoutInflater.from(MessageActivity.this)
-						.inflate(R.layout.report_dialog, null);
+						.inflate(R.layout.dialog_report, null);
 				final EditText editText_report = (EditText) reportView
 						.findViewById(R.id.editText_report);
 				Spinner spinner_default = (Spinner) reportView

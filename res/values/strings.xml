@@ -56,7 +56,7 @@
     <string name="mymessage_prefix">状态</string>
     <string name="mymessage_test">“啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊”</string>
     <string name="mymessage_r_test">收到1个赞</string>
-    <string name="footer_more">more</string>
+    <string name="footer_more">more…</string>
     <string name="footer_read">显示已读消息</string>
     <string name="footer_loading">载入中</string>
     <string name="path_good">赞过</string>
@@ -105,6 +105,12 @@
     <string name="notify_type_who_reply">来自WHO的回复</string>
     <string name="btn_back_to_message">返回状态</string>
     <string name="mark_all_read">全部标记已读</string>
+    <string name="who_id">纸飞机ID：</string>
+    <string name="who_name">姓名：</string>
+    <string name="who_phone">电话：</string>
+    <string name="who_contact">（手机联系人 %1$s）</string>
+    <string name="who_contact_no">（非手机联系人）</string>
+    <string name="who_allow">是否同意交换个人信息？</string>
 
     <string-array name="report_default">
         <item></item>
