@@ -44,6 +44,9 @@ public class SettingsFragment extends SherlockFragment implements
 
 		ListView settingsView = (ListView) rootView
 				.findViewById(R.id.listView_settings);
+		View fakeHeadView = LayoutInflater.from(getActivity()).inflate(
+				R.layout.settings_fake_head, null);
+		settingsView.addHeaderView(fakeHeadView, null, false);
 		settingsView.setAdapter(sa);
 		settingsView.setOnItemClickListener(this);
 

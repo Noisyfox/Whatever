@@ -3,14 +3,14 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.Sherlock.Light">
 
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
         <!-- Implementation of attributes needed for the navigation drawer as the default implementation is based on API-14. -->
         <item name="myapp_listPreferredItemHeightSmall">48dip</item>
@@ -36,9 +36,13 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
+        <item name="switchStyle">@style/CompoundButton.Switch.my</item>
     </style>
 
+    <style name="CompoundButton.Switch.my" parent="Widget.Holo.Light.CompoundButton.Switch">
+        <item name="thumb">@drawable/switch_inner_my</item>
+    </style>
+    
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
