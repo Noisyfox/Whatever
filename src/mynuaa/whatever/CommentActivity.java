@@ -273,6 +273,12 @@ public class CommentActivity extends SherlockFragmentActivity implements
 			return;
 		}
 
+		int insertPosition = editText_comment.getSelectionStart();
+		insertPosition -= mReplyToPrefix.length();
+		if (insertPosition < 0) {
+			insertPosition = 0;
+		}
+
 		String origComment = getComment();
 		mReplyToPrefix = "";
 
@@ -280,6 +286,8 @@ public class CommentActivity extends SherlockFragmentActivity implements
 			String pref = "回复 " + (replyTo == 0 ? "楼主" : "用户" + replyTo) + " :";
 			editText_comment.setText(pref + origComment);
 			mReplyToPrefix = pref;
+			insertPosition += mReplyToPrefix.length();
+			editText_comment.setSelection(insertPosition);
 		} else {
 			editText_comment.setText(origComment);
 		}
