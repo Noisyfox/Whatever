@@ -14,7 +14,8 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 	public String cid;
 	public String content;
 	public String image_cid;
-	public String time;
+	public String time_normative;
+	public long time_precise;
 	public int background_color_index;
 	public int background_texture_index;
 	public int good_count, bad_count, comment_count;
@@ -32,15 +33,13 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 
 	public static List<MessageData> getCachedMessages(int messageFilter) {
 		SQLiteDatabase db = DataCenter.getDatabase(false);
-		Cursor c = db
-				.query(DataCenter.DB_MESSAGECACHE_NAME, null,
-						DataCenter.DB_MESSAGECACHE_COLUMN_FILTER + "=?",
-						new String[] { String.valueOf(messageFilter) }, null,
-						null,
-						DataCenter.DB_MESSAGECACHE_COLUMN_TIME + " desc"/*
-																		 * 0rderBy
-																		 */,
-						"0, 20" /* limit */);
+		Cursor c = db.query(DataCenter.DB_MESSAGECACHE_NAME, null,
+				DataCenter.DB_MESSAGECACHE_COLUMN_FILTER + "=?",
+				new String[] { String.valueOf(messageFilter) }, null, null,
+				DataCenter.DB_MESSAGECACHE_COLUMN_TIME_PREC + " desc"/*
+																	 * 0rderBy
+																	 */,
+				"0, 20" /* limit */);
 
 		List<MessageData> messages = new ArrayList<MessageData>();
 		if (c.moveToFirst()) {
@@ -54,9 +53,12 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 				String image_cid = c
 						.getString(c
 								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_IMAGE));
-				String time = c
+				String time_norm = c
 						.getString(c
-								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_TIME));
+								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_TIME_NORM));
+				long time_prec = c
+						.getLong(c
+								.getColumnIndex(DataCenter.DB_MESSAGECACHE_COLUMN_TIME_PREC));
 
 				int background_color_index = c
 						.getInt(c
@@ -87,7 +89,8 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 				md.cid = cid;
 				md.content = content;
 				md.image_cid = image_cid;
-				md.time = time;
+				md.time_normative = time_norm;
+				md.time_precise = time_prec;
 				md.background_color_index = background_color_index;
 				md.background_texture_index = background_texture_index;
 				md.good_count = good_count;
@@ -133,7 +136,9 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_CID, m.cid);
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_CONTENT, m.content);
-			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_TIME, m.time);
+			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_TIME_NORM,
+					m.time_normative);
+			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_TIME_PREC, m.time_precise);
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_GOOD, m.good_count);
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_BAD, m.bad_count);
 			cv.put(DataCenter.DB_MESSAGECACHE_COLUMN_COMMENT, m.comment_count);
@@ -172,7 +177,8 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 		dest.writeString(cid);
 		dest.writeString(content);
 		dest.writeString(image_cid);
-		dest.writeString(time);
+		dest.writeString(time_normative);
+		dest.writeLong(time_precise);
 		dest.writeInt(background_color_index);
 		dest.writeInt(background_texture_index);
 		dest.writeInt(good_count);
@@ -189,7 +195,8 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 			md.cid = source.readString();
 			md.content = source.readString();
 			md.image_cid = source.readString();
-			md.time = source.readString();
+			md.time_normative = source.readString();
+			md.time_precise = source.readLong();
 			md.background_color_index = source.readInt();
 			md.background_texture_index = source.readInt();
 			md.good_count = source.readInt();

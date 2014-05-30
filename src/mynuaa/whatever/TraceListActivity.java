@@ -219,7 +219,7 @@ public class TraceListActivity extends SherlockActivity implements
 			MessageData md = (MessageData) getItem(arg0);
 
 			holder.textView_context.setText(md.content);
-			holder.textView_time.setText(md.time);
+			holder.textView_time.setText(md.time_normative);
 			holder.triangleCornerView_corner.setColor(MessageTheme.getColor(
 					md.background_color_index, MessageTheme.COLOR_CORNER));
 

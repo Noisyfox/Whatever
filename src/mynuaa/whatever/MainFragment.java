@@ -368,7 +368,9 @@ public class MainFragment extends SherlockFragment implements
 			MessageData md = (MessageData) getItem(position);
 
 			holder.textView_context.setText(md.content);
-			holder.textView_time.setText(md.time);
+			String niceTime = Util.getNiceTime(md.time_precise);
+			holder.textView_time.setText(niceTime == null ? md.time_normative
+					: niceTime);
 			GradientDrawable sd = (GradientDrawable) holder.view_background
 					.getBackground();
 			sd.setColor(MessageTheme.getColor(md.background_color_index,

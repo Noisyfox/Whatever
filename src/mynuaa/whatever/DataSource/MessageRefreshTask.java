@@ -67,7 +67,7 @@ public class MessageRefreshTask extends Task {
 				String cid = messageObj.getString("nid");
 				String content = messageObj.getString("content");
 				String image_cid = messageObj.getString("imageid");
-				String time = messageObj.getString("time");
+				String time_norm = messageObj.getString("time");
 
 				String background_color_index = messageObj.getString("color");
 				String background_texture_index = messageObj
@@ -92,13 +92,15 @@ public class MessageRefreshTask extends Task {
 					image_cid = "";
 				}
 
-				time = Util.formatTime(time);
+				long time_prec = Util.parseServerTime(time_norm);
+				time_norm = Util.formatTime(time_prec);
 
 				MessageData md = new MessageData();
 				md.cid = cid;
 				md.content = Util.messageDecode(content);
 				md.image_cid = image_cid;
-				md.time = time;
+				md.time_normative = time_norm;
+				md.time_precise = time_prec;
 				md.background_color_index = background_color_index_i;
 				md.background_texture_index = background_texture_index_i;
 				md.good_count = good_count_i;

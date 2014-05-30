@@ -44,7 +44,8 @@ public class DataCenter {
 	public static final String DB_MESSAGECACHE_COLUMN_ID = "mid";
 	public static final String DB_MESSAGECACHE_COLUMN_CID = "cid";
 	public static final String DB_MESSAGECACHE_COLUMN_CONTENT = "content";
-	public static final String DB_MESSAGECACHE_COLUMN_TIME = "time";
+	public static final String DB_MESSAGECACHE_COLUMN_TIME_PREC = "time_prec";
+	public static final String DB_MESSAGECACHE_COLUMN_TIME_NORM = "time_norm";
 	public static final String DB_MESSAGECACHE_COLUMN_GOOD = "good";
 	public static final String DB_MESSAGECACHE_COLUMN_BAD = "bad";
 	public static final String DB_MESSAGECACHE_COLUMN_COMMENT = "comment";
@@ -344,11 +345,12 @@ public class DataCenter {
 			db.execSQL(sql);
 
 			sql = String
-					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+					.format("CREATE TABLE %s(%s integer primary key autoincrement, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
 							DB_MESSAGECACHE_NAME, DB_MESSAGECACHE_COLUMN_ID,
 							DB_MESSAGECACHE_COLUMN_CID,
 							DB_MESSAGECACHE_COLUMN_CONTENT,
-							DB_MESSAGECACHE_COLUMN_TIME,
+							DB_MESSAGECACHE_COLUMN_TIME_PREC,
+							DB_MESSAGECACHE_COLUMN_TIME_NORM,
 							DB_MESSAGECACHE_COLUMN_GOOD,
 							DB_MESSAGECACHE_COLUMN_BAD,
 							DB_MESSAGECACHE_COLUMN_COMMENT,

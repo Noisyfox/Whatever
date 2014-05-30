@@ -130,7 +130,7 @@ public class MessageActivity extends SherlockActivity implements
 			setupButtons();
 
 			textView_message.setText(mMessage.content);
-			textView_time.setText(mMessage.time);
+			textView_time.setText(mMessage.time_normative);
 			imageView_background.setImageBitmap(MessageTheme.createBackground(
 					this, mMessage.background_color_index,
 					mMessage.background_texture_index));

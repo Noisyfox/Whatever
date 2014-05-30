@@ -345,6 +345,10 @@ public class Util {
 	private static final DateFormat DF_target = new SimpleDateFormat(
 			"MM-dd HH:mm", Locale.CHINA);
 
+	public static String formatTime(long time) {
+		return DF_target.format(new Date(time));
+	}
+
 	public static String formatTime(String origin) {
 		try {
 			return DF_target.format(DF_orig.parse(origin));
@@ -588,6 +592,31 @@ public class Util {
 			return DF_level_month.format(new Date(time));
 		}
 		return DF_level_timeOnly.format(new Date(time));
+	}
+
+	private static final DateFormat DF_level_dateOnly = new SimpleDateFormat(
+			"MM-dd", Locale.CHINA);
+
+	public static String getNiceTime(long time) {
+		long currentTime = System.currentTimeMillis();
+		long delta = currentTime - time;
+		long minute = delta / 1000 / 60;
+		if (minute < 1) {
+			return "刚刚";
+		}
+		if (minute < 60) {
+			return minute + "分钟前";
+		}
+		long hour = minute / 60;
+		if (hour < 24) {
+			return hour + "小时前";
+		}
+		long day = hour / 24;
+		if (day == 1) {
+			return "昨天";
+		}
+
+		return DF_level_dateOnly.format(new Date(time));
 	}
 
 	/**
