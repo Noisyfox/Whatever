@@ -20,6 +20,15 @@
         android:id="@+id/switch_group"
         android:icon="@drawable/ic_location"
         android:showAsAction="always"
-        android:title="@string/switch_location"/>
+        android:title="@string/switch_location">
+        <menu>
+            <item
+                android:id="@+id/location"
+                android:title="@string/switch_location"/>
+            <item
+                android:id="@+id/contact"
+                android:title="@string/switch_contact"/>
+        </menu>
+    </item>
 
 </menu>

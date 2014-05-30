@@ -57,12 +57,15 @@ public class MainFragment extends SherlockFragment implements
 
 	private View toTopView;
 
+	private MenuItem switchMenuItem;
+
 	protected boolean mMessageGroupIsContact = false;
 	private boolean mMessageGroupIsVisible = true;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.mainpage, menu);
+		switchMenuItem = menu.findItem(R.id.switch_group);
 	}
 
 	@Override
@@ -74,19 +77,23 @@ public class MainFragment extends SherlockFragment implements
 			boolean drawerOpen = ma.mDrawerLayout.isDrawerOpen(ma.mDrawerList);
 			mMessageGroupIsVisible = !drawerOpen;
 
-			updateSwitchIcon(menu.findItem(R.id.switch_group));
+			updateSwitchIcon();
 		}
 	}
 
-	private void updateSwitchIcon(MenuItem item) {
-		item.setVisible(mMessageGroupIsVisible);
+	private void updateSwitchIcon() {
+		if (switchMenuItem == null) {
+			return;
+		}
+
+		switchMenuItem.setVisible(mMessageGroupIsVisible);
 		if (mMessageGroupIsVisible) {
 			if (mMessageGroupIsContact) {
-				item.setIcon(R.drawable.ic_contact);
-				item.setTitle(R.string.switch_location);
+				switchMenuItem.setIcon(R.drawable.ic_contact);
+				switchMenuItem.setTitle(R.string.switch_contact);
 			} else {
-				item.setIcon(R.drawable.ic_location);
-				item.setTitle(R.string.switch_contact);
+				switchMenuItem.setIcon(R.drawable.ic_location);
+				switchMenuItem.setTitle(R.string.switch_location);
 			}
 		}
 	}
@@ -95,37 +102,65 @@ public class MainFragment extends SherlockFragment implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action buttons
 		switch (item.getItemId()) {
-		case R.id.switch_group:
-			if (!mMessageGroupIsContact
-					&& !ContactSyncTask.contactEnabled(getActivity())) {
-				Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
-						.setMessage(
-								"\u3000\u3000基于通讯录的状态匹配需要开启通讯录匹配功能。你可以在设置中点击\"匹配手机通讯录\"来启用它。")
-						.setPositiveButton("现在去开",
-								new MyAlertDialog.OnClickListener() {
-									@Override
-									public boolean onClick(
-											DialogInterface dialog, int which) {
-										((MainActivity) getActivity())
-												.jumpToSettings();
-										return true;
-									}
-								}).setNegativeButton("算了吧", null).create();
-				alertDialog.show();
-			} else {
-				returnTop();
-				mMessageGroupIsContact = !mMessageGroupIsContact;
-				clearLoading();
-				updateSwitchIcon(item);
-				loadCachedMessage(mMessageGroupIsContact ? MessageData.MESSAGE_FILTER_CONTACT
-						: MessageData.MESSAGE_FILTER_LOCATION);
-				if (currentData.isEmpty()) {
-					updateCurrendData(true);
-				}
-			}
+		/*
+		 * case R.id.switch_group: if (!mMessageGroupIsContact &&
+		 * !ContactSyncTask.contactEnabled(getActivity())) { Dialog alertDialog
+		 * = new MyAlertDialog.Builder(getActivity()) .setMessage(
+		 * "\u3000\u3000基于通讯录的状态匹配需要开启通讯录匹配功能。你可以在设置中点击\"匹配手机通讯录\"来启用它。")
+		 * .setPositiveButton("现在去开", new MyAlertDialog.OnClickListener() {
+		 * 
+		 * @Override public boolean onClick( DialogInterface dialog, int which)
+		 * { ((MainActivity) getActivity()) .jumpToSettings(); return true; }
+		 * }).setNegativeButton("算了吧", null).create(); alertDialog.show(); }
+		 * else { returnTop(); mMessageGroupIsContact = !mMessageGroupIsContact;
+		 * clearLoading(); updateSwitchIcon();
+		 * loadCachedMessage(mMessageGroupIsContact ?
+		 * MessageData.MESSAGE_FILTER_CONTACT :
+		 * MessageData.MESSAGE_FILTER_LOCATION); if (currentData.isEmpty()) {
+		 * updateCurrendData(true); } } return true;
+		 */
+		case R.id.contact:
+			switchGroup(true);
+			return true;
+		case R.id.location:
+			switchGroup(false);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void switchGroup(boolean contact) {
+		if (mMessageGroupIsContact == contact) {
+			returnTop();
+			return;
+		}
+
+		if (contact && !ContactSyncTask.contactEnabled(getActivity())) {
+			Dialog alertDialog = new MyAlertDialog.Builder(getActivity())
+					.setMessage(
+							"\u3000\u3000基于通讯录的状态匹配需要开启通讯录匹配功能。你可以在设置中点击\"匹配手机通讯录\"来启用它。")
+					.setPositiveButton("现在去开",
+							new MyAlertDialog.OnClickListener() {
+								@Override
+								public boolean onClick(DialogInterface dialog,
+										int which) {
+									((MainActivity) getActivity())
+											.jumpToSettings();
+									return true;
+								}
+							}).setNegativeButton("算了吧", null).create();
+			alertDialog.show();
+		} else {
+			returnTop();
+			mMessageGroupIsContact = !mMessageGroupIsContact;
+			clearLoading();
+			updateSwitchIcon();
+			loadCachedMessage(mMessageGroupIsContact ? MessageData.MESSAGE_FILTER_CONTACT
+					: MessageData.MESSAGE_FILTER_LOCATION);
+			if (currentData.isEmpty()) {
+				updateCurrendData(true);
+			}
 		}
 	}
 
