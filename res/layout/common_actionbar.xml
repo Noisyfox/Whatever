@@ -17,6 +17,7 @@
         android:layout_gravity="left|center_vertical"
         android:layout_marginLeft="0dp"
         android:background="@drawable/actionbar_return_button"
+        android:padding="10dp"
         android:src="@drawable/ic_action_previous_item" />
 
     <Button
@@ -27,6 +28,7 @@
         android:layout_marginLeft="0dp"
         android:background="@drawable/actionbar_return_button"
         android:minWidth="48dp"
+        android:padding="10dp"
         android:text="@string/btn_write_message_sned"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
