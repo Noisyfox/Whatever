@@ -84,6 +84,6 @@ public class NotificationCheckTask extends Task {
 	public static boolean checkEnabled(Context context) {
 		SharedPreferences sp = context.getSharedPreferences("Settings",
 				Context.MODE_PRIVATE);
-		return sp.getBoolean("messageNoti", false);
+		return sp.getBoolean("messageNoti", true);
 	}
 }

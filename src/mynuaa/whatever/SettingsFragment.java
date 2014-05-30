@@ -88,7 +88,7 @@ public class SettingsFragment extends SherlockFragment implements
 
 	private void setupSettings(SettingsAdapter settingsAdapter) {
 		settingsAdapter.addSetting(new ToggleSetting("匹配手机通讯录", "autoContact",
-				new OnToggleSettingChangeListener() {
+				false, new OnToggleSettingChangeListener() {
 					@Override
 					public boolean onValueChange(final ToggleSetting ts,
 							boolean newValue) {
@@ -129,7 +129,7 @@ public class SettingsFragment extends SherlockFragment implements
 					}
 				}));
 		settingsAdapter.addSetting(new ToggleSetting("新消息通知", "messageNoti",
-				new OnToggleSettingChangeListener() {
+				true, new OnToggleSettingChangeListener() {
 					@Override
 					public boolean onValueChange(ToggleSetting ts,
 							boolean newValue) {

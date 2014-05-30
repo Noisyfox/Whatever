@@ -18,9 +18,10 @@ public class ToggleSetting extends Setting {
 	boolean checked = false;
 	Switch mSwitch;
 
-	public ToggleSetting(String title, String id,
+	public ToggleSetting(String title, String id, boolean defaultValue,
 			OnToggleSettingChangeListener onToggleSettingChangeListener) {
 		super(title, id);
+		checked = defaultValue;
 		mChangeListener = onToggleSettingChangeListener;
 	}
 
@@ -62,8 +63,8 @@ public class ToggleSetting extends Setting {
 
 		return arg1;
 	}
-	
-	public void setChceked(boolean checked){
+
+	public void setChceked(boolean checked) {
 		mSwitch.setChecked(checked);
 	}
 
