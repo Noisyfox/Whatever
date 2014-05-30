@@ -574,9 +574,11 @@ public class Util {
 			int month = ca.get(Calendar.MONTH);
 			int day = ca.get(Calendar.DAY_OF_MONTH);
 			ca.set(year, month, day, 0, 0, 0);
+			ca.set(Calendar.MILLISECOND, 0);
 			time_today = ca.getTimeInMillis();
 			time_nextDay = time_today + 24 * 60 * 60 * 1000;
 			ca.set(year, 1, 1, 0, 0, 0);
+			ca.set(Calendar.MILLISECOND, 0);
 			time_thisYear = ca.getTimeInMillis();
 		}
 
