@@ -34,6 +34,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:background="@drawable/textfield_default_holo_light"
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textMultiLine" />
