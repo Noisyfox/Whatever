@@ -3,6 +3,7 @@ package mynuaa.whatever;
 import mynuaa.whatever.SettingsWidget.ButtonSetting;
 import mynuaa.whatever.SettingsWidget.Setting;
 import mynuaa.whatever.SettingsWidget.SettingsAdapter;
+import mynuaa.whatever.SettingsWidget.TextSetting;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -20,6 +21,7 @@ public class AboutActivity extends SherlockActivity implements
 		OnItemClickListener, OnGestureListener {
 
 	GestureDetector mGestureDetector;
+	TextSetting mTextSetting_update;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,14 @@ public class AboutActivity extends SherlockActivity implements
 	}
 
 	private void setupSettings(SettingsAdapter settingsAdapter) {
+		mTextSetting_update = new TextSetting("版本更新", "update") {
+			@Override
+			public void OnClick() {
+
+			}
+		};
+		mTextSetting_update.setText("已是最新版本");
+		settingsAdapter.addSetting(mTextSetting_update);
 		settingsAdapter.addSetting(new ButtonSetting("隐私声明", "privacy") {
 			@Override
 			public void OnClick() {
