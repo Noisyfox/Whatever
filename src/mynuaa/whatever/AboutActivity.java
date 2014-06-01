@@ -60,6 +60,8 @@ public class AboutActivity extends SherlockActivity implements
 		settingsAdapter.addSetting(new ButtonSetting("团队简介", "aboutUs") {
 			@Override
 			public void OnClick() {
+				WebViewActivity.startWebView(AboutActivity.this,
+						"file:///android_asset/aboutus.html");
 			}
 		});
 		settingsAdapter.addSetting(new ButtonSetting("扫一扫 下载我", "download") {
