@@ -71,18 +71,23 @@
         </FrameLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <mynuaa.whatever.TouchEater
         android:id="@+id/pm_load_process"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="#44000000" >
+        android:layout_height="fill_parent" >
 
-        <include
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            layout="@layout/overlay_progress_view" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="#44000000" >
+
+            <include
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                layout="@layout/overlay_progress_view" />
+        </RelativeLayout>
+    </mynuaa.whatever.TouchEater>
 
 </merge>

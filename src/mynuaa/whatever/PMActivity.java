@@ -281,13 +281,6 @@ public class PMActivity extends SherlockFragmentActivity implements
 		cid = getIntent().getStringExtra("cid");
 		session = getIntent().getStringExtra("session");
 
-		loadingView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return true;
-			}
-		});
-
 		WhateverApplication.getMainTaskManager().activateTag(TASK_TAG);
 
 		if (session == null) {
