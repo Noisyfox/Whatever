@@ -72,7 +72,7 @@
     <string name="user_edit">修改</string>
     <string name="user_loading">载入中</string>
     <string name="about_title">关于</string>
-    <string name="about_version">V 1.0</string>
+    <string name="about_version">V %1$s</string>
     <string name="about_nuaa">纸飞机南航青年网络社区出品</string>
     <string name="about_contact">联系我们:appwhateverapp@gamil.com</string>
     <string name="edit_user_info">修改个人信息</string>

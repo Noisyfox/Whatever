@@ -2,12 +2,10 @@ package mynuaa.whatever;
 
 import java.lang.ref.WeakReference;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View.OnKeyListener;
 
@@ -75,11 +73,6 @@ public class StartupActivity extends SherlockFragmentActivity {
 				mHandler.sendEmptyMessage(MESSAGE_SPLASHFINISHED);
 			}
 		}
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		Log.d("bbb", "onNewIntent");
 	}
 
 	@Override

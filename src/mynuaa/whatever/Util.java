@@ -205,7 +205,7 @@ public class Util {
 	}
 
 	private static double MATRIX_HEAD[] = null;
-	private static int RADIUS_HEAD = 10;
+	private static int RADIUS_HEAD = 20;
 	private static Paint PAINT_HEAD = null;
 
 	public static Bitmap blurHeadBackground(Bitmap src) {

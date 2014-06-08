@@ -8,6 +8,8 @@ import mynuaa.whatever.SettingsWidget.TextSetting;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
@@ -16,17 +18,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class AboutActivity extends SherlockActivity implements
 		OnItemClickListener, OnGestureListener {
 
 	GestureDetector mGestureDetector;
 	TextSetting mTextSetting_update;
+	TextView mTextView_version;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
+
+		mTextView_version = (TextView) findViewById(R.id.textView_version);
+		String version = "unknown";
+		try {
+			PackageInfo info = getPackageManager().getPackageInfo(
+					getPackageName(), 0);
+			version = info.versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		mTextView_version.setText(getString(R.string.about_version, version));
 
 		Util.setupCommonActionBar(this, R.string.about_title);
 
