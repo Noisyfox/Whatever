@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="-55dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
         android:src="@drawable/path_background" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp" >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/button_bad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/path_button"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:text="@string/path_bad"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/button_bad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_bad" />
-
-            <Button
-                android:id="@+id/button_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_comment" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_bad"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/path_button"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:text="@string/path_message"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/button_good"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_good" />
-
-            <Button
-                android:id="@+id/button_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="21dp"
-                android:layout_marginTop="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_message" />
-
-            <Button
-                android:id="@+id/button_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_report" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/button_pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_send"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/path_button"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:text="@string/path_pm"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/button_who"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_WHO" />
+        <Button
+            android:id="@+id/button_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_send"
+            android:layout_marginRight="-12dp"
+            android:layout_marginTop="-45dp"
+            android:layout_toLeftOf="@+id/button_send"
+            android:background="@drawable/path_button"
+            android:gravity="center"
+            android:text="@string/path_report"
+            android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/button_pm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:background="@drawable/path_button"
-                android:gravity="center"
-                android:text="@string/path_pm" />
-        </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/button_good"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_bad"
+            android:layout_marginRight="-12dp"
+            android:layout_marginTop="-45dp"
+            android:layout_toLeftOf="@+id/button_bad"
+            android:background="@drawable/path_button"
+            android:gravity="center"
+            android:text="@string/path_good"
+            android:textColor="@color/white" />
 
-</FrameLayout>
+        <Button
+            android:id="@+id/button_who"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_send"
+            android:layout_marginLeft="-12dp"
+            android:layout_marginTop="-45dp"
+            android:layout_toRightOf="@+id/button_send"
+            android:background="@drawable/path_button"
+            android:gravity="center"
+            android:text="@string/path_WHO"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_bad"
+            android:layout_marginLeft="-12dp"
+            android:layout_marginTop="-45dp"
+            android:layout_toRightOf="@+id/button_bad"
+            android:background="@drawable/path_button"
+            android:gravity="center"
+            android:text="@string/path_comment"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</RelativeLayout>
