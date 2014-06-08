@@ -10,13 +10,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class NotificationData {
-	public static final int TYPE_GOOD = 1;
-	public static final int TYPE_BAD = 2;
-	public static final int TYPE_COMMENT = 3;
-	public static final int TYPE_PM = 4;
-	public static final int TYPE_REPORT = 5;
-	public static final int TYPE_WHO = 6;
-	public static final int TYPE_WHO_REPLY = 7;
+	public static final int TYPE_GOOD = 0;
+	public static final int TYPE_BAD = 1;
+	public static final int TYPE_COMMENT = 2;
+	public static final int TYPE_PM = 3;
+	public static final int TYPE_REPORT = 4;
+	public static final int TYPE_WHO = 5;
+	public static final int TYPE_WHO_REPLY = 6;
 
 	public int type;
 	public String time;
@@ -36,6 +36,50 @@ public class NotificationData {
 		Cursor c = db.query(DataCenter.DB_NOTICACHE_NAME, null,
 				DataCenter.DB_NOTICACHE_COLUMN_ISREAD + "=0", null, null, null,
 				DataCenter.DB_NOTICACHE_COLUMN_TIME + " Desc");
+
+		ArrayList<NotificationData> nds = new ArrayList<NotificationData>();
+
+		if (c.moveToFirst()) {
+			do {
+				NotificationData nd = readFromCursor(c);
+				nds.add(nd);
+			} while (c.moveToNext());
+		}
+
+		c.close();
+
+		return nds;
+	}
+
+	public static List<NotificationData> getUnreadNotification(int type) {
+		String selection;
+
+		switch (type) {
+		case TYPE_GOOD:
+		case TYPE_BAD:
+		case TYPE_COMMENT:
+		case TYPE_PM:
+		case TYPE_REPORT:
+			selection = DataCenter.DB_NOTICACHE_COLUMN_TYPE + "=" + type;
+			break;
+		case TYPE_WHO:
+			selection = DataCenter.DB_NOTICACHE_COLUMN_TYPE + "=" + TYPE_WHO
+					+ " OR " + DataCenter.DB_NOTICACHE_COLUMN_TYPE + "="
+					+ TYPE_WHO_REPLY;
+			break;
+		default:
+			return null;
+		}
+
+		selection = DataCenter.DB_NOTICACHE_COLUMN_ISREAD + "=0" + " AND ("
+				+ selection + ")";
+
+		SQLiteDatabase db = DataCenter.getDatabase(false);
+
+		Cursor c = db
+				.query(DataCenter.DB_NOTICACHE_NAME, null, selection, null,
+						null, null, DataCenter.DB_NOTICACHE_COLUMN_TIME
+								+ " Desc");
 
 		ArrayList<NotificationData> nds = new ArrayList<NotificationData>();
 

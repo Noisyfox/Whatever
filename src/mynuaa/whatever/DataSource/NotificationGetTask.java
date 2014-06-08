@@ -31,44 +31,75 @@ public class NotificationGetTask extends Task {
 	private static final String NOTYPE_PM = "pm";
 	private static final String NOTYPE_WHO = "who";
 	private static final String NOTYPE_WHO_REPLY = "who_reply";
+	private static final String NOTYPES[] = { NOTYPE_GOODS, NOTYPE_BADS,
+			NOTYPE_COMMENT, NOTYPE_PM, NOTYPE_REPORT, NOTYPE_WHO };
 
 	private final OnNotificationGetListener mOnNotificationGetListener;
-	private final int mType;
+	private final int mReadType;
 	private final String mLastId;
+	private final String mType;
+	private final int mTypeI;
 
 	private int mResult = GET_SUCCESS;
 	private List<NotificationData> mNds;
 
-	public NotificationGetTask(String tag, int type, OnNotificationGetListener l) {
-		super(tag);
-
-		mType = type;
-		mOnNotificationGetListener = l;
-		mLastId = null;
-	}
-
-	public NotificationGetTask(String tag, OnNotificationGetListener l) {
-		super(tag);
-
-		mType = TYPE_UNREAD;
-		mOnNotificationGetListener = l;
-		mLastId = null;
-	}
-
-	public NotificationGetTask(String tag, String lastId,
+	public NotificationGetTask(String tag, int readType, int notifyType,
 			OnNotificationGetListener l) {
 		super(tag);
 
-		mType = TYPE_READ;
+		mReadType = readType;
+		mOnNotificationGetListener = l;
+		mLastId = null;
+
+		if (notifyType < 0 || notifyType >= NOTYPES.length) {
+			mType = "all";
+			mTypeI = -1;
+		} else {
+			mType = NOTYPES[notifyType];
+			mTypeI = notifyType;
+		}
+	}
+
+	public NotificationGetTask(String tag, int notifyType,
+			OnNotificationGetListener l) {
+		super(tag);
+
+		mReadType = TYPE_UNREAD;
+		mOnNotificationGetListener = l;
+		mLastId = null;
+
+		if (notifyType < 0 || notifyType >= NOTYPES.length) {
+			mType = "all";
+			mTypeI = -1;
+		} else {
+			mType = NOTYPES[notifyType];
+			mTypeI = notifyType;
+		}
+	}
+
+	public NotificationGetTask(String tag, int notifyType, String lastId,
+			OnNotificationGetListener l) {
+		super(tag);
+
+		mReadType = TYPE_READ;
 		mOnNotificationGetListener = l;
 		mLastId = lastId;
+
+		if (notifyType < 0 || notifyType >= NOTYPES.length) {
+			mType = "all";
+			mTypeI = -1;
+		} else {
+			mType = NOTYPES[notifyType];
+			mTypeI = notifyType;
+		}
 	}
 
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
 		params.put("session", mSessionId);
-		params.put("isread", String.valueOf(mType));
+		params.put("type", mType);
+		params.put("isread", String.valueOf(mReadType));
 		if (mLastId != null) {
 			params.put("last_noticeid", mLastId);
 		}
@@ -166,12 +197,13 @@ public class NotificationGetTask extends Task {
 	@Override
 	public void callback() {
 		if (mOnNotificationGetListener != null) {
-			mOnNotificationGetListener.onNotificationGet(mResult, mType, mNds);
+			mOnNotificationGetListener.onNotificationGet(mResult, mReadType,
+					mTypeI, mNds);
 		}
 	}
 
 	public static interface OnNotificationGetListener {
-		public void onNotificationGet(int result, int type,
+		public void onNotificationGet(int result, int readType, int notifyType,
 				List<NotificationData> nds);
 	}
 

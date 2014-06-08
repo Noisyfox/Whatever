@@ -1,18 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/main_list"
+    <RelativeLayout
+        android:id="@+id/notify_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/message_list_background"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/divider"
-        android:dividerHeight="1dp"
-        android:fastScrollEnabled="true"
-        android:footerDividersEnabled="true"
-        android:scrollbars="vertical" />
-    
-</RelativeLayout>
+        android:layout_height="match_parent" >
+
+        <TableLayout
+            android:id="@+id/tableLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:stretchColumns="*" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <include
+                    android:id="@+id/icon_good"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+
+                <include
+                    android:id="@+id/icon_bad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+
+                <include
+                    android:id="@+id/icon_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" >
+
+                <include
+                    android:id="@+id/icon_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+
+                <include
+                    android:id="@+id/icon_pm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+
+                <include
+                    android:id="@+id/icon_who"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/notify_item" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView_noti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView_cat"
+            android:layout_alignLeft="@+id/imageView_cat"
+            android:layout_marginLeft="90dp"
+            android:text="@string/notify_no_unread"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageView
+            android:id="@+id/imageView_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tableLayout1"
+            android:layout_below="@+id/tableLayout1"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="46dp"
+            android:src="@drawable/feijicat" />
+    </RelativeLayout>
+
+    <mynuaa.whatever.TouchEater
+        android:id="@+id/pm_load_process"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" 
+            android:background="#44000000" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="#44000000" >
+
+            <include
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                layout="@layout/overlay_progress_view" />
+        </RelativeLayout>
+    </mynuaa.whatever.TouchEater>
+
+</FrameLayout>

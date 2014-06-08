@@ -12,7 +12,7 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
+  limitations under the License.
 -->
 
 <resources>
@@ -96,13 +96,18 @@
     <string name="pm_history_delete">删除</string>
     <string name="pm_history_delete_ask_title">删除私信记录</string>
     <string name="pm_history_delete_ask">确认删除和Ta的私信记录</string>
+    <string name="notify_from">来自状态</string>
     <string name="notify_type_good">收到%1$d个赞</string>
     <string name="notify_type_bad">收到%1$d个踩</string>
     <string name="notify_type_comment">收到%1$d条评论</string>
-    <string name="notify_type_pm">收到%1$d条私信</string>
-    <string name="notify_type_report">收到%1$d个举报</string>
+    <string name="notify_type_pm"><Data><![CDATA[<font color="#3581C2">%1$s</font> 对你说“%2$s”]]></Data></string>
+    <string name="notify_type_report">您的状态被举报</string>
     <string name="notify_type_who"><Data><![CDATA[机友 <font color="#3581C2">%1$s</font> 想知道你是谁]]></Data></string>
     <string name="notify_type_who_reply">来自WHO的回复</string>
+    <string name="notify_type_who_reply_agree">TA 同意了你的 WHO 请求</string>
+    <string name="notify_type_who_reply_disagree">TA 拒绝了你的 WHO 请求</string>
+    <string name="notify_no_unread">您没有未读消息喵~</string>
+    <string name="notify_has_unread">您有%1$s条未读消息喵~</string>
     <string name="btn_back_to_message">返回状态</string>
     <string name="mark_all_read">全部标记已读</string>
     <string name="who_id">纸飞机ID：</string>

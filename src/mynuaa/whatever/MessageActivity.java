@@ -195,11 +195,8 @@ public class MessageActivity extends SherlockActivity implements
 		btn_comment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent();
-				intent.setClass(MessageActivity.this, CommentActivity.class);
-				intent.putExtra("message_cid", mMessage.cid);
-				startActivity(intent);
-				overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+				CommentActivity.showComment(MessageActivity.this, mMessage.cid,
+						false);
 			}
 		});
 

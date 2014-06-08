@@ -15,6 +15,8 @@ import com.rockerhieu.emojicon.EmojiconGridFragment;
 import com.rockerhieu.emojicon.EmojiconsFragment;
 import com.rockerhieu.emojicon.emoji.Emojicon;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -47,6 +49,18 @@ public class CommentActivity extends SherlockFragmentActivity implements
 		EmojiconsFragment.OnEmojiconBackspaceClickedListener, OnTouchListener,
 		OnFocusChangeListener {
 	private static final String TASK_TAG = "task_comment_activity";
+
+	public static void showComment(Activity activity, String cid,
+			boolean returnToMessage) {
+		Intent intent = new Intent();
+		intent.setClass(activity, CommentActivity.class);
+
+		intent.putExtra("message_cid", cid);
+		intent.putExtra("return_message", returnToMessage);
+
+		activity.startActivity(intent);
+		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+	}
 
 	GestureDetector mGestureDetector;
 

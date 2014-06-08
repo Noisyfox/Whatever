@@ -126,6 +126,10 @@
             android:name="mynuaa.whatever.WebViewActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="mynuaa.whatever.NotifyListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

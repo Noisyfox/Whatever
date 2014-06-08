@@ -55,7 +55,7 @@ public class PathFragment extends SherlockFragment implements OnClickListener/*
 		Intent i = new Intent();
 		i.setClass(getActivity(), TraceListActivity.class);
 		i.putExtra("trace", filter);
-		getActivity().startActivity(i);
+		startActivity(i);
 		getActivity().overridePendingTransition(R.anim.slide_in_right,
 				R.anim.stay);
 	}

@@ -71,7 +71,7 @@ public class SettingsFragment extends SherlockFragment implements
 												i.setClass(getActivity(),
 														StartupActivity.class);
 												i.putExtra("skipSplash", true);
-												getActivity().startActivity(i);
+												startActivity(i);
 
 												((MainActivity) getActivity())
 														.forceFinish();
@@ -175,7 +175,7 @@ public class SettingsFragment extends SherlockFragment implements
 			public void OnClick() {
 				Intent i = new Intent();
 				i.setClass(getActivity(), AboutActivity.class);
-				getActivity().startActivity(i);
+				startActivity(i);
 				getActivity().overridePendingTransition(R.anim.slide_in_right,
 						R.anim.stay);
 			}

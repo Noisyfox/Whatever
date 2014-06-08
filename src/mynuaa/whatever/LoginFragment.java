@@ -135,7 +135,7 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 			i.setClass(getActivity(), MainActivity.class);
 			i.putExtra("notification", getActivity().getIntent()
 					.getBooleanExtra("notification", false));
-			getActivity().startActivity(i);
+			startActivity(i);
 			getActivity().finish();
 			break;
 		}
