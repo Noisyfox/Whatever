@@ -1,5 +1,8 @@
 package mynuaa.whatever;
 
+import mynuaa.whatever.DataSource.UpdateTask;
+import mynuaa.whatever.DataSource.UpdateTask.OnUpdateCheckListener;
+import mynuaa.whatever.DataSource.UpdateTask.VersionData;
 import mynuaa.whatever.SettingsWidget.ButtonSetting;
 import mynuaa.whatever.SettingsWidget.Setting;
 import mynuaa.whatever.SettingsWidget.SettingsAdapter;
@@ -8,9 +11,12 @@ import mynuaa.whatever.SettingsWidget.TextSetting;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,9 +25,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AboutActivity extends SherlockActivity implements
-		OnItemClickListener, OnGestureListener {
+		OnItemClickListener, OnGestureListener, OnUpdateCheckListener {
 
 	GestureDetector mGestureDetector;
 	TextSetting mTextSetting_update;
@@ -60,10 +67,30 @@ public class AboutActivity extends SherlockActivity implements
 		mTextSetting_update = new TextSetting("版本更新", "update") {
 			@Override
 			public void OnClick() {
-
+				Toast.makeText(AboutActivity.this,
+						R.string.update_toast_checking, Toast.LENGTH_SHORT)
+						.show();
+				WhateverApplication.getMainTaskManager().startTask(
+						new UpdateTask("Global", AboutActivity.this,
+								AboutActivity.this));
 			}
 		};
-		mTextSetting_update.setText("已是最新版本");
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		long lastUpdateCheckVersion = sp.getLong("updateV", -1);
+		int version = -1;
+		try {
+			PackageInfo info = getPackageManager().getPackageInfo(
+					getPackageName(), 0);
+			version = info.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		if (version >= lastUpdateCheckVersion) {
+			mTextSetting_update.setText("已是最新版本");
+		} else {
+			mTextSetting_update.setText("发现新版本");
+		}
 		settingsAdapter.addSetting(mTextSetting_update);
 		settingsAdapter.addSetting(new ButtonSetting("隐私声明", "privacy") {
 			@Override
@@ -149,5 +176,27 @@ public class AboutActivity extends SherlockActivity implements
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		mGestureDetector.onTouchEvent(ev);
 		return super.dispatchTouchEvent(ev);
+	}
+
+	@Override
+	public void onUpdateCheck(int result, VersionData version) {
+		if (result == UpdateTask.CHECK_SUCCESS) {
+			if (version == null) {
+				Toast.makeText(this, R.string.update_toast_already,
+						Toast.LENGTH_SHORT).show();
+			} else {
+				SharedPreferences sp = PreferenceManager
+						.getDefaultSharedPreferences(this);
+
+				UpdateTask.showUpdateDialog(this, version);
+
+				Editor e = sp.edit();
+				e.putLong("updateV", version.version);
+				e.commit();
+			}
+		} else {
+			Toast.makeText(this, R.string.update_toast_fail, Toast.LENGTH_SHORT)
+					.show();
+		}
 	}
 }

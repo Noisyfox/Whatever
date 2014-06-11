@@ -12,7 +12,7 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
+  limitations under the License.
 -->
 
 <resources>
@@ -116,6 +116,13 @@
     <string name="who_contact">（手机联系人 %1$s）</string>
     <string name="who_contact_no">（非手机联系人）</string>
     <string name="who_allow">是否同意交换个人信息？</string>
+    <string name="update_dialog_title">在线更新</string>
+    <string name="update_dialog_new_version"><Data><![CDATA[版本:<font color="#3581C2">%1$s</font>]]></Data></string>
+    <string name="update_dialog_file_size">下载包大小为%1$s</string>
+    <string name="update_dialog_btn_update_now">立即更新</string>
+    <string name="update_toast_checking">检测新版本中</string>
+    <string name="update_toast_already">已是最新版</string>
+    <string name="update_toast_fail">检查更新失败，请稍后再试</string>
 
     <string-array name="report_default">
         <item></item>

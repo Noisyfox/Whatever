@@ -7,6 +7,9 @@ import mynuaa.whatever.DataSource.DataCenter;
 import mynuaa.whatever.DataSource.NotificationCheckTask;
 import mynuaa.whatever.DataSource.NotificationCheckTask.OnNotificationCheckListener;
 import mynuaa.whatever.DataSource.NotificationData;
+import mynuaa.whatever.DataSource.UpdateTask;
+import mynuaa.whatever.DataSource.UpdateTask.OnUpdateCheckListener;
+import mynuaa.whatever.DataSource.UpdateTask.VersionData;
 import mynuaa.whatever.DataSource.UserInfoSyncTask.OnUserInfoSyncListener;
 import mynuaa.whatever.DataSource.UserInfoSyncTask;
 import mynuaa.whatever.DataSource.UserSession;
@@ -44,7 +47,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		OnUserInfoSyncListener, OnNotificationCheckListener {
+		OnUserInfoSyncListener, OnNotificationCheckListener,
+		OnUpdateCheckListener {
 	private static final String TASK_TAG = "task_main_activity";
 	private static long exitFirstTime = 0;
 
@@ -165,6 +169,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (needChkNotiNow) {
 			WhateverApplication.getApplication().checkNoitifcation();
 		}
+		WhateverApplication.getMainTaskManager().startTask(
+				new UpdateTask("Global", this, this));
 	}
 
 	@Override
@@ -722,6 +728,23 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (session.getUnreadNotificationCount() == 0
 				&& NotificationData.getUnreadNotification().size() == 0) {
 			mDrawerAdapter.setNotification(R.id.drawer_message, false);
+		}
+	}
+
+	@Override
+	public void onUpdateCheck(int result, VersionData version) {
+		if (result == UpdateTask.CHECK_SUCCESS && version != null) {
+			SharedPreferences sp = PreferenceManager
+					.getDefaultSharedPreferences(this);
+
+			long lastUpdateCheckVersion = sp.getLong("updateV", -1);
+			if (version.version > lastUpdateCheckVersion) {
+				UpdateTask.showUpdateDialog(this, version);
+			}
+
+			Editor e = sp.edit();
+			e.putLong("updateV", version.version);
+			e.commit();
 		}
 	}
 

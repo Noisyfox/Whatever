@@ -64,6 +64,7 @@ public class NetworkHelper {
 			+ "Notification/check";
 	static final String STR_SERVER_URL_WHO_ASK = STR_SERVER_URL + "Who/post";
 	static final String STR_SERVER_URL_WHO_REPLY = STR_SERVER_URL + "Who/reply";
+	static final String STR_SERVER_URL_UPDATE = "https://whatever-noisyfox.rhcloud.com/update";
 
 	public static String doHttpRequest(String url,
 			Set<Entry<Object, Object>> data) {
