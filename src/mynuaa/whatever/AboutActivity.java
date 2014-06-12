@@ -75,21 +75,11 @@ public class AboutActivity extends SherlockActivity implements
 								AboutActivity.this));
 			}
 		};
-		SharedPreferences sp = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		long lastUpdateCheckVersion = sp.getLong("updateV", -1);
-		int version = -1;
-		try {
-			PackageInfo info = getPackageManager().getPackageInfo(
-					getPackageName(), 0);
-			version = info.versionCode;
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-		if (version >= lastUpdateCheckVersion) {
-			mTextSetting_update.setText("已是最新版本");
+
+		if (UpdateTask.hasUpdate(this)) {
+			mTextSetting_update.setText("NEW");
 		} else {
-			mTextSetting_update.setText("发现新版本");
+			mTextSetting_update.setText("已是最新版本");
 		}
 		settingsAdapter.addSetting(mTextSetting_update);
 		settingsAdapter.addSetting(new ButtonSetting("隐私声明", "privacy") {

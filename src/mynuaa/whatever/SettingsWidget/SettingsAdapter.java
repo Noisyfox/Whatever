@@ -8,7 +8,6 @@ import mynuaa.whatever.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class SettingsAdapter extends BaseAdapter {
 	}
 
 	public void onValueChanged() {
-		Log.d("aaa", "Aasdasd");
 		Editor e = mPreferneces.edit();
 		for (Setting s : mSettings) {
 			s.save(e);
@@ -67,9 +65,10 @@ public class SettingsAdapter extends BaseAdapter {
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 		Setting s = mSettings.get(arg0);
 
-		if (arg1 == null)
+		if (arg1 == null) {
 			arg1 = LayoutInflater.from(mContext).inflate(R.layout.setting_item,
 					arg2, false);
+		}
 
 		((TextView) arg1.findViewById(R.id.textView_title)).setText(s.title);
 

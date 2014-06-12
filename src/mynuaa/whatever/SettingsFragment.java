@@ -2,6 +2,7 @@ package mynuaa.whatever;
 
 import mynuaa.whatever.DataSource.CacheClearTask;
 import mynuaa.whatever.DataSource.CacheClearTask.OnCacheClearListener;
+import mynuaa.whatever.DataSource.UpdateTask;
 import mynuaa.whatever.DataSource.UserSession;
 import mynuaa.whatever.SettingsWidget.ButtonSetting;
 import mynuaa.whatever.SettingsWidget.Setting;
@@ -170,7 +171,7 @@ public class SettingsFragment extends SherlockFragment implements
 				alertDialog.show();
 			}
 		});
-		settingsAdapter.addSetting(new ButtonSetting("关于 Whatever", "about") {
+		ButtonSetting bs = new ButtonSetting("关于 Whatever", "about") {
 			@Override
 			public void OnClick() {
 				Intent i = new Intent();
@@ -179,7 +180,11 @@ public class SettingsFragment extends SherlockFragment implements
 				getActivity().overridePendingTransition(R.anim.slide_in_right,
 						R.anim.stay);
 			}
-		});
+		};
+		settingsAdapter.addSetting(bs);
+		if (UpdateTask.hasUpdate(getActivity())) {
+			bs.setNotificationText("发现新版本");
+		}
 	}
 
 	@Override

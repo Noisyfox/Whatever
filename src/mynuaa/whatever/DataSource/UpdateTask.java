@@ -12,13 +12,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -140,6 +143,7 @@ public class UpdateTask extends Task {
 		public long fileSize;
 	}
 
+	@SuppressLint("DefaultLocale")
 	public static void showUpdateDialog(final Context context,
 			VersionData version) {
 		String title = context.getString(R.string.update_dialog_title);
@@ -185,4 +189,18 @@ public class UpdateTask extends Task {
 		alertDialog.show();
 	}
 
+	public static boolean hasUpdate(Context context) {
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		long lastUpdateCheckVersion = sp.getLong("updateV", -1);
+		int version = -1;
+		try {
+			PackageInfo info = context.getPackageManager().getPackageInfo(
+					context.getPackageName(), 0);
+			version = info.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return version < lastUpdateCheckVersion;
+	}
 }

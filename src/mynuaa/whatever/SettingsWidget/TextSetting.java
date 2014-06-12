@@ -41,6 +41,7 @@ public abstract class TextSetting extends Setting {
 		} else {
 			mTextView.setText(mResid);
 		}
+		mTextView.setTextColor(0xff3581C2);
 		mTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.MATCH_PARENT));
 		ll.addView(mTextView);
