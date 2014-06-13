@@ -62,19 +62,18 @@ public class UpdateTask extends Task {
 	@Override
 	public void doTask() {
 		Map<Object, Object> params = new HashMap<Object, Object>();
-		params.put("m", "c");
 		params.put("p", String.valueOf(PLATFORM));
 		params.put("v", String.valueOf(mVersion));
 
 		String result = NetworkHelper.doHttpRequest(
-				NetworkHelper.STR_SERVER_URL_UPDATE, params.entrySet());
+				NetworkHelper.STR_SERVER_URL_UPDATE_CHECK, params.entrySet());
 
 		if (TextUtils.isEmpty(result)) {
 			mResult = CHECK_FAIL_INNER_ERROR;
 			return;
 		}
 
-		Log.d("https update", result);
+		Log.d("http update", result);
 
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
@@ -178,8 +177,8 @@ public class UpdateTask extends Task {
 							@Override
 							public boolean onClick(DialogInterface dialog,
 									int which) {
-								String url = NetworkHelper.STR_SERVER_URL_UPDATE
-										+ "?m=d&p=0";
+								String url = NetworkHelper.STR_SERVER_URL_UPDATE_DOWNLOAD
+										+ "?p=0";
 								Intent i = new Intent(Intent.ACTION_VIEW);
 								i.setData(Uri.parse(url));
 								context.startActivity(i);

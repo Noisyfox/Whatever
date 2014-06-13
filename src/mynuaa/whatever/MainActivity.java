@@ -5,6 +5,7 @@ import java.util.List;
 
 import mynuaa.whatever.DataSource.DataCenter;
 import mynuaa.whatever.DataSource.NotificationCheckTask;
+import mynuaa.whatever.DataSource.TaskManager;
 import mynuaa.whatever.DataSource.NotificationCheckTask.OnNotificationCheckListener;
 import mynuaa.whatever.DataSource.NotificationData;
 import mynuaa.whatever.DataSource.UpdateTask;
@@ -174,7 +175,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			WhateverApplication.getApplication().checkNoitifcation();
 		}
 		WhateverApplication.getMainTaskManager().startTask(
-				new UpdateTask("Global", this, this));
+				new UpdateTask(TaskManager.TAG_GLOBAL, this, this));
 	}
 
 	@Override

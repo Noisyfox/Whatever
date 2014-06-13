@@ -171,6 +171,16 @@ public class SettingsFragment extends SherlockFragment implements
 				alertDialog.show();
 			}
 		});
+		settingsAdapter.addSetting(new ButtonSetting("意见反馈", "feedback") {
+			@Override
+			public void OnClick() {
+				Intent i = new Intent();
+				i.setClass(getActivity(), FeedbackActivity.class);
+				startActivity(i);
+				getActivity().overridePendingTransition(R.anim.slide_in_right,
+						R.anim.stay);
+			}
+		});
 		ButtonSetting bs = new ButtonSetting("关于 Whatever", "about") {
 			@Override
 			public void OnClick() {

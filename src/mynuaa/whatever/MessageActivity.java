@@ -4,6 +4,7 @@ import mynuaa.whatever.DataSource.ImageLoadTask.OnImageLoadListener;
 import mynuaa.whatever.DataSource.ImageLoadTask;
 import mynuaa.whatever.DataSource.MessageData;
 import mynuaa.whatever.DataSource.MessageMannerTask;
+import mynuaa.whatever.DataSource.TaskManager;
 import mynuaa.whatever.DataSource.MessageMannerTask.OnMannerPutListener;
 import mynuaa.whatever.DataSource.MessageRefreshTask;
 import mynuaa.whatever.DataSource.MessageRefreshTask.OnMessageRefreshListener;
@@ -280,7 +281,7 @@ public class MessageActivity extends SherlockActivity implements
 												.getMainTaskManager()
 												.startTask(
 														new ReportTask(
-																"Global",
+																TaskManager.TAG_GLOBAL,
 																cid,
 																content,
 																WhateverApplication

@@ -1,5 +1,6 @@
 package mynuaa.whatever;
 
+import mynuaa.whatever.DataSource.TaskManager;
 import mynuaa.whatever.DataSource.UpdateTask;
 import mynuaa.whatever.DataSource.UpdateTask.OnUpdateCheckListener;
 import mynuaa.whatever.DataSource.UpdateTask.VersionData;
@@ -71,8 +72,8 @@ public class AboutActivity extends SherlockActivity implements
 						R.string.update_toast_checking, Toast.LENGTH_SHORT)
 						.show();
 				WhateverApplication.getMainTaskManager().startTask(
-						new UpdateTask("Global", AboutActivity.this,
-								AboutActivity.this));
+						new UpdateTask(TaskManager.TAG_GLOBAL,
+								AboutActivity.this, AboutActivity.this));
 			}
 		};
 

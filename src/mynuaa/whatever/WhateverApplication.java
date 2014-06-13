@@ -3,6 +3,8 @@ package mynuaa.whatever;
 import java.util.ArrayList;
 
 import mynuaa.whatever.DataSource.DataCenter;
+import mynuaa.whatever.DataSource.FeedbackTask;
+import mynuaa.whatever.DataSource.FeedbackTask.OnFeedbackSendListener;
 import mynuaa.whatever.DataSource.NotificationCheckTask;
 import mynuaa.whatever.DataSource.NotificationCheckTask.OnNotificationCheckListener;
 import mynuaa.whatever.DataSource.ReportTask;
@@ -15,7 +17,8 @@ import android.os.Looper;
 import android.widget.Toast;
 
 public class WhateverApplication extends Application implements
-		OnReportListener, OnWHOListener, OnNotificationCheckListener {
+		OnReportListener, OnWHOListener, OnNotificationCheckListener,
+		OnFeedbackSendListener {
 
 	private static TaskManager mTaskManager;
 	private static WhateverApplication mWhateverApplication;
@@ -99,7 +102,8 @@ public class WhateverApplication extends Application implements
 	}
 
 	public void checkNoitifcation() {
-		mTaskManager.startTask(new NotificationCheckTask("Global", this));
+		mTaskManager.startTask(new NotificationCheckTask(
+				TaskManager.TAG_GLOBAL, this));
 	}
 
 	@Override
@@ -108,6 +112,17 @@ public class WhateverApplication extends Application implements
 			for (OnNotificationCheckListener l : mOnNotificationCheckListeners) {
 				l.onNotificationCheck(result, unreadCount);
 			}
+		}
+	}
+
+	@Override
+	public void onFeedbackSend(int result) {
+		if (result == FeedbackTask.SEND_SUCCESS) {
+			Toast.makeText(this, R.string.feedback_toast_send_success,
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(this, R.string.feedback_toast_send_fail,
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 }

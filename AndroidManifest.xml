@@ -130,6 +130,11 @@
             android:name="mynuaa.whatever.NotifyListActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="mynuaa.whatever.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 
 </manifest>

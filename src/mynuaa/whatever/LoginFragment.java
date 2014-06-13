@@ -2,6 +2,7 @@ package mynuaa.whatever;
 
 import mynuaa.whatever.DataSource.ContactSyncTask;
 import mynuaa.whatever.DataSource.LoginTask;
+import mynuaa.whatever.DataSource.TaskManager;
 import mynuaa.whatever.DataSource.LoginTask.OnLoginListener;
 import mynuaa.whatever.DataSource.UserSession;
 
@@ -128,7 +129,8 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 			if (ContactSyncTask.contactEnabled(getActivity())
 					&& !ContactSyncTask.checkContactChange(getActivity())) {
 				WhateverApplication.getMainTaskManager().startTask(
-						new ContactSyncTask("Global", getActivity(), null));
+						new ContactSyncTask(TaskManager.TAG_GLOBAL,
+								getActivity(), null));
 			}
 
 			Intent i = new Intent();

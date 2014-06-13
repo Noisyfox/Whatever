@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 
 public class TaskManager {
+	public static final String TAG_GLOBAL = "Global";
 
 	private final Queue<Task> mWaitingTask = new LinkedList<Task>();
 	private final Queue<Task> mFinishedTask = new LinkedList<Task>();
@@ -49,12 +50,12 @@ public class TaskManager {
 
 	public TaskManager() {
 		mHandler = new TaskHandler(this);
-		mActivateTag.put("Global", Boolean.TRUE);
+		mActivateTag.put(TAG_GLOBAL, Boolean.TRUE);
 	}
 
 	public TaskManager(Looper l) {
 		mHandler = new TaskHandler(this, l);
-		mActivateTag.put("Global", Boolean.TRUE);
+		mActivateTag.put(TAG_GLOBAL, Boolean.TRUE);
 	}
 
 	public void setMaxTask(int max) {

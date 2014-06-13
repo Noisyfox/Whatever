@@ -12,8 +12,7 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
--->
+  limitations under the License.-->
 
 <resources>
 
@@ -123,6 +122,14 @@
     <string name="update_toast_checking">检测新版本中</string>
     <string name="update_toast_already">已是最新版本</string>
     <string name="update_toast_fail">检查更新失败，请稍后再试</string>
+    <string name="feedback_title">意见反馈</string>
+    <string name="feedback_message_hint">请输入您的反馈，我们会不断改进喵~</string>
+    <string name="feedback_contact_hint">可在此留下您的邮箱/QQ/手机号</string>
+    <string name="feedback_btn_send">提交</string>
+    <string name="feedback_toast_no_empty">请留下您的反馈，谢谢~</string>
+    <string name="feedback_toast_sending">反馈发送中</string>
+    <string name="feedback_toast_send_success">反馈发送成功</string>
+    <string name="feedback_toast_send_fail">反馈发送失败</string>
 
     <string-array name="report_default">
         <item></item>
