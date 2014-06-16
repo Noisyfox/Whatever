@@ -118,13 +118,15 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 	}
 
 	protected static void saveMessageCache(List<MessageData> messages,
-			int messageFilter) {
+			int messageFilter, boolean removeExists) {
 		SQLiteDatabase db = DataCenter.getDatabase(true);
 
 		String columns[] = new String[] { DataCenter.DB_MESSAGECACHE_COLUMN_CID };
 		String selection = DataCenter.DB_MESSAGECACHE_COLUMN_CID + "=? AND "
 				+ DataCenter.DB_MESSAGECACHE_COLUMN_FILTER + "=?";
 		String selectionArgs[] = new String[] { null, null };
+
+		ArrayList<MessageData> mdc = new ArrayList<MessageData>();
 
 		for (MessageData m : messages) {
 			selectionArgs[0] = m.cid;
@@ -155,6 +157,7 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 
 			if (!c.moveToFirst()) {
 				db.insert(DataCenter.DB_MESSAGECACHE_NAME, null, cv);
+				mdc.add(m);
 			} else {
 				db.update(DataCenter.DB_MESSAGECACHE_NAME, cv, selection,
 						selectionArgs);
@@ -163,6 +166,10 @@ public class MessageData implements Parcelable, Comparable<MessageData> {
 			c.close();
 		}
 
+		if (removeExists) {
+			messages.clear();
+			messages.addAll(mdc);
+		}
 		// db.close();
 	}
 

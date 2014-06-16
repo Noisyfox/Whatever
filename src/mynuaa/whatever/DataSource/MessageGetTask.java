@@ -201,7 +201,7 @@ public class MessageGetTask extends Task {
 				messages.add(md);
 			}
 
-			MessageData.saveMessageCache(messages, mGetFilter);
+			MessageData.saveMessageCache(messages, mGetFilter, mPrevId == null);
 			mMessages = messages;
 
 		} catch (JSONException e) {

@@ -1,5 +1,6 @@
 package mynuaa.whatever;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -462,6 +463,7 @@ public class MainFragment extends SherlockFragment implements
 		if (messages != null && !messages.isEmpty()) {
 			synchronized (currentData) {
 				if (prevId == null) {// 在头部追加
+					Collections.sort(currentData);
 					messages.removeAll(currentData);
 					addNew = messages.size() > 0;
 					if (addNew || currentData.size() > 20) {
