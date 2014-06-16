@@ -146,7 +146,7 @@ public class MessageActivity extends SherlockActivity implements
 			if (!mMessage.image_cid.isEmpty()) {
 				WhateverApplication.getMainTaskManager().startTask(
 						new ImageLoadTask(TASK_TAG, 0, mMessage.image_cid,
-								"small", this));
+								"big", this));
 				imageView_image.setOnClickListener(this);
 			} else {
 				imageView_image.setVisibility(View.GONE);
