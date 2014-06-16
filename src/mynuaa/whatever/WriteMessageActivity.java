@@ -53,6 +53,7 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 
 	private static Bitmap background_colors_bitmap_cache[] = new Bitmap[MessageTheme.background_colors.length];
 	private static Bitmap background_texture_bitmap_cache[] = new Bitmap[MessageTheme.background_textures.length];
+	private static Bitmap addimage_bitmap_cache[] = new Bitmap[MessageTheme.background_colors.length];
 	private static BitmapDrawable background_addimage_bitmap_cache[] = new BitmapDrawable[MessageTheme.background_colors.length];
 	private static Random mRandom = new Random();
 
@@ -69,6 +70,8 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 	private ImageView imageView_background;
 	private EditText editText_message;
 	private TextView textView_addImage;
+	private View layout_addImage;
+	private ImageView imageView_addImage;
 	private Button btn_send;
 	private ImageView imageView_image;
 	private View button_emoji;
@@ -81,6 +84,8 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 		imageView_background = (ImageView) findViewById(R.id.imageView_background);
 		editText_message = (EditText) findViewById(R.id.editText_message);
 		textView_addImage = (TextView) findViewById(R.id.textView_addImage);
+		layout_addImage = findViewById(R.id.linearLayout_addImage);
+		imageView_addImage = (ImageView) findViewById(R.id.imageView_addImage);
 		imageView_image = (ImageView) findViewById(R.id.imageView_image);
 		button_emoji = findViewById(R.id.button_emoji);
 
@@ -127,7 +132,7 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 		Util.hideHintOnFocused(editText_message);
 		editText_message.setOnClickListener(this);
 
-		textView_addImage.setOnClickListener(new OnClickListener() {
+		layout_addImage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				Intent i = new Intent(
@@ -183,14 +188,14 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 		imageAdded = addPic;
 
 		if (imageAdded) {
-			textView_addImage.setVisibility(View.GONE);
+			layout_addImage.setVisibility(View.GONE);
 			imageView_image.setVisibility(View.VISIBLE);
 
 			Bitmap preview = Util.creatPreviewImage(imageBitmap);
 
 			imageView_image.setImageBitmap(preview);
 		} else {
-			textView_addImage.setVisibility(View.VISIBLE);
+			layout_addImage.setVisibility(View.VISIBLE);
 			imageView_image.setVisibility(View.GONE);
 
 			imageBitmap = null;
@@ -260,8 +265,17 @@ public class WriteMessageActivity extends SherlockFragmentActivity implements
 					getResources(), result);
 		}
 
-		textView_addImage
+		if (addimage_bitmap_cache[colorI] == null) {
+			Bitmap mask = BitmapFactory.decodeResource(getResources(),
+					R.drawable.ic_action_new);
+
+			addimage_bitmap_cache[colorI] = MessageTheme.colorOverlay(mask,
+					color_message);
+		}
+
+		layout_addImage
 				.setBackgroundDrawable(background_addimage_bitmap_cache[colorI]);
+		imageView_addImage.setImageBitmap(addimage_bitmap_cache[colorI]);
 
 		selectedColor = colorI;
 		selectedTexture = textureI;

@@ -55,15 +55,29 @@
                             android:textColor="@color/white"
                             android:textColorHint="@color/white" />
 
-                        <TextView
-                            android:id="@+id/textView_addImage"
+                        <LinearLayout
+                            android:id="@+id/linearLayout_addImage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="30dp"
                             android:background="@drawable/add_pic"
                             android:gravity="center"
-                            android:text="@string/write_message_add_image"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:orientation="vertical"
+                            android:padding="5dp" >
+
+                            <ImageView
+                                android:id="@+id/imageView_addImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_action_new" />
+
+                            <TextView
+                                android:id="@+id/textView_addImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/write_message_add_image"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
 
                         <ImageView
                             android:id="@+id/imageView_image"
