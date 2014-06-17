@@ -4,7 +4,10 @@ import mynuaa.whatever.DataSource.FeedbackTask;
 import mynuaa.whatever.DataSource.TaskManager;
 import com.actionbarsherlock.app.SherlockActivity;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.GestureDetector.OnGestureListener;
@@ -32,6 +35,15 @@ public class FeedbackActivity extends SherlockActivity implements
 		mEditText_message = (EditText) findViewById(R.id.editText_message);
 		mEditText_contact = (EditText) findViewById(R.id.editText_contact);
 		findViewById(R.id.button_send).setOnClickListener(this);
+
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		String cachedMessage = sp.getString("feedBackM", "");
+		if (!Util.isBlank(cachedMessage)) {
+			mEditText_message.setText(cachedMessage);
+			mEditText_contact.setText(sp.getString("feedBackC", ""));
+		}
 	}
 
 	@Override
@@ -105,6 +117,13 @@ public class FeedbackActivity extends SherlockActivity implements
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
+
+		SharedPreferences sp = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		Editor e = sp.edit();
+		e.putString("feedBackM", message);
+		e.putString("feedBackC", contact);
+		e.commit();
 
 		WhateverApplication.getMainTaskManager().startTask(
 				new FeedbackTask(TaskManager.TAG_GLOBAL, message, contact,

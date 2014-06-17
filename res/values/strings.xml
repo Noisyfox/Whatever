@@ -129,7 +129,7 @@
     <string name="feedback_toast_no_empty">请留下您的反馈，谢谢~</string>
     <string name="feedback_toast_sending">反馈发送中</string>
     <string name="feedback_toast_send_success">反馈发送成功</string>
-    <string name="feedback_toast_send_fail">反馈发送失败</string>
+    <string name="feedback_toast_send_fail">反馈发送失败，已存为草稿</string>
 
     <string-array name="report_default">
         <item></item>

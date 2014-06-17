@@ -13,7 +13,10 @@ import mynuaa.whatever.DataSource.ReportTask.OnReportListener;
 import mynuaa.whatever.DataSource.TaskManager;
 import mynuaa.whatever.DataSource.WHOTask.OnWHOListener;
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class WhateverApplication extends Application implements
@@ -118,6 +121,14 @@ public class WhateverApplication extends Application implements
 	@Override
 	public void onFeedbackSend(int result) {
 		if (result == FeedbackTask.SEND_SUCCESS) {
+
+			SharedPreferences sp = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			Editor e = sp.edit();
+			e.putString("feedBackM", "");
+			e.putString("feedBackC", "");
+			e.commit();
+
 			Toast.makeText(this, R.string.feedback_toast_send_success,
 					Toast.LENGTH_SHORT).show();
 		} else {
