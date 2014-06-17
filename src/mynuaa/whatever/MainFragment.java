@@ -460,10 +460,9 @@ public class MainFragment extends SherlockFragment implements
 	private void mergeMessage(String prevId, List<MessageData> messages) {
 		boolean addNew = false;
 
-		if (messages != null && !messages.isEmpty()) {
-			synchronized (currentData) {
+		synchronized (currentData) {
+			if (messages != null && !messages.isEmpty()) {
 				if (prevId == null) {// 在头部追加
-					Collections.sort(currentData);
 					messages.removeAll(currentData);
 					addNew = messages.size() > 0;
 					if (addNew || currentData.size() > 20) {
@@ -492,6 +491,7 @@ public class MainFragment extends SherlockFragment implements
 					}
 				}
 			}
+			Collections.sort(currentData);
 		}
 
 		if (!addNew) {
