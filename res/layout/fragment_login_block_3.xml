@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_color_block_3"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_button"
+        android:paddingBottom="100dp"
+        android:paddingTop="20dp"
+        android:text="@string/action_sign_in"
+        android:textColor="@color/login_text"
+        android:textSize="30sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

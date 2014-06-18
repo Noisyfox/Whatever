@@ -6,7 +6,6 @@
     <string name="prompt_id">纸飞机ID</string>
     <string name="prompt_password">密码</string>
     <string name="action_sign_in">登录</string>
-    <string name="login_progress_signing_in">登录中&#8230;</string>
     <string name="error_incorrect_password">ID或密码不正确</string>
     <string name="error_field_required">这项还没填哦</string>
     <string name="error_invalid_phone">不是有效的手机号</string>

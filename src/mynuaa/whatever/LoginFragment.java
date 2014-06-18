@@ -43,9 +43,8 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 	// UI references.
 	private EditText mUIDView;
 	private EditText mPasswordView;
-	private View mLoginFormView;
-	private View mLoginStatusView;
-	private TextView mLoginStatusMessageView;
+	private View mLoginButton;
+	private View mLoginProgress;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -80,18 +79,15 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 					}
 				});
 
-		mLoginFormView = rootView.findViewById(R.id.login_form);
-		mLoginStatusView = rootView.findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) rootView
-				.findViewById(R.id.login_status_message);
+		mLoginButton = rootView.findViewById(R.id.sign_in_button);
+		mLoginProgress = rootView.findViewById(R.id.progressBar_login);
 
-		rootView.findViewById(R.id.sign_in_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						attemptLogin();
-					}
-				});
+		mLoginButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				attemptLogin();
+			}
+		});
 
 		return wrapper;
 	}
@@ -171,7 +167,6 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 		mAuthing = true;
 		Util.setInputMethod(getActivity(), false);
 
-		mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 		showProgress(true);
 
 		WhateverApplication.getMainTaskManager().startTask(
@@ -221,7 +216,6 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
 			mAuthing = true;
 			WhateverApplication.getMainTaskManager().startTask(
@@ -240,34 +234,36 @@ public class LoginFragment extends SherlockFragment implements OnKeyListener,
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
 			int shortAnimTime = getResources().getInteger(
 					android.R.integer.config_shortAnimTime);
-
-			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime)
+			mLoginProgress.setVisibility(View.VISIBLE);
+			mLoginProgress.animate().setDuration(shortAnimTime)
 					.alpha(show ? 1 : 0)
 					.setListener(new AnimatorListenerAdapter() {
 						@Override
 						public void onAnimationEnd(Animator animation) {
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
+							mLoginProgress.setVisibility(show ? View.VISIBLE
 									: View.GONE);
 						}
 					});
 
-			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime)
+			mLoginButton.setVisibility(View.VISIBLE);
+			mLoginButton.animate().setDuration(shortAnimTime)
 					.alpha(show ? 0 : 1)
 					.setListener(new AnimatorListenerAdapter() {
 						@Override
 						public void onAnimationEnd(Animator animation) {
-							mLoginFormView.setVisibility(show ? View.GONE
+							mLoginButton.setVisibility(show ? View.GONE
 									: View.VISIBLE);
 						}
 					});
 		} else {
 			// The ViewPropertyAnimator APIs are not available, so simply show
 			// and hide the relevant UI components.
-			mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+			mLoginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+			mLoginButton.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
+
+		mUIDView.setEnabled(!show);
+		mPasswordView.setEnabled(!show);
 	}
 
 	@Override

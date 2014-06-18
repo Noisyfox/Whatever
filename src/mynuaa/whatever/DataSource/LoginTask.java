@@ -65,6 +65,8 @@ public class LoginTask extends Task {
 
 	private void checkSession() {
 
+		long ct = System.currentTimeMillis();
+
 		Map<Object, Object> params = new HashMap<Object, Object>();
 		params.put("session", mSession.mSession);
 
@@ -72,6 +74,14 @@ public class LoginTask extends Task {
 				NetworkHelper.STR_SERVER_URL_LOGIN, params.entrySet());
 
 		parse(result, mSession);
+
+		ct = System.currentTimeMillis() - ct;
+		if (ct < 1200) {
+			try {
+				Thread.sleep(1200 - ct);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 
 	private UserSession parse(String result, UserSession oSession) {

@@ -316,8 +316,9 @@
     <color name="comment_item_background_1">#80FFFFFF</color>
     <color name="comment_item_background_selected">#803581C2</color>
     <color name="mymessage_r_text">#676767</color>
-    <color name="login_password_forget_text">#ffffff</color>
+    <color name="login_password_forget_text">#96030303</color>
     <color name="login_text">#ffffff</color>
+    <color name="login_background">#f0f0f0</color>
     <color name="user_edit">#929292</color>
     <color name="about_text">#868080</color>
     <color name="message_image_loading_background">#CCCCCC</color>
